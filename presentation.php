@@ -1,0 +1,282 @@
+<?php
+namespace Grav\Plugin;
+
+use Grav\Common\Grav;
+use Grav\Common\Utils;
+use Grav\Common\Plugin;
+use Grav\Common\Page\Page;
+use Grav\Common\Page\Pages;
+use Grav\Common\Page\Media;
+use Grav\Common\Page\Collection;
+use RocketTheme\Toolbox\Event\Event;
+
+require __DIR__ . '/vendor/autoload.php';
+use Michelf\SmartyPants;
+require __DIR__ . '/API/Push.php';
+use Grav\Plugin\PresentationPlugin\API\Push;
+
+require 'Utilities.php';
+use Presentation\Utilities;
+
+/**
+ * Creates slides using Reveal.js
+ *
+ * Class PresentationPlugin
+ * 
+ * @package Grav\Plugin
+ * @return  void
+ * @license MIT License by Ole Vik
+ */
+class PresentationPlugin extends Plugin
+{
+
+    /**
+     * Grav cache setting
+     *
+     * @var [type]
+     */
+    protected $cache;
+    protected $route = 'presentationapi';
+
+    /**
+     * Register intial event
+     * 
+     * @return array
+     */
+    public static function getSubscribedEvents()
+    {
+        return [
+            'onPluginsInitialized' => ['onPluginsInitialized', 0]
+        ];
+    }
+
+    /**
+     * Declare config from plugin-config
+     * 
+     * @return array Plugin configuration
+     */
+    public function config()
+    {
+        $pluginsobject = (array) $this->config->get('plugins');
+        if (isset($pluginsobject) && $pluginsobject['presentation']['enabled']) {
+            $config = $pluginsobject['presentation'];
+        } else {
+            return;
+        }
+        return $config;
+    }
+
+    /**
+     * Initialize the plugin and events
+     *
+     * @param Event $event RocketTheme events
+     * 
+     * @return void
+     */
+    public function onPluginsInitialized(Event $event)
+    {
+        if ($this->isAdmin()) {
+            return;
+        }
+        $this->grav['config']->set('system.cache.enabled', false);
+        $this->enable(
+            [
+                'onPageContentProcessed' => ['pageIteration', 0],
+                'onTwigExtensions' => ['onTwigExtensions', 0],
+                'onTwigTemplatePaths' => ['templates', 0],
+                'onPagesInitialized' => ['onPagesInitialized', 0],
+                'onShutdown' => ['onShutdown', 0]
+            ]
+        );
+        /*$userData = Grav::instance()['locator']->findResource('user://data/charts', true);
+        $files = self::filesFinder($userData, ['json']);
+        foreach ($files as $file) {
+            $json = str_replace(
+                array("\r\n", "\n", "\r"), 
+                '',
+                file_get_contents($file->getLinkTarget())
+            );
+            $output = 'var Grav = {Plugins: {Presentation: {' . pathinfo($file, PATHINFO_FILENAME) . ': ' . $json . '}}};';
+            Grav::instance()['assets']->addInlineJs($output);
+            Grav::instance()['assets']->addInlineJs('console.log(window.Grav);');
+        }*/
+    }
+
+    /**
+     * Push styles to via Assets Manager
+     * 
+     * @return void
+     */
+    public function onPagesInitialized()
+    {
+        $uri = $this->grav['uri'];
+        $page = $this->grav['page'];
+        $url = $page->url(true, true, true);
+        $config = $this->config();
+        // Grav::instance()['debugger']->addMessage($uri->path());
+        if ($config['sync'] == 'api') {
+            if ($uri->path() == '/' . $this->route) {
+                header('Cache-Control: no-cache, no-store, max-age=0, must-revalidate');
+                header('Pragma: no-cache');
+                if (!isset($_GET['mode'])) {
+                    header('HTTP/1.1 400 Bad Request');
+                    exit('HTTP/1.1 400 Bad Request');
+                }
+                $res = Grav::instance()['locator'];
+                $target = $res->findResource('cache://') . '/presentation';
+                $Push = new Push($target, 'PushCommand.json');
+                if ($_GET['mode'] == 'set' && isset($_GET['command'])) {
+                    $Push->set(urldecode($_GET['command']));
+                } elseif ($_GET['mode'] == 'get') {
+                    $Push->get();
+                } elseif ($_GET['mode'] == 'remove') {
+                    $Push->remove();
+                } elseif ($_GET['mode'] == 'serve') {
+                    $Push->serve();
+                }
+                exit();
+            }
+        }
+        /*$userData = Grav::instance()['locator']->findResource('user://data/charts', false);
+        $files = self::filesFinder($userData, ['js']);
+        foreach ($files as $file) {
+            Grav::instance()['assets']->addJs($userData . '/' . $file->getFilename(), 100, false, null, 'bottom');
+        }*/
+    }
+
+    /**
+     * Construct the page
+     * 
+     * @return void
+     */
+    public function pageIteration()
+    {
+        $page = $this->grav['page'];
+        $config = $this->config();
+        if ($config['enabled'] && $page->template() == 'presentation') {
+            $utility = new Utilities($config);
+            $tree = $utility->buildTree($page->route());
+            $slides = $utility->buildContent($tree);
+            $page->setRawContent($slides);
+            $menu = $utility->buildMenu($tree);
+            $menu = $utility->flattenArray($menu, 1);
+
+            $options = json_encode($config['options'], JSON_PRETTY_PRINT);
+            $init = 'window.addEventListener("load", function(event) {';
+            $init .= 'javascript:document.getElementById("page_transition").style.visibility="hidden";';
+            $init .= 'javascript:document.getElementById("page_transition").style.opacity=0;';
+            $init .= 'javascript:document.getElementById("page_transition").style.display="none";';
+            $init .= '}, false);';
+            $this->grav['twig']->twig_vars['presentation_init'] = $init;
+            if (!empty($config['header_font'])) {
+                $header_font = $config['header_font'];
+                $this->grav['assets']->addInlineCss("
+                    #fullpage h1,
+                    #fullpage h2,
+                    #fullpage h3,
+                    #fullpage h4,
+                    #fullpage h5,
+                    #fullpage h6 {
+                        font-family: $header_font;
+                    }
+                ");
+            }
+            if (!empty($config['block_font'])) {
+                $block_font = $config['block_font'];
+                $this->grav['assets']->addInlineCss("
+                    #fullpage,
+                    #fullpage p,
+                    #fullpage ul,
+                    #fullpage ol,
+                    #fullpage blockquote,
+                    #fullpage figcaption {
+                        font-family: $block_font;
+                    }
+                ");
+            }
+        }
+    }
+
+    /**
+     * Add templates-directory to Twig paths
+     * 
+     * @return void
+     */
+    public function templates()
+    {
+        $this->grav['twig']->twig_paths[] = __DIR__ . '/templates';
+    }
+
+    /**
+     * Reset cache on shutdown
+     * 
+     * @return void
+     */
+    public function onShutdown()
+    {
+        $this->grav['config']->set('system.cache.enabled', $this->cache);
+    }
+
+    /**
+     * Add Twig Extensions
+     *
+     * @return void
+     */
+    public function onTwigExtensions()
+    {
+        include_once __DIR__ . '/twig/CallStaticExtension.php';
+        $this->grav['twig']->twig->addExtension(new CallStaticTwigExtension());
+        include_once __DIR__ . '/twig/FileFinderExtension.php';
+        $this->grav['twig']->twig->addExtension(new FileFinderTwigExtension());
+    }
+
+    /**
+     * Search for a file in multiple locations
+     *
+     * @param string $file         Filename.
+     * @param string $ext          File extension.
+     * @param array  ...$locations List of paths.
+     * 
+     * @return string
+     */
+    public static function fileFinder(String $file, String $ext, Array ...$locations)
+    {
+        $return = false;
+        foreach ($locations as $location) {
+            if (file_exists($location . '/' . $file . $ext)) {
+                $return = $location . '/' . $file . $ext;
+                break;
+            }
+        }
+        return $return;
+    }
+
+    /**
+     * Search for files in multiple locations
+     *
+     * @param string $directory         Filename.
+     * @param string $types          File extension.
+     * @param array  ...$locations List of paths.
+     * 
+     * @return string
+     */
+    public static function filesFinder(String $directory, Array $types)
+    {
+        $iterator = new \RecursiveDirectoryIterator(
+            $directory,
+            \RecursiveDirectoryIterator::SKIP_DOTS
+        );
+        $iterator = new \RecursiveIteratorIterator($iterator);
+        $files = [];
+        foreach ($iterator as $file) {
+            if (in_array(pathinfo($file, PATHINFO_EXTENSION), $types)) {
+                $files[] = $file;
+            }
+        }
+        if (count($files) > 0) {
+            return $files;
+        } else {
+            return false;
+        }
+    }
+}

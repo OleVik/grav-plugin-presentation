@@ -1,0 +1,20 @@
+{
+  "name": "grav-plugin-presentation",
+  "version": "1.0.0",
+  "description": "Presentations for Grav!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "OleVik",
+  "license": "MIT",
+  "dependencies": {
+    "apexcharts": "^2.1.8",
+    "axios": "^0.18.0",
+    "cloner": "^0.4.0",
+    "css-element-queries": "^1.0.5",
+    "include-media": "^1.4.9",
+    "moment": "^2.22.2",
+    "reveal.js": "^3.7.0"
+  }
+}

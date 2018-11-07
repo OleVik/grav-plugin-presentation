@@ -1,0 +1,28 @@
+{
+  "name": "Fullpage.css",
+  "homepage": "https://github.com/OleVik/grav-plugin-fullpage",
+  "authors": [
+    "Ole Vik <git@olevik.net>"
+  ],
+  "description": "CSS generation with SCSS for Grav Fullpage-plugin",
+  "main": "fullpage.sass",
+  "keywords": [
+    "grav",
+    "fullpage.js",
+    "responsive"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "include-media": "^1.4.9",
+    "modular-scale": "^3.0.2",
+    "compass-mixins": "^1.0.2"
+  }
+}

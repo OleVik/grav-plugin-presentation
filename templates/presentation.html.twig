@@ -1,0 +1,152 @@
+{% set theme_config = attribute(config.themes, config.system.pages.theme) %}
+<!DOCTYPE html>
+<html lang="{{ grav.language.getLanguage ?: 'en' }}">
+  {% block head %}
+  <head>
+    {% block meta %}
+      <meta charset="utf-8" />
+      <title>{% if header.title %}{{ header.title|e('html') }} | {% endif %}{{ site.title|e('html') }}</title>
+      {% include 'partials/metadata.html.twig' %}
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    {% endblock meta %}
+    <link rel="icon" type="image/png" href="{{ url('theme://images/favicon.png') }}" />
+    <link rel="canonical" href="{{ page.url(true, true) }}" />
+    {% block stylesheets %}
+      {% if config.plugins['presentation'].transition %}
+        {% do assets.addCss('plugin://presentation/css/transition.css', {'group': 'critical'}) %}
+      {% endif %}
+      {% if config.plugins['presentation'].builtin_css %}
+        {% do assets.addCss('plugin://presentation/node_modules/reveal.js/css/reveal.css') %}
+        {% if uri.query('showNotes') == 'separate-page' and uri.query('print-pdf') == true %}
+          {% do assets.addCss('plugin://presentation/node_modules/reveal.js/css/theme/white.css') %}
+          {% do assets.addCss('plugin://presentation/node_modules/reveal.js/css/print/pdf.css') %}
+        {% else %}
+          {% do assets.addCss('plugin://presentation/css/uib.css') %}
+          {% do assets.addCss('plugin://timeline/assets/timeline.css') %}
+        {% endif %}
+      {% endif %}
+      {% if config.plugins['presentation'].theme_css %}
+        {% do assets.addCss('theme://css/custom.css') %}
+      {% endif %}
+    {% endblock %}
+    {{ assets.css('critical')|raw }}
+    {{ assets.css()|raw }}
+  </head>
+  {% endblock head %}
+
+  <body id="top" class="{{ page.header.body_classes }}">
+    {% if config.plugins['presentation'].transition %}
+    <div id="page_transition">
+      <div class="la-line-scale la-dark la-3x">
+        <div style="color: #0B110D;"></div>
+        <div style="color: #2C4D56;"></div>
+        <div style="color: #C3AA72;"></div>
+        <div style="color: #DC7612;"></div>
+        <div style="color: #BD3200;"></div>
+      </div>
+    </div>
+    {% endif %}
+    {% block content %}
+    <div class="reveal">
+      <div class="slides">
+        {{ page.content|raw }}
+      </div>
+    </div>
+    {% endblock content %}
+    {% block plugin_init %}
+      {% if config.plugins['presentation'].builtin_js %}
+        <script type="text/javascript">
+          {{ presentation_init }}
+        </script>
+      {% endif %}
+    {% endblock %}
+    {% block scripts %}
+      {% if config.plugins['presentation'].builtin_js %}
+        {% do assets.addJs('plugin://presentation/node_modules/reveal.js/lib/js/head.min.js') %}
+        {% do assets.addJs('plugin://presentation/node_modules/reveal.js/js/reveal.js') %}
+        {% do assets.addJs('plugin://presentation/node_modules/axios/dist/axios.min.js') %}
+        {% do assets.addJs('plugin://presentation/node_modules/css-element-queries/src/ResizeSensor.js') %}
+        {% do assets.addJs('plugin://presentation/node_modules/css-element-queries/src/ElementQueries.js') %}
+        {#{% do assets.addJs('plugin://presentation/node_modules/cloner/build/cloner.js') %}#}
+        {#{% do assets.addJs('plugin://presentation/node_modules/apexcharts/dist/apexcharts.min.js') %}#}
+        {#{% do assets.addJs('plugin://presentation/node_modules/moment/min/moment.min.js') %}#}
+        {#{% do assets.addJs('user://data/apexcharts.js') %}#}
+      {% endif %}
+    {% endblock %}
+    {{ assets.js()|raw }}
+    <script type="text/javascript">
+    window.addEventListener("load", function(event) {
+      Reveal.initialize({
+        width: "95%",
+        height: "95%",
+        margin: 0,
+        minScale: 1,
+        maxScale: 1,
+        transition: 'fade',
+        controlsTutorial: false,
+        history: true
+      });
+    }, false);
+    </script>
+    {% if config.plugins['presentation'].sync == 'browser' %}
+    <script type="text/javascript">
+    function findGetParameter(parameterName) {
+      var result = null,
+          tmp = [];
+      location.search
+          .substr(1)
+          .split("&")
+          .forEach(function (item) {
+            tmp = item.split("=");
+            if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+          });
+      return result;
+    }
+    function GetClock() {
+      var d = new Date();
+      var nhour = d.getHours();
+      var nmin = d.getMinutes();
+      var nsec = d.getSeconds();
+      if (nmin <= 9) {
+        nmin = "0" + nmin;
+      }
+      if (nsec <= 9) {
+        nsec = "0" + nsec;
+      }
+      var clocktext = "" + nhour + ":" + nmin + ":" + nsec + "";
+      document.getElementById('clockbox').innerHTML=clocktext;
+    }
+
+    ElementQueries.listen();
+
+    var bc = new BroadcastChannel('grav-presentation');
+    window.addEventListener("load", function(event) {
+      if (findGetParameter('admin') == 'yes') {
+        Reveal.addEventListener('slidechanged', function( event ) {
+          bc.postMessage({
+            indexh: event.indexh,
+            indexv: event.indexv,
+            indexf: typeof event.indexf !== 'undefined' ? event.indexf : 0 
+          });
+        });
+        Reveal.addEventListener('ready', function(event) {
+          if (findGetParameter('admin') == 'yes') {
+            var body = document.getElementById('top');
+            body.insertAdjacentHTML('beforeend', '<div id="clockbox"></div>');
+            GetClock();
+            setInterval(GetClock, 1000);
+          }
+        });
+      } else {
+        bc.onmessage = function (event) {
+          Reveal.slide(event.data.indexh, event.data.indexv, event.data.indexf);
+        }
+      }
+    }, false);
+    </script>
+    {% elseif config.plugins['presentation'].sync == 'api' %}
+        {% do assets.addJs('plugin://presentation/js/poll.js') %}
+    {% endif %}
+    {{ assets.js('bottom') }}
+  </body>
+</html>

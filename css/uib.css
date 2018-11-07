@@ -1,0 +1,521 @@
+/**
+ * University of Bergen theme for reveal.js
+ *
+ * By Ole Vik, https://olevik.me/
+ * 
+ * @see https://manual.uib.no/profilmanual/profilelementer/
+ * @see https://manual.uib.no/profilmanual/maler/
+ * 
+ * Compile with: node-sass --watch --source-map true scss/uib.scss css/uib.css
+ */
+@import url(../fonts/open-sans/open-sans.css);
+.reveal.overview .slides section {
+  width: calc(100% - 0px) !important;
+  min-width: calc(100% - 0px) !important;
+  max-width: calc(100% - 0px) !important;
+  height: calc(100% - 0px) !important;
+  min-height: calc(100% - 0px) !important;
+  max-height: calc(100% - 0px) !important; }
+  .reveal.overview .slides section section {
+    padding-top: 9rem !important; }
+
+.reveal:not(.overview) .slides section {
+  width: calc(100% - 0px) !important;
+  min-width: calc(100% - 0px) !important;
+  max-width: calc(100% - 0px) !important;
+  height: calc(100% - 0px) !important;
+  min-height: calc(100% - 0px) !important;
+  max-height: calc(100% - 0px) !important; }
+  .reveal:not(.overview) .slides section section {
+    width: calc(100% - 4rem) !important;
+    min-width: calc(100% - 4rem) !important;
+    max-width: calc(100% - 4rem) !important;
+    height: calc(100% - 12rem) !important;
+    min-height: calc(100% - 12rem) !important;
+    max-height: calc(100% - 12rem) !important;
+    padding: 6rem 2rem !important; }
+    @media (min-width: 1600px) {
+      .reveal:not(.overview) .slides section section {
+        width: calc(100% - 6rem) !important;
+        min-width: calc(100% - 6rem) !important;
+        max-width: calc(100% - 6rem) !important;
+        height: calc(100% - 18rem) !important;
+        min-height: calc(100% - 18rem) !important;
+        max-height: calc(100% - 18rem) !important;
+        padding: 9rem 3rem !important; } }
+    .reveal:not(.overview) .slides section section.start {
+      width: calc(100% - 0px) !important;
+      min-width: calc(100% - 0px) !important;
+      max-width: calc(100% - 0px) !important;
+      height: calc(100% - 0px) !important;
+      min-height: calc(100% - 0px) !important;
+      max-height: calc(100% - 0px) !important;
+      padding: 0 !important; }
+    .reveal:not(.overview) .slides section section.skinny {
+      width: calc(100% - 2rem) !important;
+      min-width: calc(100% - 2rem) !important;
+      max-width: calc(100% - 2rem) !important;
+      height: calc(100% - 2rem) !important;
+      min-height: calc(100% - 2rem) !important;
+      max-height: calc(100% - 2rem) !important;
+      padding: 1rem !important; }
+    .reveal:not(.overview) .slides section section.end {
+      width: calc(100% - 4rem) !important;
+      min-width: calc(100% - 4rem) !important;
+      max-width: calc(100% - 4rem) !important;
+      height: calc(100% - 4rem) !important;
+      min-height: calc(100% - 4rem) !important;
+      max-height: calc(100% - 4rem) !important;
+      padding: 2rem 2rem !important; }
+
+.reveal .slides section,
+.reveal.center .slides section {
+  background: #efefef;
+  background: -moz-linear-gradient(top, #efefef 0%, #ffffff 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #efefef), color-stop(100%, #ffffff));
+  background: -webkit-linear-gradient(top, #efefef 0%, #ffffff 100%);
+  background: -o-linear-gradient(top, #efefef 0%, #ffffff 100%);
+  background: -ms-linear-gradient(top, #efefef 0%, #ffffff 100%);
+  background: linear-gradient(top, #efefef 0%, #ffffff 100%); }
+  .reveal .slides section section,
+  .reveal.center .slides section section {
+    font-size: 2rem; }
+    @media (min-width: 1600px) {
+      .reveal .slides section section,
+      .reveal.center .slides section section {
+        font-size: 3rem; } }
+    .reveal .slides section section img,
+    .reveal .slides section section canvas,
+    .reveal.center .slides section section img,
+    .reveal.center .slides section section canvas {
+      max-width: 100%; }
+    .reveal .slides section section blockquote,
+    .reveal.center .slides section section blockquote {
+      background: #ffffff; }
+      .reveal .slides section section blockquote p,
+      .reveal.center .slides section section blockquote p {
+        margin: 0; }
+    .reveal .slides section section object,
+    .reveal.center .slides section section object {
+      width: 100%;
+      height: 100%; }
+    .reveal .slides section section p,
+    .reveal.center .slides section section p {
+      margin: 0 0 1em 0; }
+    .reveal .slides section section ul,
+    .reveal .slides section section ol,
+    .reveal.center .slides section section ul,
+    .reveal.center .slides section section ol {
+      width: calc(100% - 3em);
+      max-width: 100%;
+      margin: 0 1em 1em 2em;
+      list-style-position: outside; }
+      .reveal .slides section section ul ul,
+      .reveal .slides section section ul ol,
+      .reveal .slides section section ol ul,
+      .reveal .slides section section ol ol,
+      .reveal.center .slides section section ul ul,
+      .reveal.center .slides section section ul ol,
+      .reveal.center .slides section section ol ul,
+      .reveal.center .slides section section ol ol {
+        margin: 0 0 0 1em; }
+    .reveal .slides section section .caption,
+    .reveal .slides section section .text-small,
+    .reveal.center .slides section section .caption,
+    .reveal.center .slides section section .text-small {
+      color: #7f7f7f;
+      font-size: 12px;
+      font-family: TimesNewRoman, "Times New Roman", Times, Baskerville, Georgia, serif;
+      text-transform: uppercase; }
+    .reveal .slides section section .timeline,
+    .reveal.center .slides section section .timeline {
+      margin-left: 0; }
+  .reveal .slides section.skinny p,
+  .reveal.center .slides section.skinny p {
+    margin: 0; }
+  .reveal .slides section.start,
+  .reveal.center .slides section.start {
+    top: 0 !important; }
+    .reveal .slides section.start h2,
+    .reveal.center .slides section.start h2 {
+      color: #404040;
+      background: #efefef;
+      background: -moz-linear-gradient(top, #efefef 0%, #ffffff 100%);
+      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #efefef), color-stop(100%, #ffffff));
+      background: -webkit-linear-gradient(top, #efefef 0%, #ffffff 100%);
+      background: -o-linear-gradient(top, #efefef 0%, #ffffff 100%);
+      background: -ms-linear-gradient(top, #efefef 0%, #ffffff 100%);
+      background: linear-gradient(top, #efefef 0%, #ffffff 100%);
+      margin: 0;
+      height: calc(50% - 6rem) !important;
+      height: calc(50% - 6rem) !important;
+      min-height: calc(50% - 6rem) !important;
+      max-height: calc(50% - 6rem) !important;
+      width: calc(100% - 4rem) !important;
+      min-width: calc(100% - 4rem) !important;
+      max-width: calc(100% - 4rem) !important;
+      padding: 6rem 2rem 0rem 2rem; }
+      @media (min-width: 1600px) {
+        .reveal .slides section.start h2,
+        .reveal.center .slides section.start h2 {
+          height: calc(50% - 15rem) !important;
+          height: calc(50% - 15rem) !important;
+          min-height: calc(50% - 15rem) !important;
+          max-height: calc(50% - 15rem) !important;
+          width: calc(100% - 5rem) !important;
+          min-width: calc(100% - 5rem) !important;
+          max-width: calc(100% - 5rem) !important;
+          padding: 15rem 5rem 0rem 5rem; } }
+    .reveal .slides section.start p:first-of-type,
+    .reveal.center .slides section.start p:first-of-type {
+      color: #ffffff;
+      background: #e54e47;
+      height: calc(50% - 4rem) !important;
+      min-height: calc(50% - 4rem) !important;
+      max-height: calc(50% - 4rem) !important;
+      width: calc(100% - 4rem) !important;
+      min-width: calc(100% - 4rem) !important;
+      max-width: calc(100% - 4rem) !important;
+      margin: 0;
+      padding: 2rem; }
+      .reveal .slides section.start p:first-of-type:before,
+      .reveal.center .slides section.start p:first-of-type:before {
+        content: "";
+        position: absolute;
+        left: 20px;
+        bottom: 20px;
+        display: block;
+        width: 440px;
+        height: 100px;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-image: url("images/UiB-logo_white_left.svg"); }
+  .reveal .slides section.title,
+  .reveal.center .slides section.title {
+    color: #ffffff;
+    background: #e54e47; }
+    .reveal .slides section.title h1,
+    .reveal .slides section.title h2,
+    .reveal .slides section.title h3,
+    .reveal .slides section.title h4,
+    .reveal .slides section.title h5,
+    .reveal .slides section.title h6,
+    .reveal.center .slides section.title h1,
+    .reveal.center .slides section.title h2,
+    .reveal.center .slides section.title h3,
+    .reveal.center .slides section.title h4,
+    .reveal.center .slides section.title h5,
+    .reveal.center .slides section.title h6 {
+      color: #ffffff; }
+  .reveal .slides section.end img,
+  .reveal.center .slides section.end img {
+    position: relative;
+    width: 45%;
+    margin: 0 auto;
+    box-shadow: 0 0;
+    border: 0; }
+  .reveal .slides section.end p,
+  .reveal.center .slides section.end p {
+    color: #7f7f7f;
+    font-size: 24px;
+    font-family: TimesNewRoman, "Times New Roman", Times, Baskerville, Georgia, serif;
+    text-transform: uppercase; }
+    .reveal .slides section.end p:last-of-type:before,
+    .reveal.center .slides section.end p:last-of-type:before {
+      content: "";
+      display: block;
+      width: 50%;
+      height: 10px;
+      margin: 0 auto;
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-image: url("images/UiB-fargestripe.png"); }
+
+.reveal .controls .controls-arrow:before,
+.reveal .controls .controls-arrow:after,
+.reveal.center .controls .controls-arrow:before,
+.reveal.center .controls .controls-arrow:after {
+  background-color: rgba(0, 0, 0, 0.65); }
+
+.reveal .progress,
+.reveal.center .progress {
+  color: rgba(0, 0, 0, 0.65); }
+
+#clockbox {
+  padding: 0.1rem;
+  color: #222222;
+  font-size: 4rem;
+  font-family: Helvetica, sans-serif;
+  background: white;
+  border: 1px solid #9E9E9C;
+  position: absolute;
+  right: 0.25rem;
+  bottom: 0.25rem;
+  z-index: 9999; }
+
+/*********************************************
+ * GLOBAL STYLES
+ *********************************************/
+body {
+  background: #ffffff;
+  background-color: #ffffff; }
+
+.reveal {
+  font-family: "Open Sans", Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 40px;
+  font-weight: normal;
+  color: #404040; }
+
+::selection {
+  color: #fff;
+  background: #FF5E99;
+  text-shadow: none; }
+
+::-moz-selection {
+  color: #fff;
+  background: #FF5E99;
+  text-shadow: none; }
+
+.reveal .slides section,
+.reveal .slides section > section {
+  line-height: 1.3;
+  font-weight: inherit; }
+
+/*********************************************
+ * HEADERS
+ *********************************************/
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 {
+  margin: 0 0 20px 0;
+  color: #e54f46;
+  font-family: "Open Sans", Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-weight: bold;
+  line-height: 1.2;
+  letter-spacing: normal;
+  text-transform: inherit;
+  text-shadow: none;
+  word-wrap: break-word; }
+
+.reveal h1 {
+  font-size: 3.77em; }
+
+.reveal h2 {
+  font-size: 2.11em; }
+
+.reveal h3 {
+  font-size: 1.55em; }
+
+.reveal h4 {
+  font-size: 1em; }
+
+.reveal h1 {
+  text-shadow: none; }
+
+/*********************************************
+ * OTHER
+ *********************************************/
+.reveal p {
+  margin: 20px 0;
+  line-height: 1.3; }
+
+/* Ensure certain elements are never larger than the slide itself */
+.reveal img,
+.reveal video,
+.reveal iframe {
+  max-width: 95%;
+  max-height: 95%; }
+
+.reveal strong,
+.reveal b {
+  font-weight: bold; }
+
+.reveal em {
+  font-style: italic; }
+
+.reveal ol,
+.reveal dl,
+.reveal ul {
+  display: inline-block;
+  text-align: left;
+  margin: 0 0 0 1em; }
+
+.reveal ol {
+  list-style-type: decimal; }
+
+.reveal ul {
+  list-style-type: disc; }
+
+.reveal ul ul {
+  list-style-type: square; }
+
+.reveal ul ul ul {
+  list-style-type: circle; }
+
+.reveal ul ul,
+.reveal ul ol,
+.reveal ol ol,
+.reveal ol ul {
+  display: block;
+  margin-left: 40px; }
+
+.reveal dt {
+  font-weight: bold; }
+
+.reveal dd {
+  margin-left: 40px; }
+
+.reveal blockquote {
+  display: block;
+  position: relative;
+  width: 70%;
+  margin: 20px auto;
+  padding: 5px;
+  font-style: italic;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2); }
+
+.reveal blockquote p:first-child,
+.reveal blockquote p:last-child {
+  display: inline-block; }
+
+.reveal q {
+  font-style: italic; }
+
+.reveal pre {
+  display: block;
+  position: relative;
+  width: 90%;
+  margin: 20px auto;
+  text-align: left;
+  font-size: 0.55em;
+  font-family: monospace;
+  line-height: 1.2em;
+  word-wrap: break-word;
+  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.3); }
+
+.reveal code {
+  font-family: monospace;
+  text-transform: none; }
+
+.reveal pre code {
+  display: block;
+  padding: 5px;
+  overflow: auto;
+  max-height: 400px;
+  word-wrap: normal; }
+
+.reveal table {
+  margin: auto;
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+.reveal table th {
+  font-weight: bold; }
+
+.reveal table th,
+.reveal table td {
+  text-align: left;
+  padding: 0.2em 0.5em 0.2em 0.5em;
+  border-bottom: 1px solid; }
+
+.reveal table th[align="center"],
+.reveal table td[align="center"] {
+  text-align: center; }
+
+.reveal table th[align="right"],
+.reveal table td[align="right"] {
+  text-align: right; }
+
+.reveal table tbody tr:last-child th,
+.reveal table tbody tr:last-child td {
+  border-bottom: none; }
+
+.reveal sup {
+  vertical-align: super;
+  font-size: smaller; }
+
+.reveal sub {
+  vertical-align: sub;
+  font-size: smaller; }
+
+.reveal small {
+  display: inline-block;
+  font-size: 0.6em;
+  line-height: 1.2em;
+  vertical-align: top; }
+
+.reveal small * {
+  vertical-align: top; }
+
+/*********************************************
+ * LINKS
+ *********************************************/
+.reveal a {
+  color: #13DAEC;
+  text-decoration: none;
+  -webkit-transition: color .15s ease;
+  -moz-transition: color .15s ease;
+  transition: color .15s ease; }
+
+.reveal a:hover {
+  color: #71e9f4;
+  text-shadow: none;
+  border: none; }
+
+.reveal .roll span:after {
+  color: #fff;
+  background: #0d99a5; }
+
+/*********************************************
+ * IMAGES
+ *********************************************/
+.reveal section img {
+  margin: 15px 0px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 4px solid #404040;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); }
+
+.reveal section img.plain {
+  border: 0;
+  box-shadow: none; }
+
+.reveal a img {
+  -webkit-transition: all .15s linear;
+  -moz-transition: all .15s linear;
+  transition: all .15s linear; }
+
+.reveal a:hover img {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: #13DAEC;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.55); }
+
+/*********************************************
+ * NAVIGATION CONTROLS
+ *********************************************/
+.reveal .controls {
+  color: #13DAEC; }
+
+/*********************************************
+ * PROGRESS BAR
+ *********************************************/
+.reveal .progress {
+  background: rgba(0, 0, 0, 0.2);
+  color: #13DAEC; }
+
+.reveal .progress span {
+  -webkit-transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);
+  -moz-transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);
+  transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985); }
+
+/*********************************************
+ * PRINT BACKGROUND
+ *********************************************/
+@media print {
+  .backgrounds {
+    background-color: #ffffff; } }
+
+/*# sourceMappingURL=uib.css.map */
