@@ -16,13 +16,13 @@
         {% do assets.addCss('plugin://presentation/css/transition.css', {'group': 'critical'}) %}
       {% endif %}
       {% if config.plugins['presentation'].builtin_css %}
-        {% do assets.addCss('plugin://presentation/node_modules/reveal.js/css/reveal.css') %}
+        {% do assets.addCss('plugin://presentation/node_modules/reveal.js/css/reveal.css', {'group': 'presentation'}) %}
         {% if uri.query('showNotes') == 'separate-page' and uri.query('print-pdf') == true %}
-          {% do assets.addCss('plugin://presentation/node_modules/reveal.js/css/theme/white.css') %}
-          {% do assets.addCss('plugin://presentation/node_modules/reveal.js/css/print/pdf.css') %}
+          {% do assets.addCss('plugin://presentation/node_modules/reveal.js/css/theme/white.css', {'group': 'presentation'}) %}
+          {% do assets.addCss('plugin://presentation/node_modules/reveal.js/css/print/pdf.css', {'group': 'presentation'}) %}
         {% else %}
-          {% do assets.addCss('plugin://presentation/css/uib.css') %}
-          {% do assets.addCss('plugin://timeline/assets/timeline.css') %}
+          {% do assets.addCss('plugin://presentation/css/uib.css', {'group': 'presentation'}) %}
+          {% do assets.addCss('plugin://timeline/assets/timeline.css', {'group': 'presentation'}) %}
         {% endif %}
       {% endif %}
       {% if config.plugins['presentation'].theme_css %}
@@ -30,7 +30,7 @@
       {% endif %}
     {% endblock %}
     {{ assets.css('critical')|raw }}
-    {{ assets.css()|raw }}
+    {{ assets.css('presentation')|raw }}
   </head>
   {% endblock head %}
 
@@ -62,18 +62,14 @@
     {% endblock %}
     {% block scripts %}
       {% if config.plugins['presentation'].builtin_js %}
-        {% do assets.addJs('plugin://presentation/node_modules/reveal.js/lib/js/head.min.js') %}
-        {% do assets.addJs('plugin://presentation/node_modules/reveal.js/js/reveal.js') %}
-        {% do assets.addJs('plugin://presentation/node_modules/axios/dist/axios.min.js') %}
-        {% do assets.addJs('plugin://presentation/node_modules/css-element-queries/src/ResizeSensor.js') %}
-        {% do assets.addJs('plugin://presentation/node_modules/css-element-queries/src/ElementQueries.js') %}
-        {#{% do assets.addJs('plugin://presentation/node_modules/cloner/build/cloner.js') %}#}
-        {#{% do assets.addJs('plugin://presentation/node_modules/apexcharts/dist/apexcharts.min.js') %}#}
-        {#{% do assets.addJs('plugin://presentation/node_modules/moment/min/moment.min.js') %}#}
-        {#{% do assets.addJs('user://data/apexcharts.js') %}#}
+        {% do assets.addJs('plugin://presentation/node_modules/reveal.js/lib/js/head.min.js', {'group': 'presentation'}) %}
+        {% do assets.addJs('plugin://presentation/node_modules/reveal.js/js/reveal.js', {'group': 'presentation'}) %}
+        {% do assets.addJs('plugin://presentation/node_modules/axios/dist/axios.min.js', {'group': 'presentation'}) %}
+        {% do assets.addJs('plugin://presentation/node_modules/css-element-queries/src/ResizeSensor.js', {'group': 'presentation'}) %}
+        {% do assets.addJs('plugin://presentation/node_modules/css-element-queries/src/ElementQueries.js', {'group': 'presentation'}) %}
       {% endif %}
     {% endblock %}
-    {{ assets.js()|raw }}
+    {{ assets.js('presentation')|raw }}
     <script type="text/javascript">
     window.addEventListener("load", function(event) {
       Reveal.initialize({
