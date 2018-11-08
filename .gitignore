@@ -10,7 +10,7 @@ yarn-error.log*
 node_modules/
 !node_modules/reveal.js/css/**/*.css
 !node_modules/reveal.js/**/*.js
-!node_modules/axios/dist/axios.min.js
+!node_modules/axios/dist/**/*.js
 !node_modules/css-element-queries/src/**/*.js
 
 # Sonarlint plugin
