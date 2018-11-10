@@ -2,7 +2,7 @@
 ## 10-11-2018
 
 1. [](#new)
-    * Slide blueprint
+    * Slide-blueprint
     * Translations
     * Added support for ambiguous CSS-properties in FrontMatter
     * Added footer-template
