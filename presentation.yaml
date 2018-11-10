@@ -10,7 +10,7 @@ color_function: "50"
 header_font: "'Helvetica Neue', Helvetica, Arial, sans-serif"
 block_font: "Palatino, 'Palatino Linotype', 'Palatino LT STD', 'Book Antiqua', Georgia, serif"
 change_titles: true
-inject_footer: ""
+footer: "partials/presentation_footer.html.twig"
 shortcodes: true
 transition: true
 styles: 
@@ -20,24 +20,11 @@ styles:
   - background: "#DC7612" 
   - background: "#BD3200" 
 options:
-  navigation: false
-  navigationPosition: 'right'
-  showActiveTooltip: false
-  slidesNavigation: false
-  slidesNavPosition: 'bottom'
-  css3: true
-  autoScrolling: true
-  fitToSection: true
-  scrollBar: false
-  loopTop: false
-  loopBottom: false
-  loopHorizontal: true
-  touchSensitivity: 15
-  keyboardScrolling: true
-  animateAnchor: true
-  recordHistory: true
-  controlArrows: true
-  verticalCentered: true
-  sectionSelector: '.section'
-  slideSelector: '.slide'
-  lazyLoading: true
+  width: "100%"
+  height: "100%"
+  margin: 0
+  minScale: 1
+  maxScale: 1
+  transition: 'fade'
+  controlsTutorial: false
+  history: true

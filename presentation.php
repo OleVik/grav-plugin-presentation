@@ -76,7 +76,11 @@ class PresentationPlugin extends Plugin
     public function onPluginsInitialized(Event $event)
     {
         if ($this->isAdmin()) {
-            return;
+            $this->enable(
+                [
+                    'onGetPageTemplates' => ['onGetPageTemplates', 0]
+                ]
+            );
         }
         $this->grav['config']->set('system.cache.enabled', false);
         $this->enable(
@@ -158,42 +162,12 @@ class PresentationPlugin extends Plugin
             $tree = $utility->buildTree($page->route());
             $slides = $utility->buildContent($tree);
             $page->setRawContent($slides);
-            $menu = $utility->buildMenu($tree);
-            $menu = $utility->flattenArray($menu, 1);
+            // $menu = $utility->buildMenu($tree);
+            // $menu = $utility->flattenArray($menu, 1);
 
             $options = json_encode($config['options'], JSON_PRETTY_PRINT);
-            $init = 'window.addEventListener("load", function(event) {';
-            $init .= 'javascript:document.getElementById("page_transition").style.visibility="hidden";';
-            $init .= 'javascript:document.getElementById("page_transition").style.opacity=0;';
-            $init .= 'javascript:document.getElementById("page_transition").style.display="none";';
-            $init .= '}, false);';
-            $this->grav['twig']->twig_vars['presentation_init'] = $init;
-            if (!empty($config['header_font'])) {
-                $header_font = $config['header_font'];
-                $this->grav['assets']->addInlineCss("
-                    #fullpage h1,
-                    #fullpage h2,
-                    #fullpage h3,
-                    #fullpage h4,
-                    #fullpage h5,
-                    #fullpage h6 {
-                        font-family: $header_font;
-                    }
-                ");
-            }
-            if (!empty($config['block_font'])) {
-                $block_font = $config['block_font'];
-                $this->grav['assets']->addInlineCss("
-                    #fullpage,
-                    #fullpage p,
-                    #fullpage ul,
-                    #fullpage ol,
-                    #fullpage blockquote,
-                    #fullpage figcaption {
-                        font-family: $block_font;
-                    }
-                ");
-            }
+            // $this->grav['debugger']->addMessage($options);
+            $this->grav['twig']->twig_vars['reveal_init'] = $options;
         }
     }
 
@@ -254,8 +228,8 @@ class PresentationPlugin extends Plugin
     /**
      * Search for files in multiple locations
      *
-     * @param string $directory         Filename.
-     * @param string $types          File extension.
+     * @param string $directory    Filename.
+     * @param string $types        File extension.
      * @param array  ...$locations List of paths.
      * 
      * @return string
@@ -278,5 +252,12 @@ class PresentationPlugin extends Plugin
         } else {
             return false;
         }
+    }
+
+    public function onGetPageTemplates($event)
+    {
+        $types = $event->types;
+        $locator = Grav::instance()['locator'];
+        $types->scanBlueprints($locator->findResource('plugin://' . $this->name . '/blueprints'));
     }
 }

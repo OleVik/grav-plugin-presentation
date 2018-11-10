@@ -54,10 +54,14 @@
     </div>
     {% endblock content %}
     {% block plugin_init %}
-      {% if config.plugins['presentation'].builtin_js %}
-        <script type="text/javascript">
-          {{ presentation_init }}
-        </script>
+      {% if config.plugins['presentation'].builtin_js and config.plugins['presentation'].transition %}
+      <script type="text/javascript">
+      window.addEventListener("load", function(event) {
+        javascript:document.getElementById("page_transition").style.visibility="hidden";
+        javascript:document.getElementById("page_transition").style.opacity=0;
+        javascript:document.getElementById("page_transition").style.display="none";
+      }, false);
+      </script>
       {% endif %}
     {% endblock %}
     {% block scripts %}
@@ -68,20 +72,17 @@
         {% do assets.addJs('plugin://presentation/node_modules/css-element-queries/src/ResizeSensor.js', {'group': 'presentation'}) %}
         {% do assets.addJs('plugin://presentation/node_modules/css-element-queries/src/ElementQueries.js', {'group': 'presentation'}) %}
       {% endif %}
+      {% if config.plugins['nomnoml-uml-diagrams'].enabled %}
+        {% do assets.addJs('plugin://nomnoml-uml-diagrams/js/lodash.min.js', {'group': 'presentation'}) %}
+        {% do assets.addJs('plugin://nomnoml-uml-diagrams/js/dagre.min.js', {'group': 'presentation'}) %}
+        {% do assets.addJs('plugin://nomnoml-uml-diagrams/js/nomnoml.js', {'group': 'presentation'}) %}
+      {% endif %}
     {% endblock %}
     {{ assets.js('presentation')|raw }}
     <script type="text/javascript">
+    var reveal_init = {{ reveal_init }};
     window.addEventListener("load", function(event) {
-      Reveal.initialize({
-        width: "95%",
-        height: "95%",
-        margin: 0,
-        minScale: 1,
-        maxScale: 1,
-        transition: 'fade',
-        controlsTutorial: false,
-        history: true
-      });
+      Reveal.initialize(reveal_init);
     }, false);
     </script>
     {% if config.plugins['presentation'].sync == 'browser' %}
@@ -141,7 +142,11 @@
     }, false);
     </script>
     {% elseif config.plugins['presentation'].sync == 'api' %}
-        {% do assets.addJs('plugin://presentation/js/poll.js') %}
+        {% do assets.addJs('plugin://presentation/js/poll.js', {'group': 'bottom'}) %}
+    {% endif %}
+    {% if config.system.debugger.enabled %}
+      {{ assets.css() }}
+      {{ assets.js() }}
     {% endif %}
     {{ assets.js('bottom') }}
   </body>

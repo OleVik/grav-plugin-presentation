@@ -1,5 +1,5 @@
 name: Presentation
-version: 0.0.1
+version: 0.0.2
 testing: true
 description: Fullscreen navigational slideshows through Reveal.js
 icon: arrows-alt
@@ -92,10 +92,10 @@ form:
         0: PLUGIN_ADMIN.DISABLED
       validate:
         type: bool
-    inject_footer:
+    footer:
       type: text
       label: Inject Twig
-      description: "Render a theme's Twig-template and append it to each section, eg. 'partials/inject.html.twig'."
+      description: "Render a theme's Twig-template and append it to each section, eg. 'partials/presentation_footer.html.twig'."
     shortcodes:
       type: toggle
       label: Shortcodes

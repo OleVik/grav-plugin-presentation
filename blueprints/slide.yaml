@@ -1,0 +1,57 @@
+title: Presentation Plugin Options
+extends@:
+  type: default
+  context: blueprints://pages
+
+form:
+  fields:
+    tabs:
+      type: tabs
+      active: 1
+      fields:
+        content:
+          type: tab
+          fields:
+            style:
+              type: section
+              title: PLUGIN_PRESENTATION.ADMIN.STYLE.TITLE
+              underline: true
+              fields:
+                header.style.color:
+                  type: colorpicker
+                  label: PLUGIN_PRESENTATION.ADMIN.STYLE.COLOR.LABEL
+                  help: PLUGIN_PRESENTATION.ADMIN.STYLE.COLOR.HELP
+                header.style.background-image:
+                  type: filepicker
+                  folder: '@self'
+                  preview_images: true
+                  label: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-IMAGE.LABEL
+                  help: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-IMAGE.HELP
+                  accept:
+                    - .png
+                    - .jpg
+                    - .gif
+                    - 'image/*'
+                header.style.background-size:
+                  type: select
+                  label: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-SIZE.LABEL
+                  help: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-SIZE.HELP
+                  default: auto
+                  options:
+                    auto: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-SIZE.OPTIONS.AUTO
+                    cover: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-SIZE.OPTIONS.COVER
+                    contain: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-SIZE.OPTIONS.CONTAIN
+                header.style.background-repeat:
+                  type: select
+                  label: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-REPEAT.LABEL
+                  help: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-REPEAT.HELP
+                  default: no-repeat
+                  options:
+                    no-repeat: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-REPEAT.OPTIONS.NO-REPEAT
+                    repeat: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-REPEAT.OPTIONS.REPEAT
+                    repeat-x: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-REPEAT.OPTIONS.REPEAT-X
+                    repeat-y: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-REPEAT.OPTIONS.REPEAT-Y
+                    space: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-REPEAT.OPTIONS.SPACE
+                    round: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-REPEAT.OPTIONS.ROUND
+        options:
+          type: tab

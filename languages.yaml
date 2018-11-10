@@ -1,0 +1,28 @@
+en:
+  PLUGIN_PRESENTATION:
+    ADMIN:
+      STYLE:
+        TITLE: Style
+        COLOR:
+          LABEL: Color
+          HELP: Font Color
+        BACKGROUND-IMAGE:
+          LABEL: Background Image
+          HELP: Background Image
+        BACKGROUND-SIZE:
+          LABEL: Background Size
+          HELP: Background Size
+          OPTIONS:
+            AUTO: Auto
+            COVER: Cover
+            CONTAIN: Contain
+        BACKGROUND-REPEAT:
+          LABEL: Background Repeat
+          HELP: Background Repeat
+          OPTIONS:
+            NO-REPEAT: No repeat
+            REPEAT: Repeat both
+            REPEAT-X: Repeat horizontally
+            REPEAT-Y: Repeat vertically
+            SPACE: Repeat without clipping
+            ROUND: Repeat and stretch

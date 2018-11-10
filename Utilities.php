@@ -45,8 +45,8 @@ class Utilities
         $mode = '@page.self';
 
         $config = $this->config;
-        if (isset($page->header()->fullpage)) {
-            $config = array_merge($config, $page->header()->fullpage);
+        if (isset($page->header()->Reveal)) {
+            $config = array_merge($config, $page->header()->Reveal);
         }
         if ($depth > 1) {
             $mode = '@page.children';
@@ -71,14 +71,14 @@ class Utilities
             if (isset($page->header()->type)) {
                 $paths[$route]['type'] = $page->header()->type;
             }
-            if (isset($config['inject_footer'])) {
-                $paths[$route]['inject_footer'] = $config['inject_footer'];
+            if (isset($config['footer'])) {
+                $paths[$route]['footer'] = $config['footer'];
             }
-            if (isset($page->header()->inject_footer)) {
-                $paths[$route]['inject_footer'] = $page->header()->inject_footer;
+            if (isset($page->header()->footer)) {
+                $paths[$route]['footer'] = $page->header()->footer;
             }
-            if (!empty($paths[$route]['inject_footer'])) {
-                $paths[$route]['inject_footer'] = Grav::instance()['twig']->processTemplate($paths[$route]['inject_footer'], ['page' => $page]);
+            if (!empty($paths[$route]['footer'])) {
+                $paths[$route]['footer'] = Grav::instance()['twig']->processTemplate($paths[$route]['footer'], ['page' => $page]);
             }
             if (isset($page->header()->horizontal)) {
                 $paths[$route]['horizontal'] = $page->header()->horizontal;
@@ -105,7 +105,7 @@ class Utilities
     }
 
     /**
-     * Create HTML to use with fullPage.js
+     * Create HTML to use with Reveal.js
      *
      * @param array $pages Page-structure with children
      *
@@ -126,8 +126,8 @@ class Utilities
             $styleIndex = 0;
             $styles = array();
             $config = $this->config;
-            if (isset($page['header']->fullpage)) {
-                $config = array_merge($config, $page['header']->fullpage);
+            if (isset($page['header']->Reveal)) {
+                $config = array_merge($config, $page['header']->Reveal);
             }
             $breaks = explode('<hr />', $content);
 
@@ -155,6 +155,7 @@ class Utilities
                         }
                         if (isset($shortcodes['styles']['background'])) {
                             $background = $shortcodes['styles']['background'];
+                            Grav::instance()['debugger']->addMessage($background);
                         }
                         if (isset($shortcodes['styles']['hide'])) {
                             $hide = true;
@@ -173,8 +174,24 @@ class Utilities
                         }
                         echo '</section>';
                     } elseif ($hide !== true) {
-                        echo '<section class="' . $class . '">';
+                        echo '<section class="' . $class . '"';
+                        if (isset($page['header']->style)) {
+                            Grav::instance()['debugger']->addMessage($page['header']->style);
+                            echo ' style="';
+                            foreach ($page['header']->style as $property => $value) {
+                                if ($property == 'background-image') {
+                                    echo $property . ': url(' . $route . '/' . $value . ');';
+                                } else {
+                                    echo $property . ': ' . $value . ';';
+                                }
+                            }
+                            echo '"';
+                        }
+                        echo '>';
                         echo str_replace('<p></p>', '', $break);
+                        if (isset($page['footer'])) {
+                            echo $page['footer'];
+                        }
                         echo '</section>';
                     }
                 }
@@ -182,6 +199,9 @@ class Utilities
             } else {
                 echo '<section data-separator-notes="^Notes:">>';
                 echo $content;
+                if (isset($page['footer'])) {
+                    echo $page['footer'];
+                }
                 echo '</section>';
             }
             $return .= ob_get_contents();
@@ -235,6 +255,21 @@ class Utilities
         }
         return $items;
     }
+
+    /* public function applyStylesNEW(String $content) {
+        if (isset($page['header']->style)) {
+            Grav::instance()['debugger']->addMessage($page['header']->style);
+            echo ' style="';
+            foreach ($page['header']->style as $property => $value) {
+                if ($property == 'background-image') {
+                    echo $property . ': url(' . $route . '/' . $value . ');';
+                } else {
+                    echo $property . ': ' . $value . ';';
+                }
+            }
+            echo '"';
+        }
+    } */
 
     /**
      * Format styles for inlining
