@@ -126,6 +126,8 @@ class Utilities
             $styleIndex = 0;
             $styles = array();
             $config = $this->config;
+            $fontScale = $config['fontscale'];
+            $fontRatio = $config['fontratio'];
             if (isset($page['header']->Reveal)) {
                 $config = array_merge($config, $page['header']->Reveal);
             }
@@ -134,7 +136,7 @@ class Utilities
             // Grav::instance()['debugger']->addMessage($breaks);
 
             if (count($breaks) > 0) {
-                echo '<section data-separator-notes="^Notes:"';
+                echo '<section';
                 if (isset($page['header']->type)) {
                     echo ' class="' . $page['header']->type . '"';
                 }
@@ -150,6 +152,7 @@ class Utilities
                         if (isset($shortcodes['styles']['class'])) {
                             $class = $shortcodes['styles']['class'];
                         }
+                        
                         if (isset($shortcodes['styles']['color'])) {
                             $color = $shortcodes['styles']['color'];
                         }
@@ -161,9 +164,17 @@ class Utilities
                             $hide = true;
                         }
                     }
+                    if (isset($page['header']->fontscale) && $page['header']->fontscale == true) {
+                        $class .= ' fontscale';
+                    }
+                    if (isset($page['header']->class) && !empty($page['header']->class)) {
+                        foreach ($page['header']->class as $item) {
+                            $class .= ' ' . $item;
+                        }
+                    }
                     if (strpos($break, '<p>+++</p>') !== false) {
                         $fragments = explode('<p>+++</p>', $break);
-                        echo '<section data-separator-notes="^Notes:" class="' . $class . '">';
+                        echo '<section class="' . $class . '">';
                         foreach ($fragments as $fragment) {
                             echo '<span class="fragment fade-in">';
                             echo '<span class="fragment fade-out">';
@@ -176,16 +187,24 @@ class Utilities
                     } elseif ($hide !== true) {
                         echo '<section class="' . $class . '"';
                         if (isset($page['header']->style)) {
-                            Grav::instance()['debugger']->addMessage($page['header']->style);
                             echo ' style="';
-                            foreach ($page['header']->style as $property => $value) {
-                                if ($property == 'background-image') {
-                                    echo $property . ': url(' . $route . '/' . $value . ');';
-                                } else {
-                                    echo $property . ': ' . $value . ';';
-                                }
-                            }
+                            echo inlineStyles($page['header']->style, $route);
                             echo '"';
+                        }
+                        if (isset($page['header']->textsize['scale'])) {
+                            echo ' data-textsize-scale="' .$page['header']->textsize['scale'] . '"';
+                            if (isset($page['header']->textsize['header']) && is_int($page['header']->textsize['header'])) {
+                                echo ' data-textsize-header="' .$page['header']->textsize['header'] . '"';
+                            }
+                            if (isset($page['header']->textsize['text']) && is_int($page['header']->textsize['text'])) {
+                                echo ' data-textsize-text="' .$page['header']->textsize['text'] . '"';
+                            }
+                        }
+                        if ($fontScale == true || isset($page['header']->fontscale)) {
+                            if (isset($page['header']->fontratio)) {
+                                $fontRatio = $page['header']->fontratio;
+                            }
+                            echo ' data-fontratio="' . $fontRatio . '"';
                         }
                         echo '>';
                         echo str_replace('<p></p>', '', $break);
@@ -197,7 +216,7 @@ class Utilities
                 }
                 echo '</section>';
             } else {
-                echo '<section data-separator-notes="^Notes:">>';
+                echo '<section>';
                 echo $content;
                 if (isset($page['footer'])) {
                     echo $page['footer'];
@@ -256,20 +275,18 @@ class Utilities
         return $items;
     }
 
-    /* public function applyStylesNEW(String $content) {
-        if (isset($page['header']->style)) {
-            Grav::instance()['debugger']->addMessage($page['header']->style);
-            echo ' style="';
-            foreach ($page['header']->style as $property => $value) {
-                if ($property == 'background-image') {
-                    echo $property . ': url(' . $route . '/' . $value . ');';
-                } else {
-                    echo $property . ': ' . $value . ';';
-                }
+    public function inlineStyles(Array $styles, String $route)
+    {
+        $return = '';
+        foreach ($styles as $property => $value) {
+            if ($property == 'background-image') {
+                $return .= $property . ': url(' . $route . '/' . $value . ');';
+            } else {
+                $return .= $property . ': ' . $value . ';';
             }
-            echo '"';
         }
-    } */
+        return $return;
+    }
 
     /**
      * Format styles for inlining

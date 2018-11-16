@@ -12,6 +12,41 @@ form:
         content:
           type: tab
           fields:
+            header.class:
+              type: selectize
+              label: PLUGIN_PRESENTATION.ADMIN.CLASS.LABEL
+              help: PLUGIN_PRESENTATION.ADMIN.CLASS.HELP
+              validate:
+                type: commalist
+            textsize:
+              type: section
+              title: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.TITLE
+              underline: true
+              fields:
+                header.textsize.scale:
+                  type: select
+                  label: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.SCALE.LABEL
+                  help: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.SCALE.HELP
+                  description: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.SCALE.DESCRIPTION
+                  data-options@: '\Grav\Plugin\PresentationPlugin::getModularScaleBlueprintOptions'
+                header.textsize.header:
+                  type: range
+                  label: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.HEADER.LABEL
+                  help: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.HEADER.HELP
+                  description: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.HEADER.DESCRIPTION
+                  default: 3
+                  validate:
+                    min: -6
+                    max: 16
+                header.textsize.text:
+                  type: range
+                  label: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.TEXT.LABEL
+                  help: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.TEXT.HELP
+                  description: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.TEXT.DESCRIPTION
+                  default: 0
+                  validate:
+                    min: -6
+                    max: 16
             style:
               type: section
               title: PLUGIN_PRESENTATION.ADMIN.STYLE.TITLE
@@ -21,6 +56,10 @@ form:
                   type: colorpicker
                   label: PLUGIN_PRESENTATION.ADMIN.STYLE.COLOR.LABEL
                   help: PLUGIN_PRESENTATION.ADMIN.STYLE.COLOR.HELP
+                header.style.background-color:
+                  type: colorpicker
+                  label: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-COLOR.LABEL
+                  help: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-COLOR.HELP
                 header.style.background-image:
                   type: filepicker
                   folder: '@self'
@@ -36,22 +75,45 @@ form:
                   type: select
                   label: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-SIZE.LABEL
                   help: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-SIZE.HELP
-                  default: auto
                   options:
+                    '': PLUGIN_PRESENTATION.ADMIN.COMMON.NONE
                     auto: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-SIZE.OPTIONS.AUTO
                     cover: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-SIZE.OPTIONS.COVER
                     contain: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-SIZE.OPTIONS.CONTAIN
+                    initial: PLUGIN_PRESENTATION.ADMIN.COMMON.INITIAL
+                    inherit: PLUGIN_PRESENTATION.ADMIN.COMMON.INHERIT
                 header.style.background-repeat:
                   type: select
                   label: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-REPEAT.LABEL
                   help: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-REPEAT.HELP
-                  default: no-repeat
                   options:
+                    '': PLUGIN_PRESENTATION.ADMIN.COMMON.NONE
                     no-repeat: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-REPEAT.OPTIONS.NO-REPEAT
                     repeat: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-REPEAT.OPTIONS.REPEAT
                     repeat-x: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-REPEAT.OPTIONS.REPEAT-X
                     repeat-y: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-REPEAT.OPTIONS.REPEAT-Y
                     space: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-REPEAT.OPTIONS.SPACE
                     round: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-REPEAT.OPTIONS.ROUND
+                    initial: PLUGIN_PRESENTATION.ADMIN.COMMON.INITIAL
+                    inherit: PLUGIN_PRESENTATION.ADMIN.COMMON.INHERIT
+            header.autoscale:
+              type: toggle
+              label: PLUGIN_PRESENTATION.ADMIN.AUTOSCALE.LABEL
+              help: PLUGIN_PRESENTATION.ADMIN.AUTOSCALE.HELP
+              default: 0
+              options:
+                1: PLUGIN_ADMIN.YES
+                0: PLUGIN_ADMIN.NO
+              validate:
+                type: bool
+            header.fontratio:
+              type: range
+              label: PLUGIN_PRESENTATION.ADMIN.FONTRATIO.LABEL
+              help: PLUGIN_PRESENTATION.ADMIN.FONTRATIO.HELP
+              description: PLUGIN_PRESENTATION.ADMIN.FONTRATIO.DESCRIPTION
+              default: 30
+              validate:
+                min: 1
+                max: 100
         options:
           type: tab

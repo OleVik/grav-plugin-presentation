@@ -260,4 +260,36 @@ class PresentationPlugin extends Plugin
         $locator = Grav::instance()['locator'];
         $types->scanBlueprints($locator->findResource('plugin://' . $this->name . '/blueprints'));
     }
+
+    public static function getModularScale()
+    {
+        return array(
+            ['name' => 'minor second', 'ratio' => '15:16', 'numerical' => 1.067],
+            ['name' => 'major second', 'ratio' => '8:9', 'numerical' => 1.125],
+            ['name' => 'minor third', 'ratio' => '5:6', 'numerical' => 1.2],
+            ['name' => 'major third', 'ratio' => '4:5', 'numerical' => 1.25],
+            ['name' => 'perfect fourth', 'ratio' => '3:4', 'numerical' => 1.333],
+            ['name' => 'aug. fourth / dim. fifth', 'ratio' => '1:√2', 'numerical' => 1.414],
+            ['name' => 'perfect fifth', 'ratio' => '2:3', 'numerical' => 1.5],
+            ['name' => 'minor sixth', 'ratio' => '5:8', 'numerical' => 1.6],
+            ['name' => 'golden section', 'ratio' => '1:1.618', 'numerical' => 1.618],
+            ['name' => 'major sixth', 'ratio' => '3:5', 'numerical' => 1.667],
+            ['name' => 'minor seventh', 'ratio' => '9:16', 'numerical' => 1.778],
+            ['name' => 'major seventh', 'ratio' => '8:15', 'numerical' => 1.875],
+            ['name' => 'octave', 'ratio' => '1:2', 'numerical' => 2],
+            ['name' => 'major tenth', 'ratio' => '2:5', 'numerical' => 2.5],
+            ['name' => 'major eleventh', 'ratio' => '3:8', 'numerical' => 2.667],
+            ['name' => 'major twelfth', 'ratio' => '1:3', 'numerical' => 3],
+            ['name' => 'double octave', 'ratio' => '1:4', 'numerical' => 4]
+        );
+    }
+
+    public static function getModularScaleBlueprintOptions()
+    {
+        $options = ['' => 'None'];
+        foreach (self::getModularScale() as $scale) {
+            $options[(string) $scale['numerical']] = ucwords($scale['name']) . ' (' . $scale['ratio'] . ')';
+        }
+        return $options;
+    }
 }

@@ -1,11 +1,42 @@
 en:
   PLUGIN_PRESENTATION:
     ADMIN:
+      COMMON:
+        INITIAL: Initial
+        INHERIT: Inherit
+        NONE: None
+      CLASS:
+        LABEL: Class(es)
+        HELP: Classes to add to the Slide
+      AUTOSCALE:
+        LABEL: Autoscale
+        HELP: Scale text to fit slide
+      FONTRATIO:
+        LABEL: Font Ratio
+        HELP: Scale text by ratio
+        DESCRIPTION: Lower numbers increase text size, and vice versa.
+      TEXTSIZE:
+        TITLE: Font Sizing
+        SCALE:
+          LABEL: Font scale
+          HELP: Font scale
+          DESCRIPTION: Use a modular, harmonious, scale to proportionally determine the responsive size of text from a device's base size and the size of the slide.
+        HEADER:
+          LABEL: Header font size
+          HELP: Header font size
+          DESCRIPTION: Sets the text size for header elements, relative to the base and the scale.
+        TEXT:
+          LABEL: Main font size
+          HELP: Main font size
+          DESCRIPTION: Sets the text size for general elements, relative to the base and the scale.
       STYLE:
-        TITLE: Style
+        TITLE: Design
         COLOR:
-          LABEL: Color
-          HELP: Font Color
+          LABEL: Text Color
+          HELP: Text Color
+        BACKGROUND-COLOR:
+          LABEL: Background Color
+          HELP: Background Color
         BACKGROUND-IMAGE:
           LABEL: Background Image
           HELP: Background Image

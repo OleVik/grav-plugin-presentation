@@ -72,6 +72,9 @@
         {% do assets.addJs('plugin://presentation/node_modules/css-element-queries/src/ResizeSensor.js', {'group': 'presentation'}) %}
         {% do assets.addJs('plugin://presentation/node_modules/css-element-queries/src/ElementQueries.js', {'group': 'presentation'}) %}
       {% endif %}
+      {% if config.plugins['presentation'].fontscale %}
+        {% do assets.addJs('plugin://presentation/js/FlowType.js', {'group': 'presentation'}) %}
+      {% endif %}
       {% if config.plugins['nomnoml-uml-diagrams'].enabled %}
         {% do assets.addJs('plugin://nomnoml-uml-diagrams/js/lodash.min.js', {'group': 'presentation'}) %}
         {% do assets.addJs('plugin://nomnoml-uml-diagrams/js/dagre.min.js', {'group': 'presentation'}) %}
@@ -139,6 +142,14 @@
           Reveal.slide(event.data.indexh, event.data.indexv, event.data.indexf);
         }
       }
+
+      Reveal.addEventListener('ready', function(event) {
+        var els = document.getElementsByClassName("fontscale");
+        Array.prototype.forEach.call(els, function(el) {
+            window.flowtype( el, {fontRatio: el.dataset.fontratio} );
+        });
+      });
+
     }, false);
     </script>
     {% elseif config.plugins['presentation'].sync == 'api' %}
