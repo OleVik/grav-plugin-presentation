@@ -1,5 +1,5 @@
 name: Presentation
-version: 0.0.2
+version: 0.0.3
 testing: true
 description: Fullscreen navigational slideshows through Reveal.js
 icon: arrows-alt

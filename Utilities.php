@@ -12,6 +12,11 @@ use Michelf\SmartyPants;
  */
 class Utilities
 {
+    const REGEX_IMG = "/(<img(?:(\s*(class)\s*=\s*\x22([^\x22]+)\x22*)+|[^>]+?)*>)/";
+    const REGEX_IMG_P = "/<p>\s*?(<a .*<img.*<\/a>|<img.*)?\s*<\/p>/";
+    const REGEX_IMG_TITLE = "/<img[^>]*?title[ ]*=[ ]*[\"](.*?)[\"][^>]*?>/";
+    const REGEX_IMG_WRAPPING_LINK = '/\[(?\'image\'\!.*)\]\((?\'url\'https?:\/\/.*)\)/';
+
     /**
      * Plugin configuration
      *
@@ -84,9 +89,9 @@ class Utilities
                 $paths[$route]['horizontal'] = $page->header()->horizontal;
             }
             if (isset($page->header()->styles)) {
-                $paths[$route]['styles'] = $page->header()->styles;
-            } elseif (isset($config['styles'])) {
-                $paths[$route]['styles'] = $config['styles'];
+                $paths[$route]['style'] = $page->header()->styles;
+            } elseif (isset($config['style'])) {
+                $paths[$route]['style'] = $config['style'];
             }
             $paths[$route]['content'] = $page->content();
 
@@ -122,7 +127,7 @@ class Utilities
             $content = $page['content'];
             $content = $parsedown->text($content);
             $content = str_replace('<p></p>', '', $content);
-            $index = 0;
+            
             $styleIndex = 0;
             $styles = array();
             $config = $this->config;
@@ -132,36 +137,33 @@ class Utilities
                 $config = array_merge($config, $page['header']->Reveal);
             }
             $breaks = explode('<hr />', $content);
-
-            // Grav::instance()['debugger']->addMessage($breaks);
-
             if (count($breaks) > 0) {
-                echo '<section';
-                if (isset($page['header']->type)) {
-                    echo ' class="' . $page['header']->type . '"';
-                }
-                echo '>';
+                echo '<section id="' . $slug . '" data-title="' . $title . '">';
+                $index = 0;
                 foreach ($breaks as $break) {
-                    $class = $color = $background = '';
+                    $id = $slug . '-' . $index;
+                    $class = '';
                     $hide = false;
+                    $styles = array();
+                    if ($this->config['unwrap_images']) {
+                        $break = self::unwrapImage($break);
+                    }
+                    if (isset($page['header']->style)) {
+                        $styles = array_merge($styles, $page['header']->style);
+                    }
                     if ($config['shortcodes']) {
                         $break = self::pushNotes($break);
                         $shortcodes = $this->interpretShortcodes($break);
                         $break = $shortcodes['content'];
                         $break = SmartyPants::defaultTransform($break);
-                        if (isset($shortcodes['styles']['class'])) {
-                            $class = $shortcodes['styles']['class'];
+                        if (isset($shortcodes['class'])) {
+                            $class = $shortcodes['style']['class'];
                         }
-                        
-                        if (isset($shortcodes['styles']['color'])) {
-                            $color = $shortcodes['styles']['color'];
-                        }
-                        if (isset($shortcodes['styles']['background'])) {
-                            $background = $shortcodes['styles']['background'];
-                            Grav::instance()['debugger']->addMessage($background);
-                        }
-                        if (isset($shortcodes['styles']['hide'])) {
+                        if (isset($shortcodes['hide'])) {
                             $hide = true;
+                        }
+                        if (isset($shortcodes['props']['styles'])) {
+                            $styles = array_merge($styles, $shortcodes['props']['styles']);
                         }
                     }
                     if (isset($page['header']->fontscale) && $page['header']->fontscale == true) {
@@ -174,7 +176,7 @@ class Utilities
                     }
                     if (strpos($break, '<p>+++</p>') !== false) {
                         $fragments = explode('<p>+++</p>', $break);
-                        echo '<section class="' . $class . '">';
+                        echo '<section id="' . $id . ' class="' . $class . '" data-title="' . $title . '">';
                         foreach ($fragments as $fragment) {
                             echo '<span class="fragment fade-in">';
                             echo '<span class="fragment fade-out">';
@@ -185,10 +187,11 @@ class Utilities
                         }
                         echo '</section>';
                     } elseif ($hide !== true) {
-                        echo '<section class="' . $class . '"';
-                        if (isset($page['header']->style)) {
+                        echo '<section id="' . $id . '" class="' . $class . '" data-title="' . $title . '"';
+                        // Grav::instance()['debugger']->addMessage($styles);
+                        if (!empty($styles)) {
                             echo ' style="';
-                            echo inlineStyles($page['header']->style, $route);
+                            echo self::inlineStyles($styles, $route);
                             echo '"';
                         }
                         if (isset($page['header']->textsize['scale'])) {
@@ -213,6 +216,7 @@ class Utilities
                         }
                         echo '</section>';
                     }
+                    $index++;
                 }
                 echo '</section>';
             } else {
@@ -234,21 +238,28 @@ class Utilities
 
     public function interpretShortcodes($content)
     {
-        $styles = array();
+        $return = array();
         $re = '~((?:\[\s*(?<name>[a-zA-Z0-9-_]+)\s*(?:\=\s*(?<bbCode>\"(?:[^\"\\\\]*(?:\\\\.[^\"\\\\]*)*)\"|((?:(?!=\s*|\]|\/\])[^\s])+)))?\s*(?<parameters>(?:\s*(?:\w+(?:\s*\=\s*\"(?:[^\"\\\\]*(?:\\\\.[^\"\\\\]*)*)\"|\s*\=\s*((?:(?!=\s*|\]|\/\])[^\s])+)|(?=\s|\]|\/\s*\]|$))))*)\s*(?:\](?<content>.*?)\[\s*(?<markerContent>\/)\s*(\k<name>)\s*\]|\]|(?<marker>\/)\s*\])))~u';
         preg_match_all($re, $content, $matches, PREG_SET_ORDER, 0);
         if (!empty($matches)) {
             foreach ($matches as $match) {
-                $styles[$match['name']] = $match['bbCode'];
+                $name = $match['name'];
+                $value = $match['bbCode'];
                 $content = str_replace($match[0], '', $content);
+                if ($name == 'class') {
+                    $return['class'] = $value;
+                } elseif ($name == 'hide') {
+                    $return['hide'] = true;
+                } else {
+                    $return['styles'][$name] = $value;
+                }
             }
         }
-        return ['content' => $content, 'styles' => $styles];
+        return ['content' => $content, 'props' => $return];
     }
 
     public function pushNotes($content)
     {
-        // $re = '/\[notes\](.*?)\[\/notes\]/is';
         $content = str_replace('[notes]', '<aside class="notes">', $content);
         $content = str_replace('[/notes]', '</aside>', $content);
         return $content;
@@ -275,7 +286,7 @@ class Utilities
         return $items;
     }
 
-    public function inlineStyles(Array $styles, String $route)
+    public static function inlineStyles(Array $styles, String $route)
     {
         $return = '';
         foreach ($styles as $property => $value) {
@@ -295,6 +306,8 @@ class Utilities
      * @param string $mode   'background' or 'font'
      *
      * @return string CSS-styles
+     * 
+     * @deprecated 0.0.3 Needs backporting
      */
     public function applyStyles($styles, $mode = 'background')
     {
@@ -349,6 +362,69 @@ class Utilities
             $return .= $key . ': ' . $value . ';';
         }
         return $return;*/
+    }
+
+
+    public static function unwrapImage($content, $figure = false) {
+        $unwrap = self::REGEX_IMG_P;
+        $content = preg_replace($unwrap, "$1", $content);
+        if ($figure) {
+            $wrap = self::REGEX_IMG;
+            $content = preg_replace($wrap, '<figure role="group" $2>$1</figure>', $content);
+            $title = self::REGEX_IMG_TITLE;
+            $content = preg_replace($title, "$0<figcaption>$1</figcaption>", $content);
+        }
+        return $content;
+    }
+
+    /**
+     * Search for a file in multiple locations
+     *
+     * @param string $file         Filename.
+     * @param string $ext          File extension.
+     * @param array  ...$locations List of paths.
+     * 
+     * @return string
+     */
+    public static function fileFinder(String $file, String $ext, Array ...$locations)
+    {
+        $return = false;
+        foreach ($locations as $location) {
+            if (file_exists($location . '/' . $file . $ext)) {
+                $return = $location . '/' . $file . $ext;
+                break;
+            }
+        }
+        return $return;
+    }
+
+    /**
+     * Search for files in multiple locations
+     *
+     * @param string $directory    Filename.
+     * @param string $types        File extension.
+     * @param array  ...$locations List of paths.
+     * 
+     * @return string
+     */
+    public static function filesFinder(String $directory, Array $types)
+    {
+        $iterator = new \RecursiveDirectoryIterator(
+            $directory,
+            \RecursiveDirectoryIterator::SKIP_DOTS
+        );
+        $iterator = new \RecursiveIteratorIterator($iterator);
+        $files = [];
+        foreach ($iterator as $file) {
+            if (in_array(pathinfo($file, PATHINFO_EXTENSION), $types)) {
+                $files[] = $file;
+            }
+        }
+        if (count($files) > 0) {
+            return $files;
+        } else {
+            return false;
+        }
     }
 
     /**

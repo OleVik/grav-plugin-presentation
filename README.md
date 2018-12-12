@@ -1,6 +1,6 @@
 # Presentation Plugin
 
-The **Presentation** Plugin is for [Grav CMS](http://github.com/getgrav/grav). The [presentation](https://github.com/OleVik/grav-plugin-presentation)-plugin provides a simple way of creating fullscreen slideshows that can be navigated vertically and horizontally, using the [Reveal.js](https://github.com/hakimel/reveal.js/)-library.
+The **Presentation** Plugin is an extension for [Grav CMS](http://github.com/getgrav/grav), and provides a simple way of creating fullscreen slideshows that can be navigated vertically and horizontally, using the [Reveal.js](https://github.com/hakimel/reveal.js/)-library.
 
 At its core the plugin facilitates efficient handling of content for use with the library. You can utilize Reveal.js however you want through custom initialization, and still leverage the plugin's content-handling.
 
@@ -39,30 +39,32 @@ enabled: true
 order:
   by: folder
   dir: asc
+theme_css: true
 builtin_css: true
 builtin_js: true
-styles:
-  - background: "#93c0d3"
-  - background: "#6f977d"
-  - background: "#598495"
-  - background: "#5e6168"
-  - background: "#213533"
+fontscale: true
+fontratio: 30
+sync: 'browser'
 color_function: "50"
+header_font: "'Helvetica Neue', Helvetica, Arial, sans-serif"
+block_font: "Palatino, 'Palatino Linotype', 'Palatino LT STD', 'Book Antiqua', Georgia, serif"
 change_titles: true
+footer: "partials/presentation_footer.html.twig"
+shortcodes: true
 options:
   ...
 ```
 
-All options available to the Reveal.js-library can be configured through `options`, see its [documentation for available options](https://github.com/alvarotrigo/Reveal.js#options). For example:
+All configuration-options available to the Reveal.js-library can be configured through `options`, see its [documentation for available options](https://github.com/hakimel/reveal.js#configuration). For example:
 
 ```yaml
 options:
-  navigation: false
-  navigationPosition: 'right'
-  navigationTooltips: []
+  controls: true
+  controlsTutorial: true
+  controlsLayout: 'bottom-right'
 ```
 
-In addition to options for the Reveal.js-library, you can define the order of the of how the pages are rendered through `order.by` and `order.dir`, and whether to use the plugin's built-in CSS and JS with `builtin_css` and `builtin_js`. Further, you can define inline-styles for each section or slide through `styles`. This last property is a list of CSS-properties that will be applied to the page, or pages if using horizontal rules, in the order they appear. If `change_titles` is enabled, the plugin will use the titles of pages to override the title of the website upon navigation.
+In addition to options for the Reveal.js-library, you can define the order of the of how the pages are rendered through `order.by` and `order.dir`, and whether to use the plugin's built-in CSS and JS with `builtin_css` and `builtin_js`.
 
 ### Page-specific configuration
 
@@ -80,14 +82,62 @@ presentation:
 ---
 ```
 
+## Usage
+
+The page-structure used in presentation is essentially the same as normally in Grav, with a few notable exceptions: Any horizontal rule, `---` in Markdown and `<hr />` in HTML, is treated as a _thematic break_, as it is defined in HTML5. This means that if you separate content with a horizontal rule within a page, the plugin treats this as a new section. This is equivalent to using child-pages for new sections, which work recursively: You can have as many pages below the root-page as you want, each of them will be treated as a section. Further, these methods can be mixed by some pages using horizontal rules, and some not.
+
+### Nomenclature
+
+With Reveal.js the presentation is not entirely linear. Rather, it has a linear, left-to-right set of sections that each make up a slide, and can have additional slides going dowards. Thus you can progress through the presentation linearly starting at each section, moving downwards until the end, and continuing onto the next section, or move between them as you choose.
+
+Further, there are [Fragments](https://github.com/hakimel/reveal.js#fragments) that can be used within each slide. These reveal linearly like slides, but make one element appear at a time rather than the full contents of the slide.
+
+### Example structure:
+
+```
+/user/pages/book
+├── presentation.md
+├── 01.down-the-rabbit-hole
+│   └── default.md
+├── 02.advice-from-a-caterpillar
+│   └── default.md
+├── 03.were-all-mad-here
+│   └── default.md
+├── 04.a-mad-tea-party
+│   └── default.md
+├── 05.the-queens-crocquet-ground
+│   └── default.md
+├── 06.postscript
+└───└── default.md
+```
+
+As seen in this example structure, only the initial page uses the `presentation.html.twig`-template. The template used for child-pages is irrelevant, as only the content of these pages are processed. The plugin defines the `presentation.html.twig`-template, but you can override it through your theme.
+
 ### Styling
+
+The plugin emulates the logic of Cascading Style Sheets (CSS), in that pages can be assigned a class, style-property, or be hidden using FrontMatter or shortcodes. This is as simple as using `class: slide1` in FrontMatter or `[class=slide1]` with a shortcode in the Markdown-content. Styles are applied the same way, where FrontMatter accepts CSS-properties like this:
+
+```
+style:
+  color: green
+```
+
+That is, mapping each property to a value, not as a list. The same could be set for any single slide using `[color=green]`, as described below. Styles are given precedence by where they appear, so the plugins looks for them in this order:
+
+1. Plugin-settings
+2. Page FrontMatter
+3. Child page FrontMatter
+4. Page Content (Markdown) as shortcodes
+
+The properties are gathered cumulatively, and a property farther down the chain takes precedence over a property further up.
+
 
 The `styles`-property is defined by a list of `property: value`'s and processed by the plugin. If the amount of pages exceed the amount of styles, they will be reused in the order they are defined. If the `background`-property is defined, but `color` is not, the plugin tries to estimate a suitable text-color to apply. The equations available to estimate this color is either `50` or `YIQ`, set by `color_function`.
 
-You can of course also style the plugin using your theme's /css/custom.css-file, by targeting the `#presentation`-selector which wraps around all of the plugin's content. This behavior can be enabled or disabled with the `theme_css`-setting. All pages have a `data-anchor`-attribute set on their sections, which can be utilized by CSS like this:
+You can of course also style the plugin using your theme's /css/custom.css-file, by targeting the `.reveal`-selector which wraps around all of the plugin's content. This behavior can be enabled or disabled with the `theme_css`-setting. All slides have an `id`-attribute set on their sections, which can be utilized by CSS like this:
 
 ```css
-#presentation [data-anchor="constructing-pages"] {
+.reveal #down-the-rabbit-hole-0 {
   background: red;
 }
 ```
@@ -110,7 +160,7 @@ If the shortcode is found and applied, it is stripped from the further evaluated
 Using the `footer`-setting you can append a Twig-template to each section globally, or a specific page's section. For example, `footer: "partials/presentation_footer.html.twig"` will render the theme's `partials/presentation_footer.html.twig`-template and append it to the section(s). If the element was constructed like this: `<div class="footer">My footer</div>`, you could style it like this:
 
 ```css
-.slides .footer {
+.reveal .slides .footer {
   display: block;
   position: absolute;
   bottom: 2em;
@@ -141,37 +191,34 @@ The plugin makes a `presentation_menu`-variable available through Twig on pages 
 </ul>
 ```
 
-## Usage
+Each slide is assigned an `id`-attribute based on the page's slug and its index, as well as a `data-title`-attribute containing the title of the page. A menu could also be made using this data with JavaScript: `document.getElementById('presentation').querySelectorAll('*[id]')`.
 
-The page-structure used in presentation is essentially the same as normally in Grav, with a few notable exceptions: Any horizontal rule, `---` in Markdown and `<hr />` in HTML, is treated as a _thematic break_, as it is defined in HTML5. This means that if you separate content with a horizontal rule within a page, the plugin treats this as a new section. This is equivalent to using child-pages for new sections, which work recursively: You can have as many pages below the root-page as you want, each of them will be treated as a section. Further, these methods can be mixed by some pages using horizontal rules, and some not.
+### Notes
 
-### Nomenclature
-
-With Reveal.js there is a distinction between sections and slides. Sections are single fullscreen pages listed vertically, and slides are single fullscreen pages listed horizontally. That is, if a page contains slides these are navigated horizontally rather than vertically. In the plugin, you define this by setting `horizontal: true` in the page's FrontMatter, which treats all content within it as slides.
-
-### Example structure:
+Each slide can have notes associated with it, like a PowerPoint-presentation would. These can be set on any slide using `[notes] ... [/notes]`, where the shortcodes should envelop the Markdown-content that makes up your notes. Eg:
 
 ```
-/user/pages/book
-├── presentation.md
-├── 01.down-the-rabbit-hole
-│   └── default.md
-├── 02.advice-from-a-caterpillar
-│   └── default.md
-├── 03.were-all-mad-here
-│   └── default.md
-├── 04.a-mad-tea-party
-│   └── default.md
-├── 05.the-queens-crocquet-ground
-│   └── default.md
-├── 06.postscript
-└───└── default.md
+[notes]
+
+- Rabbits don't lay eggs
+- Porpoises don't tell lies
+- Camels don't smoke cigarettes
+
+[/notes]
 ```
 
-As seen in this example structure, only the initial page uses the `presentation.html.twig`-template. The template used for child-pages is irrelevant, as only the content of these pages are processed. The plugin defines the `presentation.html.twig`-template, but you can override it through your theme.
+### Presenting
+
+The plugin, like the Reveal.js-library, makes available a Presenter-mode. There are two modes available for using this: Locally, with `sync: 'browser'`, or remotely, with `sync: 'api'`. When running locally, you need to access your presentation with a special URL -- `http://yourgrav.tld/book?admin=yes&showNotes=true` -- **and in a new window from the same browser** open the same URL without these parameters -- `http://yourgrav.tld/book`. 
+
+The synchronization between Presenter-mode and Presentation happens by sending data from one browser-window to the other, requiring JavaScript. When running remotely, the synchronization happens by polling and checking if the presentation has changed. **Remote-mode is currently disabled.**
+
+## Development
+
+Use a SCSS-compiler, like [LibSass](https://github.com/sass/libsass), eg. [node-sass](https://github.com/sass/node-sass) and compiled `scss/presentation.scss` to `css/presentation.css` in the theme-folder. For example: `node-sass --watch --source-map true scss/presentation.scss css/presentation.css`. Requires Node-modules to be installed first.
 
 ## Credits
 
 - Grav [presentation](https://github.com/OleVik/grav-plugin-presentation)-plugin is written by [Ole Vik](https://github.com/OleVik)
-- [Reveal.js](https://github.com/alvarotrigo/Reveal.js)-plugin
+- [Reveal.js](https://github.com/hakimel/reveal.js)-plugin
 - Both are MIT-licensed

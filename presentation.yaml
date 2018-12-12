@@ -11,16 +11,10 @@ sync: 'browser'
 color_function: "50"
 header_font: "'Helvetica Neue', Helvetica, Arial, sans-serif"
 block_font: "Palatino, 'Palatino Linotype', 'Palatino LT STD', 'Book Antiqua', Georgia, serif"
-change_titles: true
 footer: "partials/presentation_footer.html.twig"
-shortcodes: true
 transition: true
-styles: 
-  - background: "#0B110D" 
-  - background: "#2C4D56" 
-  - background: "#C3AA72" 
-  - background: "#DC7612" 
-  - background: "#BD3200" 
+unwrap_images: true
+shortcodes: true
 options:
   width: "100%"
   height: "100%"

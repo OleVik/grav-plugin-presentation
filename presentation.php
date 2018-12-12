@@ -92,6 +92,7 @@ class PresentationPlugin extends Plugin
                 'onShutdown' => ['onShutdown', 0]
             ]
         );
+        /* WORK IN PROGRESS */
         /*$userData = Grav::instance()['locator']->findResource('user://data/charts', true);
         $files = self::filesFinder($userData, ['json']);
         foreach ($files as $file) {
@@ -117,7 +118,6 @@ class PresentationPlugin extends Plugin
         $page = $this->grav['page'];
         $url = $page->url(true, true, true);
         $config = $this->config();
-        // Grav::instance()['debugger']->addMessage($uri->path());
         if ($config['sync'] == 'api') {
             if ($uri->path() == '/' . $this->route) {
                 header('Cache-Control: no-cache, no-store, max-age=0, must-revalidate');
@@ -141,6 +141,7 @@ class PresentationPlugin extends Plugin
                 exit();
             }
         }
+        /* WORK IN PROGRESS */
         /*$userData = Grav::instance()['locator']->findResource('user://data/charts', false);
         $files = self::filesFinder($userData, ['js']);
         foreach ($files as $file) {
@@ -158,16 +159,17 @@ class PresentationPlugin extends Plugin
         $page = $this->grav['page'];
         $config = $this->config();
         if ($config['enabled'] && $page->template() == 'presentation') {
-            $utility = new Utilities($config);
-            $tree = $utility->buildTree($page->route());
-            $slides = $utility->buildContent($tree);
-            $page->setRawContent($slides);
-            // $menu = $utility->buildMenu($tree);
-            // $menu = $utility->flattenArray($menu, 1);
-
-            $options = json_encode($config['options'], JSON_PRETTY_PRINT);
-            // $this->grav['debugger']->addMessage($options);
-            $this->grav['twig']->twig_vars['reveal_init'] = $options;
+            if (!isset($this->grav['twig']->twig_vars['reveal_init'])) {
+                $utility = new Utilities($config);
+                $tree = $utility->buildTree($page->route());
+                $slides = $utility->buildContent($tree);
+                $page->setRawContent($slides);
+                $menu = $utility->buildMenu($tree);
+                $menu = $utility->flattenArray($menu, 1);
+                $options = json_encode($config['options'], JSON_PRETTY_PRINT);
+                $this->grav['twig']->twig_vars['reveal_init'] = $options;
+                $this->grav['twig']->twig_vars['presentation_menu'] = $options;
+            }
         }
     }
 
@@ -202,56 +204,6 @@ class PresentationPlugin extends Plugin
         $this->grav['twig']->twig->addExtension(new CallStaticTwigExtension());
         include_once __DIR__ . '/twig/FileFinderExtension.php';
         $this->grav['twig']->twig->addExtension(new FileFinderTwigExtension());
-    }
-
-    /**
-     * Search for a file in multiple locations
-     *
-     * @param string $file         Filename.
-     * @param string $ext          File extension.
-     * @param array  ...$locations List of paths.
-     * 
-     * @return string
-     */
-    public static function fileFinder(String $file, String $ext, Array ...$locations)
-    {
-        $return = false;
-        foreach ($locations as $location) {
-            if (file_exists($location . '/' . $file . $ext)) {
-                $return = $location . '/' . $file . $ext;
-                break;
-            }
-        }
-        return $return;
-    }
-
-    /**
-     * Search for files in multiple locations
-     *
-     * @param string $directory    Filename.
-     * @param string $types        File extension.
-     * @param array  ...$locations List of paths.
-     * 
-     * @return string
-     */
-    public static function filesFinder(String $directory, Array $types)
-    {
-        $iterator = new \RecursiveDirectoryIterator(
-            $directory,
-            \RecursiveDirectoryIterator::SKIP_DOTS
-        );
-        $iterator = new \RecursiveIteratorIterator($iterator);
-        $files = [];
-        foreach ($iterator as $file) {
-            if (in_array(pathinfo($file, PATHINFO_EXTENSION), $types)) {
-                $files[] = $file;
-            }
-        }
-        if (count($files) > 0) {
-            return $files;
-        } else {
-            return false;
-        }
     }
 
     public function onGetPageTemplates($event)

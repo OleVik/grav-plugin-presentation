@@ -17,11 +17,11 @@
       {% endif %}
       {% if config.plugins['presentation'].builtin_css %}
         {% do assets.addCss('plugin://presentation/node_modules/reveal.js/css/reveal.css', {'group': 'presentation'}) %}
-        {% if uri.query('showNotes') == 'separate-page' and uri.query('print-pdf') == true %}
+        {% if uri.query('showNotes') == 'true' and uri.query('print') == true %}
           {% do assets.addCss('plugin://presentation/node_modules/reveal.js/css/theme/white.css', {'group': 'presentation'}) %}
           {% do assets.addCss('plugin://presentation/node_modules/reveal.js/css/print/pdf.css', {'group': 'presentation'}) %}
         {% else %}
-          {% do assets.addCss('plugin://presentation/css/uib.css', {'group': 'presentation'}) %}
+          {% do assets.addCss('plugin://presentation/css/presentation.css', {'group': 'presentation'}) %}
           {% do assets.addCss('plugin://timeline/assets/timeline.css', {'group': 'presentation'}) %}
         {% endif %}
       {% endif %}
@@ -47,7 +47,7 @@
     </div>
     {% endif %}
     {% block content %}
-    <div class="reveal">
+    <div class="reveal" id="presentation">
       <div class="slides">
         {{ page.content|raw }}
       </div>

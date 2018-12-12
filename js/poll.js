@@ -74,7 +74,7 @@ function refresh() {
       })
       .catch(function (error) {
         console.log(error);
-      });;
+      });
     }
   })
   .catch(function (error) {

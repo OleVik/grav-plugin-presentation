@@ -1,3 +1,14 @@
+# v0.0.3
+## 12-12-2018
+
+1. [](#new)
+    * Images are unwrapped from paragraphs by default
+    * Switch from UiB-theme to general Presentation-theme
+    * Deprecation of Fullpage-settings
+2. [](#improved)
+    * Code-quality
+    * README
+
 # v0.0.2
 ## 10-11-2018
 
