@@ -1,31 +1,41 @@
 <?php
+/**
+ * Presentation Plugin
+ *
+ * PHP version 7
+ *
+ * @category   Extensions
+ * @package    Grav
+ * @subpackage Presentation
+ * @author     Ole Vik <git@olevik.net>
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @link       https://github.com/OleVik/grav-plugin-presentation
+ */
 namespace Grav\Plugin;
 
 use Grav\Common\Grav;
 use Grav\Common\Utils;
 use Grav\Common\Plugin;
+use Grav\Common\Inflector;
 use Grav\Common\Page\Page;
 use Grav\Common\Page\Pages;
 use Grav\Common\Page\Media;
 use Grav\Common\Page\Collection;
 use RocketTheme\Toolbox\Event\Event;
 
-require __DIR__ . '/vendor/autoload.php';
-use Michelf\SmartyPants;
-require __DIR__ . '/API/Push.php';
 use Grav\Plugin\PresentationPlugin\API\Push;
-
-require 'Utilities.php';
-use Presentation\Utilities;
+use Grav\Plugin\PresentationPlugin\Utilities;
 
 /**
  * Creates slides using Reveal.js
  *
  * Class PresentationPlugin
- * 
- * @package Grav\Plugin
- * @return  void
- * @license MIT License by Ole Vik
+ *
+ * @category Extensions
+ * @package  Grav\Plugin
+ * @author   Ole Vik <git@olevik.net>
+ * @license  http://www.opensource.org/licenses/mit-license.html MIT License
+ * @link     https://github.com/OleVik/grav-plugin-presentation
  */
 class PresentationPlugin extends Plugin
 {
@@ -40,7 +50,7 @@ class PresentationPlugin extends Plugin
 
     /**
      * Register intial event
-     * 
+     *
      * @return array
      */
     public static function getSubscribedEvents()
@@ -52,7 +62,7 @@ class PresentationPlugin extends Plugin
 
     /**
      * Declare config from plugin-config
-     * 
+     *
      * @return array Plugin configuration
      */
     public function config()
@@ -70,7 +80,7 @@ class PresentationPlugin extends Plugin
      * Initialize the plugin and events
      *
      * @param Event $event RocketTheme events
-     * 
+     *
      * @return void
      */
     public function onPluginsInitialized(Event $event)
@@ -92,24 +102,11 @@ class PresentationPlugin extends Plugin
                 'onShutdown' => ['onShutdown', 0]
             ]
         );
-        /* WORK IN PROGRESS */
-        /*$userData = Grav::instance()['locator']->findResource('user://data/charts', true);
-        $files = self::filesFinder($userData, ['json']);
-        foreach ($files as $file) {
-            $json = str_replace(
-                array("\r\n", "\n", "\r"), 
-                '',
-                file_get_contents($file->getLinkTarget())
-            );
-            $output = 'var Grav = {Plugins: {Presentation: {' . pathinfo($file, PATHINFO_FILENAME) . ': ' . $json . '}}};';
-            Grav::instance()['assets']->addInlineJs($output);
-            Grav::instance()['assets']->addInlineJs('console.log(window.Grav);');
-        }*/
     }
 
     /**
      * Push styles to via Assets Manager
-     * 
+     *
      * @return void
      */
     public function onPagesInitialized()
@@ -128,6 +125,7 @@ class PresentationPlugin extends Plugin
                 }
                 $res = Grav::instance()['locator'];
                 $target = $res->findResource('cache://') . '/presentation';
+                include_once __DIR__ . '/API/Push.php';
                 $Push = new Push($target, 'PushCommand.json');
                 if ($_GET['mode'] == 'set' && isset($_GET['command'])) {
                     $Push->set(urldecode($_GET['command']));
@@ -151,13 +149,14 @@ class PresentationPlugin extends Plugin
 
     /**
      * Construct the page
-     * 
+     *
      * @return void
      */
     public function pageIteration()
     {
         $page = $this->grav['page'];
         $config = $this->config();
+        include_once 'Utilities.php';
         if ($config['enabled'] && $page->template() == 'presentation') {
             if (!isset($this->grav['twig']->twig_vars['reveal_init'])) {
                 $utility = new Utilities($config);
@@ -175,7 +174,7 @@ class PresentationPlugin extends Plugin
 
     /**
      * Add templates-directory to Twig paths
-     * 
+     *
      * @return void
      */
     public function templates()
@@ -185,7 +184,7 @@ class PresentationPlugin extends Plugin
 
     /**
      * Reset cache on shutdown
-     * 
+     *
      * @return void
      */
     public function onShutdown()
@@ -206,13 +205,26 @@ class PresentationPlugin extends Plugin
         $this->grav['twig']->twig->addExtension(new FileFinderTwigExtension());
     }
 
+    /**
+     * Register Page templates
+     *
+     * @param RocketTheme\Toolbox\Event\Event $event Event hooked into
+     *
+     * @return void
+     */
     public function onGetPageTemplates($event)
     {
         $types = $event->types;
         $locator = Grav::instance()['locator'];
-        $types->scanBlueprints($locator->findResource('plugin://' . $this->name . '/blueprints'));
+        $path = $locator->findResource('plugin://' . $this->name . '/blueprints');
+        $types->scanBlueprints($path);
     }
 
+    /**
+     * Get list of modular scales
+     *
+     * @return array List of modular scales
+     */
     public static function getModularScale()
     {
         return array(
@@ -236,6 +248,11 @@ class PresentationPlugin extends Plugin
         );
     }
 
+    /**
+     * Parse modular scales for blueprints
+     *
+     * @return array Blueprint-friendly list of modular scales
+     */
     public static function getModularScaleBlueprintOptions()
     {
         $options = ['' => 'None'];
@@ -243,5 +260,26 @@ class PresentationPlugin extends Plugin
             $options[(string) $scale['numerical']] = ucwords($scale['name']) . ' (' . $scale['ratio'] . ')';
         }
         return $options;
+    }
+
+
+    /**
+     * Get reveal.js themes
+     *
+     * @return array Associative array of styles
+     */
+    public static function getRevealThemes()
+    {
+        $inflector = new Inflector();
+        $themes = array('none' => 'None');
+        include_once 'Utilities.php';
+        $path = 'user://plugins/presentation/node_modules/reveal.js/css/theme';
+        $location = Grav::instance()['locator']->findResource($path, true);
+        $files = Utilities::filesFinder($location, ['css']);
+        foreach ($files as $file) {
+            $key = $file->getBasename('.' . $file->getExtension());
+            $themes[$key] = $inflector->titleize($key);
+        }
+        return $themes;
     }
 }

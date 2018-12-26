@@ -1,14 +1,8 @@
 /**
- * University of Bergen theme for reveal.js
- *
- * By Ole Vik, https://olevik.me/
- * 
- * @see https://manual.uib.no/profilmanual/profilelementer/
- * @see https://manual.uib.no/profilmanual/maler/
- * 
- * Compile with: node-sass --watch --source-map true scss/uib.scss css/uib.css
+ * Presentation Plugin additions to Reveal.js
  */
-@import url(../fonts/open-sans/open-sans.css);
+/* Includes */
+/* Structure */
 .reveal.overview .slides section {
   width: calc(100% - 0px) !important;
   min-width: calc(100% - 0px) !important;
@@ -68,187 +62,95 @@
       max-height: calc(100% - 4rem) !important;
       padding: 2rem 2rem !important; }
 
-.reveal .slides section,
-.reveal.center .slides section {
-  background: #efefef;
-  background: -moz-linear-gradient(top, #efefef 0%, #ffffff 100%);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #efefef), color-stop(100%, #ffffff));
-  background: -webkit-linear-gradient(top, #efefef 0%, #ffffff 100%);
-  background: -o-linear-gradient(top, #efefef 0%, #ffffff 100%);
-  background: -ms-linear-gradient(top, #efefef 0%, #ffffff 100%);
-  background: linear-gradient(top, #efefef 0%, #ffffff 100%); }
-  .reveal .slides section section,
-  .reveal.center .slides section section {
-    font-size: 2rem; }
-    @media (min-width: 1600px) {
-      .reveal .slides section section,
-      .reveal.center .slides section section {
-        font-size: 3rem; } }
-    .reveal .slides section section *,
-    .reveal.center .slides section section * {
-      max-width: 100%;
-      max-height: 100%; }
-    .reveal .slides section section img,
-    .reveal .slides section section canvas,
-    .reveal.center .slides section section img,
-    .reveal.center .slides section section canvas {
-      display: block;
-      width: auto;
-      height: 100%;
-      max-width: 100%;
-      max-height: 100%;
-      margin: 0 auto; }
-    .reveal .slides section section blockquote,
-    .reveal.center .slides section section blockquote {
-      background: #ffffff; }
-      .reveal .slides section section blockquote p,
-      .reveal.center .slides section section blockquote p {
-        margin: 0; }
-    .reveal .slides section section object,
-    .reveal.center .slides section section object {
-      width: 100%;
-      height: 100%; }
-    .reveal .slides section section p,
-    .reveal.center .slides section section p {
-      margin: 0 0 1em 0; }
-    .reveal .slides section section ul,
-    .reveal .slides section section ol,
-    .reveal.center .slides section section ul,
-    .reveal.center .slides section section ol {
-      width: calc(100% - 3em);
-      max-width: 100%;
-      margin: 0 1em 1em 2em;
-      list-style-position: outside; }
-      .reveal .slides section section ul ul,
-      .reveal .slides section section ul ol,
-      .reveal .slides section section ol ul,
-      .reveal .slides section section ol ol,
-      .reveal.center .slides section section ul ul,
-      .reveal.center .slides section section ul ol,
-      .reveal.center .slides section section ol ul,
-      .reveal.center .slides section section ol ol {
-        margin: 0 0 0 1em; }
-    .reveal .slides section section .caption,
-    .reveal .slides section section .text-small,
-    .reveal.center .slides section section .caption,
-    .reveal.center .slides section section .text-small {
-      color: #7f7f7f;
-      font-size: 12px;
-      font-family: TimesNewRoman, "Times New Roman", Times, Baskerville, Georgia, serif;
-      text-transform: uppercase; }
-    .reveal .slides section section .timeline,
-    .reveal.center .slides section section .timeline {
-      margin-left: 0; }
-  .reveal .slides section.skinny p,
-  .reveal.center .slides section.skinny p {
+/* Style */
+.reveal .slides section section,
+.reveal.center .slides section section {
+  font-size: 2rem; }
+  @media (min-width: 1600px) {
+    .reveal .slides section section,
+    .reveal.center .slides section section {
+      font-size: 3rem; } }
+  .reveal .slides section section *,
+  .reveal.center .slides section section * {
+    max-width: 100%;
+    max-height: 100%; }
+  .reveal .slides section section img,
+  .reveal .slides section section canvas,
+  .reveal.center .slides section section img,
+  .reveal.center .slides section section canvas {
+    display: block;
+    width: auto;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    margin: 0 auto; }
+  .reveal .slides section section blockquote p,
+  .reveal.center .slides section section blockquote p {
     margin: 0; }
-  .reveal .slides section.start,
-  .reveal.center .slides section.start {
-    top: 0 !important; }
-    .reveal .slides section.start h2,
-    .reveal.center .slides section.start h2 {
-      color: #404040;
-      background: #efefef;
-      background: -moz-linear-gradient(top, #efefef 0%, #ffffff 100%);
-      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #efefef), color-stop(100%, #ffffff));
-      background: -webkit-linear-gradient(top, #efefef 0%, #ffffff 100%);
-      background: -o-linear-gradient(top, #efefef 0%, #ffffff 100%);
-      background: -ms-linear-gradient(top, #efefef 0%, #ffffff 100%);
-      background: linear-gradient(top, #efefef 0%, #ffffff 100%);
-      margin: 0;
-      height: calc(50% - 6rem) !important;
-      height: calc(50% - 6rem) !important;
-      min-height: calc(50% - 6rem) !important;
-      max-height: calc(50% - 6rem) !important;
-      width: calc(100% - 4rem) !important;
-      min-width: calc(100% - 4rem) !important;
-      max-width: calc(100% - 4rem) !important;
-      padding: 6rem 2rem 0rem 2rem; }
-      @media (min-width: 1600px) {
-        .reveal .slides section.start h2,
-        .reveal.center .slides section.start h2 {
-          height: calc(50% - 15rem) !important;
-          height: calc(50% - 15rem) !important;
-          min-height: calc(50% - 15rem) !important;
-          max-height: calc(50% - 15rem) !important;
-          width: calc(100% - 5rem) !important;
-          min-width: calc(100% - 5rem) !important;
-          max-width: calc(100% - 5rem) !important;
-          padding: 15rem 5rem 0rem 5rem; } }
-    .reveal .slides section.start p:first-of-type,
-    .reveal.center .slides section.start p:first-of-type {
-      color: #ffffff;
-      background: #e54e47;
-      height: calc(50% - 4rem) !important;
-      min-height: calc(50% - 4rem) !important;
-      max-height: calc(50% - 4rem) !important;
-      width: calc(100% - 4rem) !important;
-      min-width: calc(100% - 4rem) !important;
-      max-width: calc(100% - 4rem) !important;
-      margin: 0;
-      padding: 2rem; }
-      .reveal .slides section.start p:first-of-type:before,
-      .reveal.center .slides section.start p:first-of-type:before {
-        content: "";
-        position: absolute;
-        left: 20px;
-        bottom: 20px;
-        display: block;
-        width: 440px;
-        height: 100px;
-        background-repeat: no-repeat;
-        background-size: contain;
-        background-image: url("images/UiB-logo_white_left.svg"); }
-  .reveal .slides section.title,
-  .reveal.center .slides section.title {
-    color: #ffffff;
-    background: #e54e47; }
-    .reveal .slides section.title h1,
-    .reveal .slides section.title h2,
-    .reveal .slides section.title h3,
-    .reveal .slides section.title h4,
-    .reveal .slides section.title h5,
-    .reveal .slides section.title h6,
-    .reveal.center .slides section.title h1,
-    .reveal.center .slides section.title h2,
-    .reveal.center .slides section.title h3,
-    .reveal.center .slides section.title h4,
-    .reveal.center .slides section.title h5,
-    .reveal.center .slides section.title h6 {
-      color: #ffffff; }
-  .reveal .slides section.end img,
-  .reveal.center .slides section.end img {
-    position: relative;
-    width: 45%;
-    margin: 0 auto;
-    box-shadow: 0 0;
-    border: 0; }
-  .reveal .slides section.end p,
-  .reveal.center .slides section.end p {
-    color: #7f7f7f;
-    font-size: 24px;
-    font-family: TimesNewRoman, "Times New Roman", Times, Baskerville, Georgia, serif;
-    text-transform: uppercase; }
-    .reveal .slides section.end p:last-of-type:before,
-    .reveal.center .slides section.end p:last-of-type:before {
-      content: "";
-      display: block;
-      width: 50%;
-      height: 10px;
-      margin: 0 auto;
-      background-repeat: no-repeat;
-      background-size: contain;
-      background-image: url("images/UiB-fargestripe.png"); }
+  .reveal .slides section section object,
+  .reveal.center .slides section section object {
+    width: 100%;
+    height: 100%; }
+  .reveal .slides section section p,
+  .reveal.center .slides section section p {
+    margin: 0 0 1em 0; }
+  .reveal .slides section section ul,
+  .reveal .slides section section ol,
+  .reveal.center .slides section section ul,
+  .reveal.center .slides section section ol {
+    width: calc(100% - 3em);
+    max-width: 100%;
+    margin: 0 1em 1em 2em;
+    list-style-position: outside; }
+    .reveal .slides section section ul ul,
+    .reveal .slides section section ul ol,
+    .reveal .slides section section ol ul,
+    .reveal .slides section section ol ol,
+    .reveal.center .slides section section ul ul,
+    .reveal.center .slides section section ul ol,
+    .reveal.center .slides section section ol ul,
+    .reveal.center .slides section section ol ol {
+      margin: 0 0 0 1em; }
 
-.reveal .controls .controls-arrow:before,
-.reveal .controls .controls-arrow:after,
-.reveal.center .controls .controls-arrow:before,
-.reveal.center .controls .controls-arrow:after {
-  background-color: rgba(0, 0, 0, 0.65); }
+.reveal .slides section.skinny p,
+.reveal.center .slides section.skinny p {
+  margin: 0; }
 
-.reveal .progress,
-.reveal.center .progress {
-  color: rgba(0, 0, 0, 0.65); }
+.reveal .slides section.start,
+.reveal.center .slides section.start {
+  top: 0 !important; }
+  .reveal .slides section.start h2,
+  .reveal.center .slides section.start h2 {
+    margin: 0;
+    height: calc(50% - 6rem) !important;
+    height: calc(50% - 6rem) !important;
+    min-height: calc(50% - 6rem) !important;
+    max-height: calc(50% - 6rem) !important;
+    width: calc(100% - 4rem) !important;
+    min-width: calc(100% - 4rem) !important;
+    max-width: calc(100% - 4rem) !important;
+    padding: 6rem 2rem 0rem 2rem; }
+    @media (min-width: 1600px) {
+      .reveal .slides section.start h2,
+      .reveal.center .slides section.start h2 {
+        height: calc(50% - 15rem) !important;
+        height: calc(50% - 15rem) !important;
+        min-height: calc(50% - 15rem) !important;
+        max-height: calc(50% - 15rem) !important;
+        width: calc(100% - 5rem) !important;
+        min-width: calc(100% - 5rem) !important;
+        max-width: calc(100% - 5rem) !important;
+        padding: 15rem 5rem 0rem 5rem; } }
+  .reveal .slides section.start p:first-of-type,
+  .reveal.center .slides section.start p:first-of-type {
+    height: calc(50% - 4rem) !important;
+    min-height: calc(50% - 4rem) !important;
+    max-height: calc(50% - 4rem) !important;
+    width: calc(100% - 4rem) !important;
+    min-width: calc(100% - 4rem) !important;
+    max-width: calc(100% - 4rem) !important;
+    margin: 0;
+    padding: 2rem; }
 
 #clockbox {
   padding: 0.1rem;
@@ -262,18 +164,19 @@
   bottom: 0.25rem;
   z-index: 9999; }
 
+/* Include theme template */
 /*********************************************
  * GLOBAL STYLES
  *********************************************/
 body {
-  background: #ffffff;
-  background-color: #ffffff; }
+  background: #2b2b2b;
+  background-color: #2b2b2b; }
 
 .reveal {
-  font-family: "Open Sans", Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-family: "Lato", sans-serif;
   font-size: 40px;
   font-weight: normal;
-  color: #404040; }
+  color: #eee; }
 
 ::selection {
   color: #fff;
@@ -300,12 +203,12 @@ body {
 .reveal h5,
 .reveal h6 {
   margin: 0 0 20px 0;
-  color: #e54f46;
-  font-family: "Open Sans", Arial, "Helvetica Neue", Helvetica, sans-serif;
-  font-weight: bold;
+  color: #eee;
+  font-family: "League Gothic", Impact, sans-serif;
+  font-weight: normal;
   line-height: 1.2;
   letter-spacing: normal;
-  text-transform: inherit;
+  text-transform: uppercase;
   text-shadow: none;
   word-wrap: break-word; }
 
@@ -485,7 +388,7 @@ body {
 .reveal section img {
   margin: 15px 0px;
   background: rgba(255, 255, 255, 0.12);
-  border: 4px solid #404040;
+  border: 4px solid #eee;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); }
 
 .reveal section img.plain {
@@ -525,6 +428,6 @@ body {
  *********************************************/
 @media print {
   .backgrounds {
-    background-color: #ffffff; } }
+    background-color: #2b2b2b; } }
 
 /*# sourceMappingURL=presentation.css.map */

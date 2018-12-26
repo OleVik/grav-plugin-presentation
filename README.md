@@ -1,10 +1,24 @@
 # Presentation Plugin
 
-The **Presentation** Plugin is an extension for [Grav CMS](http://github.com/getgrav/grav), and provides a simple way of creating fullscreen slideshows that can be navigated vertically and horizontally, using the [Reveal.js](https://github.com/hakimel/reveal.js/)-library.
+The **Presentation** Plugin is an extension for [Grav CMS](http://github.com/getgrav/grav), and provides a simple way of creating fullscreen slideshows that can be navigated two-dimensionally, using the [Reveal.js](https://github.com/hakimel/reveal.js/)-library.
 
 At its core the plugin facilitates efficient handling of content for use with the library. You can utilize Reveal.js however you want through custom initialization, and still leverage the plugin's content-handling.
 
 ## CURRENTLY A WORK IN PROGRESS
+
+## Features
+
+- Presentations through two-dimensional slideshows
+- Responsive, multi-device capable styling
+- Granular control over presentation and slides
+  - Cascading-styles and options with Shortcodes and the Admin-plugin
+- Portable content: Everything is contained in Markdown, including settings
+- Flexible, ambigious, recursive Page-structure
+- Extendable through your own theme or plugin
+- Print-friendly presentations, with or without notes or in text-only mode
+- Presenter-mode: A modern, powerful, easy-to-use alternative to PowerPoint
+  - Include notes with your presentation
+  - Synchronize Presenter-mode and the Presentation locally or remotely
 
 ## Installation
 
@@ -211,9 +225,15 @@ Each slide can have notes associated with it, like a PowerPoint-presentation wou
 
 The plugin, like the Reveal.js-library, makes available a Presenter-mode. There are two modes available for using this: Locally, with `sync: 'browser'`, or remotely, with `sync: 'api'`. When running locally, you need to access your presentation with a special URL -- `http://yourgrav.tld/book?admin=yes&showNotes=true` -- **and in a new window from the same browser** open the same URL without these parameters -- `http://yourgrav.tld/book`. 
 
-The synchronization between Presenter-mode and Presentation happens by sending data from one browser-window to the other, requiring JavaScript. When running remotely, the synchronization happens by polling and checking if the presentation has changed. **Remote-mode is currently disabled.**
+The synchronization between Presenter-mode and the Presentation happens by sending data from one browser-window to the other, requiring JavaScript. When running remotely, the synchronization happens by polling and checking if the presentation has changed. **Remote-mode is currently disabled.**
 
-## Development
+## Contributing
+
+### PHP Code Standards
+
+This plugin follows PSR-1, PSR-2, and PEAR coding standards (use CodeSniffer), as well as PSR-4.
+
+### Style-compilation
 
 Use a SCSS-compiler, like [LibSass](https://github.com/sass/libsass), eg. [node-sass](https://github.com/sass/node-sass) and compiled `scss/presentation.scss` to `css/presentation.css` in the theme-folder. For example: `node-sass --watch --source-map true scss/presentation.scss css/presentation.css`. Requires Node-modules to be installed first.
 

@@ -1,19 +1,11 @@
 /**
- * University of Bergen theme for reveal.js
- *
- * By Ole Vik, https://olevik.me/
- * 
- * @see https://manual.uib.no/profilmanual/profilelementer/
- * @see https://manual.uib.no/profilmanual/maler/
- * 
- * Compile with: node-sass --watch --source-map true scss/uib.scss css/uib.css
+ * Presentation Plugin additions to Reveal.js
  */
 
-// Mixins and settings -----------------
+/* Includes */
 @import "../node_modules/reveal.js/css/theme/template/mixins";
 @import "../node_modules/reveal.js/css/theme/template/settings";
 @import "../node_modules/include-media/dist/include-media";
-// ---------------------------------------------
 
 $breakpoints: (extrasmall: 576px, small: 576px, medium: 768px, large: 992px, extralarge: 1200px, massive: 1600px);
 $rhythm: 1.5em;
@@ -23,17 +15,20 @@ $rhythm: 1.5em;
 		width: calc(100% - #{$widthModifier}) !important;
 		min-width: calc(100% - #{$widthModifier}) !important;
 		max-width: calc(100% - #{$widthModifier}) !important;
-		@if ($viewportWidth == 'true') {
+
+		@if ($viewportWidth=='true') {
 			width: calc(100vw - #{$widthModifier}) !important;
 			min-width: calc(100vw - #{$widthModifier}) !important;
 			max-width: calc(100vw - #{$widthModifier}) !important;
 		}
 	}
+
 	@if ($height) {
 		height: calc(100% - #{$heightModifier}) !important;
 		min-height: calc(100% - #{$heightModifier}) !important;
 		max-height: calc(100% - #{$heightModifier}) !important;
-		@if ($viewportHeight == 'true') {
+
+		@if ($viewportHeight=='true') {
 			width: calc(100vh - #{$heightModifier}) !important;
 			min-width: calc(100vh - #{$heightModifier}) !important;
 			max-width: calc(100vh - #{$heightModifier}) !important;
@@ -41,43 +36,45 @@ $rhythm: 1.5em;
 	}
 }
 
-// Include theme-specific fonts
-@import url(../fonts/open-sans/open-sans.css);
-$open-sans-font-stack: 'Open Sans', Arial, "Helvetica Neue", Helvetica, sans-serif !default;
-$times-new-roman-font-stack: TimesNewRoman, "Times New Roman", Times, Baskerville, Georgia, serif !default;
-
-// Structure
+/* Structure */
 .reveal.overview {
 	.slides {
 		section {
 			@include maximizeSize(true, true);
+
 			section {
 				padding-top: 9rem !important;
 			}
 		}
 	}
 }
+
 .reveal:not(.overview) {
 	.slides {
 		section {
 			@include maximizeSize(true, true, '0px', '0px', true, true);
+
 			section {
-        $base: 2;
+				$base: 2;
 				@include maximizeSize(true, true, #{$base*2}rem, #{$base*6}rem, false, true);
 				padding: #{$base*3}rem #{$base}rem !important;
-        @include media(">=massive") {
-          $base: 3;
-          @include maximizeSize(true, true, #{$base*2}rem, #{$base*6}rem, false, true);
-          padding: #{$base*3}rem #{$base}rem !important;
-        }
+
+				@include media(">=massive") {
+					$base: 3;
+					@include maximizeSize(true, true, #{$base*2}rem, #{$base*6}rem, false, true);
+					padding: #{$base*3}rem #{$base}rem !important;
+				}
+
 				&.start {
 					@include maximizeSize(true, true);
 					padding: 0 !important;
 				}
+
 				&.skinny {
 					@include maximizeSize(true, true, '2rem', '2rem', true, true);
 					padding: 1rem !important;
 				}
+
 				&.end {
 					@include maximizeSize(true, true, '4rem', '4rem', true, true);
 					padding: 2rem 2rem !important;
@@ -87,22 +84,23 @@ $times-new-roman-font-stack: TimesNewRoman, "Times New Roman", Times, Baskervill
 	}
 }
 
-// Style
-$backgroundColor: #ffffff;
+/* Style */
 .reveal,
 .reveal.center {
 	.slides {
 		section {
-			@include vertical-gradient(#efefef, #ffffff);
 			section {
-        font-size: 2rem;
-        @include media(">=massive") {
-          font-size: 3rem;
+				font-size: 2rem;
+
+				@include media(">=massive") {
+					font-size: 3rem;
 				}
+
 				* {
 					max-width: 100%;
 					max-height: 100%;
 				}
+
 				img,
 				canvas {
 					display: block;
@@ -112,53 +110,47 @@ $backgroundColor: #ffffff;
 					max-height: 100%;
 					margin: 0 auto;
 				}
+
 				blockquote {
-					background: #ffffff;
 					p {
 						margin: 0;
 					}
 				}
+
 				object {
 					width: 100%;
 					height: 100%;
 				}
+
 				p {
 					margin: 0 0 1em 0;
-					// text-align: left;
 				}
+
 				ul,
 				ol {
 					width: calc(100% - 3em);
 					max-width: 100%;
 					margin: 0 1em 1em 2em;
 					list-style-position: outside;
+
 					ul,
 					ol {
 						margin: 0 0 0 1em;
 					}
 				}
-				.caption,
-				.text-small {
-					color: #7f7f7f;
-					font-size: 12px;
-					font-family: TimesNewRoman, "Times New Roman", Times, Baskerville, Georgia, serif;
-					text-transform: uppercase;
-				}
-				.timeline {
-					margin-left: 0;
-				}
 			}
+
 			&.skinny {
 				p {
 					margin: 0;
 				}
 			}
+
 			&.start {
 				top: 0 !important;
+
 				h2 {
 					$base: 2;
-					color: #404040;
-					@include vertical-gradient(#efefef, #ffffff);
 					margin: 0;
 					height: calc(50% - #{$base*3}rem) !important;
 					height: calc(50% - #{$base*3}rem) !important;
@@ -166,6 +158,7 @@ $backgroundColor: #ffffff;
 					max-height: calc(50% - #{$base*3}rem) !important;
 					@include maximizeSize(true, false, #{$base*2}rem);
 					padding: #{$base*3}rem #{$base}rem 0rem #{$base}rem;
+
 					@include media(">=massive") {
 						$base: 5;
 						height: calc(50% - #{$base*3}rem) !important;
@@ -176,156 +169,34 @@ $backgroundColor: #ffffff;
 						padding: #{$base*3}rem #{$base}rem 0rem #{$base}rem;
 					}
 				}
+
 				p {
 					&:first-of-type {
-						color: #ffffff;
-						background: #e54e47;
 						height: calc(50% - 4rem) !important;
 						min-height: calc(50% - 4rem) !important;
 						max-height: calc(50% - 4rem) !important;
 						@include maximizeSize(true, false, '4rem');
 						margin: 0;
 						padding: 2rem;
-						&:before {
-							content: "";
-							position: absolute;
-							left: 20px;
-							bottom: 20px;
-							display: block;
-							width: 440px;
-							height: 100px;
-							background-repeat: no-repeat;
-							background-size: contain;
-							background-image: url('images/UiB-logo_white_left.svg');
-						}
-					}
-				}
-			}
-			&.title {
-				color: #ffffff;
-				background: #e54e47;
-				h1,
-				h2,
-				h3,
-				h4,
-				h5,
-				h6 {
-					color: #ffffff;
-				}
-			}
-			&.end {
-				img {
-					position: relative;
-					width: 45%;
-					margin: 0 auto;
-					box-shadow: 0 0;
-					border: 0;
-				}
-				p {
-					color: rgb(127, 127, 127);
-					font-size: 24px;
-					font-family: $times-new-roman-font-stack;
-					text-transform: uppercase;
-					&:last-of-type {
-						&:before {
-							content: "";
-							display: block;
-							width: 50%;
-							height: 10px;
-							margin: 0 auto;
-							background-repeat: no-repeat;
-							background-size: contain;
-							background-image: url('images/UiB-fargestripe.png');
-						}
 					}
 				}
 			}
 		}
-	}
-	.controls {
-		.controls-arrow:before,
-		.controls-arrow:after {
-			background-color: rgba(0, 0, 0, 0.65);
-		}
-	}
-	.progress {
-		color: rgba(0, 0, 0, 0.65);
 	}
 }
 
-
 #clockbox {
-    padding: 0.1rem;
+	padding: 0.1rem;
 	color: #222222;
 	font-size: 4rem;
 	font-family: Helvetica, sans-serif;
-    background: white;
-    border: 1px solid #9E9E9C;
+	background: white;
+	border: 1px solid #9E9E9C;
 	position: absolute;
 	right: 0.25rem;
 	bottom: 0.25rem;
 	z-index: 9999;
 }
 
-// $breakpoints: (extrasmall: 576px, small: 576px, medium: 768px, large: 992px, extralarge: 1200px);
-// Element Queries for Responsiveness
-// .reveal.show-notes:not(.overview)[min-width~="1200px"] {
-// 	section {
-// 		section {
-// 			&.start {
-// 				h2 {
-// 					color: red;
-// 					$base: 4;
-// 					height: calc(50% - #{$base*3}rem) !important;
-// 					height: calc(50% - #{$base*3}rem) !important;
-// 					min-height: calc(50% - #{$base*3}rem) !important;
-// 					max-height: calc(50% - #{$base*3}rem) !important;
-// 					@include maximizeSize(true, false, #{$base}rem);
-// 					padding: #{$base*3}rem #{$base}rem 0rem #{$base}rem;
-// 				}
-// 			}
-// 		}
-// 	}
-// }
-
-// Primary/body text
-$mainFont: $open-sans-font-stack;
-$mainFontSize: 40px;
-$mainColor: rgb(64, 64, 64);
-
-// Vertical spacing between blocks of text
-$blockMargin: 20px;
-
-// Headings
-$headingMargin: 0 0 $blockMargin 0;
-$headingFont: $open-sans-font-stack;
-$headingColor: rgb(229, 79, 70);
-$headingLineHeight: 1.2;
-$headingLetterSpacing: normal;
-$headingTextTransform: inherit;
-$headingTextShadow: none;
-$headingFontWeight: bold;
-$heading1TextShadow: $headingTextShadow;
-
-$heading1Size: 3.77em;
-$heading2Size: 2.11em;
-$heading3Size: 1.55em;
-$heading4Size: 1.00em;
-
-// Links and actions
-$linkColor: #13DAEC;
-$linkColorHover: lighten( $linkColor, 20% );
-
-// Text selection
-$selectionBackgroundColor: #FF5E99;
-$selectionColor: #fff;
-
-// Generates the presentation background, can be overridden
-// to return a background image or gradient
-@mixin bodyBackground() {
-	background: $backgroundColor;
-}
-
-// Theme template ------------------------------
+/* Include theme template */
 @import "../node_modules/reveal.js/css/theme/template/theme";
-// ---------------------------------------------

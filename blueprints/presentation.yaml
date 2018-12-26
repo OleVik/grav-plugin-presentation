@@ -1,4 +1,4 @@
-title: Presentation Slide Options
+title: Presentation Options
 extends@:
   type: default
   context: blueprints://pages
@@ -18,6 +18,21 @@ form:
               help: PLUGIN_PRESENTATION.ADMIN.CLASS.HELP
               validate:
                 type: commalist
+            footer:
+              type: text
+              label: PLUGIN_PRESENTATION.ADMIN.ASSETS.FOOTER.LABEL
+              description: PLUGIN_PRESENTATION.ADMIN.ASSETS.FOOTER.DESCRIPTION
+            shortcodes:
+              type: toggle
+              label: PLUGIN_PRESENTATION.ADMIN.ASSETS.SHORTCODES.LABEL
+              description: PLUGIN_PRESENTATION.ADMIN.ASSETS.SHORTCODES.DESCRIPTION
+              highlight: 1
+              default: 1
+              options:
+                1: PLUGIN_ADMIN.ENABLED
+                0: PLUGIN_ADMIN.DISABLED
+              validate:
+                type: bool
             textsize:
               type: section
               title: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.TITLE
@@ -47,7 +62,7 @@ form:
                   validate:
                     min: -6
                     max: 16
-                header.autoscale:
+                header.fontscale:
                   type: toggle
                   label: PLUGIN_PRESENTATION.ADMIN.AUTOSCALE.LABEL
                   help: PLUGIN_PRESENTATION.ADMIN.AUTOSCALE.HELP
@@ -71,6 +86,14 @@ form:
               title: PLUGIN_PRESENTATION.ADMIN.STYLE.TITLE
               underline: true
               fields:
+                header.style.header-font-family:
+                  type: text
+                  label: PLUGIN_PRESENTATION.ADMIN.STYLE.FONT.HEADER.LABEL
+                  description: PLUGIN_PRESENTATION.ADMIN.STYLE.FONT.HEADER.DESCRIPTION
+                header.style.block-font-family:
+                  type: text
+                  label: PLUGIN_PRESENTATION.ADMIN.STYLE.FONT.BLOCK.LABEL
+                  description: PLUGIN_PRESENTATION.ADMIN.STYLE.FONT.BLOCK.DESCRIPTION
                 header.style.color:
                   type: colorpicker
                   label: PLUGIN_PRESENTATION.ADMIN.STYLE.COLOR.LABEL

@@ -1,16 +1,29 @@
 <?php
 /**
- * @package Storage
+ * Presentation Plugin, Push API
  *
- * @license MIT License
+ * PHP version 7
+ *
+ * @category   API
+ * @package    Grav\Plugin\PresentationPlugin
+ * @subpackage Grav\Plugin\PresentationPlugin\Push
+ * @author     Ole Vik <git@olevik.net>
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @link       https://github.com/OleVik/grav-plugin-presentation
  */
 
 namespace Grav\Plugin\PresentationPlugin\API;
 
 /**
+ * Push API
+ *
  * Simple REST API for communicating commands between pages
  *
- * @package Grav\Plugins
+ * @category Extensions
+ * @package  Grav\Plugin\PresentationPlugin
+ * @author   Ole Vik <git@olevik.net>
+ * @license  http://www.opensource.org/licenses/mit-license.html MIT License
+ * @link     https://github.com/OleVik/grav-plugin-presentation
  */
 class Push
 {
@@ -31,9 +44,9 @@ class Push
      * Set Push Command
      *
      * @param string $command Command to execute.
-     * 
+     *
      * @throws Exception Errors from file operations.
-     * 
+     *
      * @return bool State of execution.
      */
     public function set($command)
@@ -42,7 +55,7 @@ class Push
             if (!is_writable($this->directory)) {
                 try {
                     mkdir($this->directory, 0755, true);
-                } catch(\Exception $e) {
+                } catch (\Exception $e) {
                     throw new \Exception($e);
                 }
             }
@@ -51,11 +64,11 @@ class Push
                 file_put_contents($this->directory . $this->DS . $this->file, $data);
                 echo $data;
                 return true;
-            } catch(\Exception $e) {
+            } catch (\Exception $e) {
                 throw new \Exception($e);
             }
             return false;
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             throw new \Exception($e);
         }
     }
@@ -64,7 +77,7 @@ class Push
      * Get Push Command
      *
      * @throws Exception Errors from file operations.
-     * 
+     *
      * @return bool Command to execute.
      */
     public function get()
@@ -76,7 +89,7 @@ class Push
                 echo $data;
                 return true;
             }
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             throw new \Exception($e);
         }
     }
@@ -85,7 +98,7 @@ class Push
      * Remove Push Command
      *
      * @throws Exception Errors from file operations.
-     * 
+     *
      * @return bool State of execution.
      */
     public function remove()
@@ -95,7 +108,7 @@ class Push
             unlink($target);
             echo 'removed ' . $this->file;
             return true;
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             throw new \Exception($e);
         }
         return false;

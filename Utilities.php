@@ -1,5 +1,18 @@
 <?php
-namespace Presentation;
+/**
+ * Presentation Plugin, Utilities
+ *
+ * PHP version 7
+ *
+ * @category   API
+ * @package    Grav\Plugin\PresentationPlugin
+ * @subpackage Grav\Plugin\PresentationPlugin\Utilities
+ * @author     Ole Vik <git@olevik.net>
+ * @license    http://www.opensource.org/licenses/mit-license.html MIT License
+ * @link       https://github.com/OleVik/grav-plugin-presentation
+ */
+
+namespace Grav\Plugin\PresentationPlugin;
 
 use Grav\Common\Grav;
 use Grav\Common\Plugin;
@@ -8,7 +21,13 @@ use Grav\Common\Page\Collection;
 use Michelf\SmartyPants;
 
 /**
- * Presentation-plugin Utilities
+ * Utilities
+ *
+ * @category Extensions
+ * @package  Grav\Plugin\PresentationPlugin
+ * @author   Ole Vik <git@olevik.net>
+ * @license  http://www.opensource.org/licenses/mit-license.html MIT License
+ * @link     https://github.com/OleVik/grav-plugin-presentation
  */
 class Utilities
 {
@@ -119,6 +138,7 @@ class Utilities
     public function buildContent($pages)
     {
         $parsedown = new \Parsedown();
+        include_once __DIR__ . '/vendor/autoload.php';
         $return = '';
         foreach ($pages as $route => $page) {
             ob_start();
@@ -236,6 +256,13 @@ class Utilities
         return $return;
     }
 
+    /**
+     * Parse shortcodes
+     *
+     * @param string $content Markdown content in Page
+     *
+     * @return array Processed contents and properties
+     */
     public function interpretShortcodes($content)
     {
         $return = array();
@@ -258,6 +285,13 @@ class Utilities
         return ['content' => $content, 'props' => $return];
     }
 
+    /**
+     * Create HTML from Notes-shortcodes
+     *
+     * @param string $content Markdown content in Page
+     *
+     * @return string Processed content
+     */
     public function pushNotes($content)
     {
         $content = str_replace('[notes]', '<aside class="notes">', $content);
@@ -286,7 +320,15 @@ class Utilities
         return $items;
     }
 
-    public static function inlineStyles(Array $styles, String $route)
+    /**
+     * Process styles
+     *
+     * @param array  $styles List of key-value pairs
+     * @param string $route  Route to Page for relative assets
+     *
+     * @return string Processed styles, in inline string
+     */
+    public static function inlineStyles(array $styles, string $route)
     {
         $return = '';
         foreach ($styles as $property => $value) {
@@ -306,7 +348,7 @@ class Utilities
      * @param string $mode   'background' or 'font'
      *
      * @return string CSS-styles
-     * 
+     *
      * @deprecated 0.0.3 Needs backporting
      */
     public function applyStyles($styles, $mode = 'background')
@@ -364,8 +406,16 @@ class Utilities
         return $return;*/
     }
 
-
-    public static function unwrapImage($content, $figure = false) {
+    /**
+     * Remove wrapping paragraph from img-element
+     *
+     * @param string  $content Markdown content in Page
+     * @param boolean $figure  Optional wrapping in figure-element
+     *
+     * @return string Processed content
+     */
+    public static function unwrapImage($content, $figure = false)
+    {
         $unwrap = self::REGEX_IMG_P;
         $content = preg_replace($unwrap, "$1", $content);
         if ($figure) {
@@ -383,10 +433,10 @@ class Utilities
      * @param string $file         Filename.
      * @param string $ext          File extension.
      * @param array  ...$locations List of paths.
-     * 
+     *
      * @return string
      */
-    public static function fileFinder(String $file, String $ext, Array ...$locations)
+    public static function fileFinder(string $file, string $ext, array ...$locations)
     {
         $return = false;
         foreach ($locations as $location) {
@@ -401,13 +451,12 @@ class Utilities
     /**
      * Search for files in multiple locations
      *
-     * @param string $directory    Filename.
-     * @param string $types        File extension.
-     * @param array  ...$locations List of paths.
-     * 
+     * @param string $directory Folder-name.
+     * @param string $types     File extensions.
+     *
      * @return string
      */
-    public static function filesFinder(String $directory, Array $types)
+    public static function filesFinder(string $directory, array $types)
     {
         $iterator = new \RecursiveDirectoryIterator(
             $directory,
@@ -463,7 +512,7 @@ class Utilities
      * Flatten a multidimensional array to one dimension, optionally preserving keys
      *
      * @param array   $array        Array to flatten
-     * @param integer $preserveKeys 0 (default) to not preserve keys, 1 to preserve string keys only, 2 to preserve all keys
+     * @param integer $preserveKeys 0 to discard, 1 for strings only, 2 for all
      * @param array   $out          Internal parameter for recursion
      *
      * @return array Flattened array

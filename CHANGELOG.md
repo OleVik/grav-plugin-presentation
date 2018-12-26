@@ -1,3 +1,15 @@
+# v0.0.4
+## 27-12-2018
+
+1. [](#new)
+    * Remote-sync API (Push)
+    * Blueprints, translations
+2. [](#improved)
+    * Code-quality, code standards
+    * README
+    * Simplify plugin CSS
+    * Improve template
+
 # v0.0.3
 ## 12-12-2018
 

@@ -1,20 +1,20 @@
 name: Presentation
-version: 0.0.3
+version: 0.0.4
 testing: true
 description: Fullscreen navigational slideshows through Reveal.js
 icon: arrows-alt
 author:
   name: Ole Vik
   email: git@olevik.net
-homepage: https://olevik.me/plugins/fullpage/
-demo: https://olevik.me/plugins/fullpage/book/
-keywords: fullscreen, slides, fullscreen.js
-bugs: https://github.com/OleVik/grav-plugin-fullpage/issues
-docs: https://github.com/OleVik/grav-plugin-fullpage/blob/develop/README.md
+homepage: https://github.com/OleVik/grav-plugin-presentation/
+demo: https://olevik.me/staging/grav-skeleton-presentation/
+keywords: presentation, fullscreen, slides, slideshow, reveal.js
+bugs: https://github.com/OleVik/grav-plugin-presentation/issues
+docs: https://github.com/OleVik/grav-plugin-presentation/blob/develop/README.md
 license: MIT
 dependencies:
-  - { name: grav, version: '>=1.3' }
-  - { name: admin, version: '>=1.5' }
+  - { name: grav, version: '>=1.6' }
+  - { name: admin, version: '>=1.9' }
 
 form:
   validation: strict
@@ -27,26 +27,31 @@ form:
         0: PLUGIN_ADMIN.DISABLED
       validate:
         type: bool
+    theme:
+      type: select
+      label: PLUGIN_PRESENTATION.ADMIN.ASSETS.THEME.LABEL
+      description: PLUGIN_PRESENTATION.ADMIN.ASSETS.THEME.DESCRIPTION
+      data-options@: '\Grav\Plugin\PresentationPlugin::getRevealThemes'
     order.by:
       type: select
       size: medium
       classes: fancy
-      label: Order Type
+      label: PLUGIN_PRESENTATION.ADMIN.COMMON.ORDER.BY.LABEL
       options:
-        default: Default - based on folder name
-        folder: Folder - based on prefix-less folder name
-        title: Title - based on title field in header
-        date: Date - based on date field in header
+        default: PLUGIN_PRESENTATION.ADMIN.COMMON.ORDER.BY.OPTIONS.DEFAULT
+        folder: PLUGIN_PRESENTATION.ADMIN.COMMON.ORDER.BY.OPTIONS.FOLDER
+        title: PLUGIN_PRESENTATION.ADMIN.COMMON.ORDER.BY.OPTIONS.TITLE
+        date: PLUGIN_PRESENTATION.ADMIN.COMMON.ORDER.BY.OPTIONS.DATE
     order.dir:
       type: toggle
-      label: Order Direction
+      label: PLUGIN_PRESENTATION.ADMIN.COMMON.ORDER.DIR.LABEL
       options:
-        asc: Ascending
-        desc: Descending
+        asc: PLUGIN_PRESENTATION.ADMIN.COMMON.ORDER.DIR.OPTIONS.ASC
+        desc: PLUGIN_PRESENTATION.ADMIN.COMMON.ORDER.DIR.OPTIONS.DESC
     theme_css:
       type: toggle
-      label: Use Theme's CSS
-      description: "Import current theme's /css/custom.css into fullpage.html.twig's assets"
+      label: PLUGIN_PRESENTATION.ADMIN.ASSETS.THEME_CSS.LABEL
+      description: PLUGIN_PRESENTATION.ADMIN.ASSETS.THEME_CSS.DESCRIPTION
       options:
         1: PLUGIN_ADMIN.ENABLED
         0: PLUGIN_ADMIN.DISABLED
@@ -54,7 +59,7 @@ form:
         type: bool
     builtin_css:
       type: toggle
-      label: Use Plugin's CSS
+      label: PLUGIN_PRESENTATION.ADMIN.ASSETS.BUILTIN_CSS.LABEL
       options:
         1: PLUGIN_ADMIN.ENABLED
         0: PLUGIN_ADMIN.DISABLED
@@ -62,44 +67,48 @@ form:
         type: bool
     builtin_js:
       type: toggle
-      label: Use Plugin's JS
+      label: PLUGIN_PRESENTATION.ADMIN.ASSETS.BUILTIN_JS.LABEL
       options:
         1: PLUGIN_ADMIN.ENABLED
         0: PLUGIN_ADMIN.DISABLED
       validate:
         type: bool
-    color_function:
+    fontscale:
       type: toggle
-      label: Color function
-      description: Default color function to apply.
+      label: PLUGIN_PRESENTATION.ADMIN.AUTOSCALE.LABEL
+      help: PLUGIN_PRESENTATION.ADMIN.AUTOSCALE.HELP
+      default: 0
       options:
-        50: "50%"
-        YIQ: "YIQ"
-    header_font:
-      type: text
-      label: Heading Font-Family
-      description: CSS Font-Family to use for headings.
-    block_font:
-      type: text
-      label: Block Font-Family
-      description: CSS Font-Family to use for block-text.
-    change_titles:
-      type: toggle
-      label: Dynamic titles
-      description: Update document titles on navigation.
-      options:
-        1: PLUGIN_ADMIN.ENABLED
-        0: PLUGIN_ADMIN.DISABLED
+        1: PLUGIN_ADMIN.YES
+        0: PLUGIN_ADMIN.NO
       validate:
         type: bool
+    fontratio:
+      type: range
+      label: PLUGIN_PRESENTATION.ADMIN.FONTRATIO.LABEL
+      help: PLUGIN_PRESENTATION.ADMIN.FONTRATIO.HELP
+      description: PLUGIN_PRESENTATION.ADMIN.FONTRATIO.DESCRIPTION
+      default: 30
+      validate:
+        min: 1
+        max: 100
+    sync:
+      type: select
+      label: PLUGIN_PRESENTATION.ADMIN.ASSETS.SYNC.LABEL
+      description: PLUGIN_PRESENTATION.ADMIN.ASSETS.SYNC.DESCRIPTION
+      options:
+        browser: PLUGIN_PRESENTATION.ADMIN.ASSETS.SYNC.OPTIONS.BROWSER
+        api: PLUGIN_PRESENTATION.ADMIN.ASSETS.SYNC.OPTIONS.API
     footer:
       type: text
-      label: Inject Twig
-      description: "Render a theme's Twig-template and append it to each section, eg. 'partials/presentation_footer.html.twig'."
+      label: PLUGIN_PRESENTATION.ADMIN.ASSETS.FOOTER.LABEL
+      description: PLUGIN_PRESENTATION.ADMIN.ASSETS.FOOTER.DESCRIPTION
     shortcodes:
       type: toggle
-      label: Shortcodes
-      description: Enables internal shortcode-processing.
+      label: PLUGIN_PRESENTATION.ADMIN.ASSETS.SHORTCODES.LABEL
+      description: PLUGIN_PRESENTATION.ADMIN.ASSETS.SHORTCODES.DESCRIPTION
+      highlight: 1
+      default: 1
       options:
         1: PLUGIN_ADMIN.ENABLED
         0: PLUGIN_ADMIN.DISABLED
@@ -108,197 +117,35 @@ form:
     transition:
       type: toggle
       label: OnLoad Transition
-      description: Fade in from white when DOM-structure is ready.
+      description: Fade in from white when page (DOM-structure) is ready.
+      highlight: 1
+      default: 1
       options:
         1: PLUGIN_ADMIN.ENABLED
         0: PLUGIN_ADMIN.DISABLED
       validate:
         type: bool
-    styles:
-      type: section
-      title: Default Styles
-      text: "Array of CSS properties and values. INCOMPLETE: Will use multilevel-field."
-      underline: true
-      fields:
-        styles:
-          type: multilevel
-          label: Styles
-          style: vertical
-          validate:
-            type: array
+    unwrap_images:
+      type: toggle
+      label: PLUGIN_PRESENTATION.ADMIN.ASSETS.UNWRAP_IMAGES.LABEL
+      description: PLUGIN_PRESENTATION.ADMIN.ASSETS.UNWRAP_IMAGES.DESCRIPTION
+      highlight: 1
+      default: 1
+      options:
+        1: PLUGIN_ADMIN.ENABLED
+        0: PLUGIN_ADMIN.DISABLED
+      validate:
+        type: bool
     options:
       type: section
-      title: Library options
-      text: Options to pass to fullPage.js.
+      title: PLUGIN_PRESENTATION.ADMIN.OPTIONS.TITLE
       underline: true
       fields:
-        options.navigation:
-          type: toggle
-          label: Navigation
-          options:
-            1: PLUGIN_ADMIN.ENABLED
-            0: PLUGIN_ADMIN.DISABLED
+        options:
+          type: array
+          label: PLUGIN_PRESENTATION.ADMIN.OPTIONS.LABEL
+          placeholder_key: PLUGIN_PRESENTATION.ADMIN.COMMON.KEY
+          placeholder_value: PLUGIN_PRESENTATION.ADMIN.COMMON.VALUE
+          required: false
           validate:
-            type: bool
-        options.navigationPosition:
-          type: toggle
-          label: Navigation Position
-          options:
-            right: Right
-            left: Left
-        options.showActiveTooltip:
-          type: toggle
-          label: Persist Tooltips
-          options:
-            1: PLUGIN_ADMIN.ENABLED
-            0: PLUGIN_ADMIN.DISABLED
-          validate:
-            type: bool
-        options.slidesNavigation:
-          type: toggle
-          label: Slides Navigation
-          options:
-            1: PLUGIN_ADMIN.ENABLED
-            0: PLUGIN_ADMIN.DISABLED
-          validate:
-            type: bool
-        options.slidesNavPosition:
-          type: toggle
-          label: Slides Navigation Position
-          options:
-            bottom: Bottom
-            top: Top
-        scrolling:
-          type: section
-          title: Scrolling
-          fields:
-            options.css3:
-              type: toggle
-              label: CSS3 Transformations
-              options:
-                1: PLUGIN_ADMIN.ENABLED
-                0: PLUGIN_ADMIN.DISABLED
-              validate:
-                type: bool
-            options.autoScrolling:
-              type: toggle
-              label: "Use 'Automatic' Scrolling"
-              options:
-                1: PLUGIN_ADMIN.ENABLED
-                0: PLUGIN_ADMIN.DISABLED
-              validate:
-                type: bool
-            options.fitToSection:
-              type: toggle
-              label: Fit Section to Viewport
-              options:
-                1: PLUGIN_ADMIN.ENABLED
-                0: PLUGIN_ADMIN.DISABLED
-              validate:
-                type: bool
-            options.scrollBar:
-              type: toggle
-              label: Use Browser ScrollBar
-              options:
-                1: PLUGIN_ADMIN.ENABLED
-                0: PLUGIN_ADMIN.DISABLED
-              validate:
-                type: bool
-            options.loopTop:
-              type: toggle
-              label: Loop Upwards
-              options:
-                1: PLUGIN_ADMIN.ENABLED
-                0: PLUGIN_ADMIN.DISABLED
-              validate:
-                type: bool
-            options.loopBottom:
-              type: toggle
-              label: Loop Downwards
-              options:
-                1: PLUGIN_ADMIN.ENABLED
-                0: PLUGIN_ADMIN.DISABLED
-              validate:
-                type: bool
-            options.loopHorizontal:
-              type: toggle
-              label: Loop Slides
-              options:
-                1: PLUGIN_ADMIN.ENABLED
-                0: PLUGIN_ADMIN.DISABLED
-              validate:
-                type: bool
-            options.touchSensitivity:
-              type: range
-              label: Touch Sensitivity
-              default: 15
-              step: 5
-              validate:
-                min: 5
-                max: 100
-        accessibility:
-          type: section
-          title: Accessibility
-          fields:
-            options.keyboardScrolling:
-              type: toggle
-              label: Navigate with Keyboard
-              options:
-                1: PLUGIN_ADMIN.ENABLED
-                0: PLUGIN_ADMIN.DISABLED
-              validate:
-                type: bool
-            options.animateAnchor:
-              type: toggle
-              label: Auto-Navigate
-              options:
-                1: PLUGIN_ADMIN.ENABLED
-                0: PLUGIN_ADMIN.DISABLED
-              validate:
-                type: bool
-            options.recordHistory:
-              type: toggle
-              label: Record Browser-History
-              options:
-                1: PLUGIN_ADMIN.ENABLED
-                0: PLUGIN_ADMIN.DISABLED
-              validate:
-                type: bool
-        design:
-          type: section
-          title: Design
-          fields:
-            options.controlArrows:
-              type: toggle
-              label: Arrows for Slides
-              options:
-                1: PLUGIN_ADMIN.ENABLED
-                0: PLUGIN_ADMIN.DISABLED
-              validate:
-                type: bool
-            options.verticalCentered:
-              type: toggle
-              label: Center content vertically
-              options:
-                1: PLUGIN_ADMIN.ENABLED
-                0: PLUGIN_ADMIN.DISABLED
-              validate:
-                type: bool
-        structure:
-          type: section
-          title: Structure
-          fields:
-            options.sectionSelector:
-              type: text
-              label: Selector for Sections
-            options.slideSelector:
-              type: text
-              label: Selector for Slides
-            options.lazyLoading:
-              type: toggle
-              label: Ladyload Media
-              options:
-                1: PLUGIN_ADMIN.ENABLED
-                0: PLUGIN_ADMIN.DISABLED
-              validate:
-                type: bool
+            type: array

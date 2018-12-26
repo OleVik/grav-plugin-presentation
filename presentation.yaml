@@ -1,4 +1,5 @@
 enabled: true
+theme: moon
 order:
   by: folder
   dir: asc
@@ -8,19 +9,16 @@ builtin_js: true
 fontscale: true
 fontratio: 30
 sync: 'browser'
-color_function: "50"
-header_font: "'Helvetica Neue', Helvetica, Arial, sans-serif"
-block_font: "Palatino, 'Palatino Linotype', 'Palatino LT STD', 'Book Antiqua', Georgia, serif"
-footer: "partials/presentation_footer.html.twig"
+footer: ''
 transition: true
-unwrap_images: true
 shortcodes: true
+unwrap_images: true
 options:
   width: "100%"
   height: "100%"
-  margin: 0
-  minScale: 1
-  maxScale: 1
+  margin: '0'
+  minScale: '1'
+  maxScale: '1'
   transition: 'fade'
-  controlsTutorial: false
-  history: true
+  controlsTutorial: 'false'
+  history: 'true'
