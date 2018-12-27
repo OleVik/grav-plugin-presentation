@@ -6,7 +6,11 @@ order:
 theme_css: true
 builtin_css: true
 builtin_js: true
-fontscale: true
+textsize:
+  scale: 1.667
+  header: 3
+  text: 0
+fontscale: false
 fontratio: 30
 sync: 'browser'
 footer: ''

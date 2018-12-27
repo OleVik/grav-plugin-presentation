@@ -57,12 +57,12 @@ $rhythm: 1.5em;
 			section {
 				$base: 2;
 				@include maximizeSize(true, true, #{$base*2}rem, #{$base*6}rem, false, true);
-				padding: #{$base*3}rem #{$base}rem !important;
+				padding: #{$base*4}rem #{$base}rem #{$base*2}rem #{$base}rem !important;
 
 				@include media(">=massive") {
 					$base: 3;
 					@include maximizeSize(true, true, #{$base*2}rem, #{$base*6}rem, false, true);
-					padding: #{$base*3}rem #{$base}rem !important;
+					padding: #{$base*4}rem #{$base}rem #{$base*2}rem #{$base}rem !important;
 				}
 
 				&.start {

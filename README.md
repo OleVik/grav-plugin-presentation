@@ -237,6 +237,14 @@ This plugin follows PSR-1, PSR-2, and PEAR coding standards (use CodeSniffer), a
 
 Use a SCSS-compiler, like [LibSass](https://github.com/sass/libsass), eg. [node-sass](https://github.com/sass/node-sass) and compiled `scss/presentation.scss` to `css/presentation.css` in the theme-folder. For example: `node-sass --watch --source-map true scss/presentation.scss css/presentation.css`. Requires Node-modules to be installed first.
 
+## TODO
+
+- Test fontsizing
+- Test responsive
+- Test print
+  - Consider blueprint addition to presentation.yaml for quick-linking
+- Test API-sync
+
 ## Credits
 
 - Grav [presentation](https://github.com/OleVik/grav-plugin-presentation)-plugin is written by [Ole Vik](https://github.com/OleVik)

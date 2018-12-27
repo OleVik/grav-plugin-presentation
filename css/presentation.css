@@ -27,7 +27,7 @@
     height: calc(100% - 12rem) !important;
     min-height: calc(100% - 12rem) !important;
     max-height: calc(100% - 12rem) !important;
-    padding: 6rem 2rem !important; }
+    padding: 8rem 2rem 4rem 2rem !important; }
     @media (min-width: 1600px) {
       .reveal:not(.overview) .slides section section {
         width: calc(100% - 6rem) !important;
@@ -36,7 +36,7 @@
         height: calc(100% - 18rem) !important;
         min-height: calc(100% - 18rem) !important;
         max-height: calc(100% - 18rem) !important;
-        padding: 9rem 3rem !important; } }
+        padding: 12rem 3rem 6rem 3rem !important; } }
     .reveal:not(.overview) .slides section section.start {
       width: calc(100% - 0px) !important;
       min-width: calc(100% - 0px) !important;

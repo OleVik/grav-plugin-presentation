@@ -48,6 +48,8 @@ en:
         UNWRAP_IMAGES:
           LABEL: Unwrap Images
           DESCRIPTION: Unwrap images from paragraphs.
+      STYLING:
+        TITLE: Style and design defaults
       CLASS:
         LABEL: Class(es)
         HELP: Classes to add to the Slide

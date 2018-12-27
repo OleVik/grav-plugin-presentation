@@ -23,6 +23,7 @@ use Grav\Common\Page\Media;
 use Grav\Common\Page\Collection;
 use RocketTheme\Toolbox\Event\Event;
 
+use Grav\Plugin\PresentationPlugin\API\Content;
 use Grav\Plugin\PresentationPlugin\API\Push;
 use Grav\Plugin\PresentationPlugin\Utilities;
 
@@ -154,18 +155,21 @@ class PresentationPlugin extends Plugin
      */
     public function pageIteration()
     {
-        $page = $this->grav['page'];
+        $grav = $this->grav;
         $config = $this->config();
-        include_once 'Utilities.php';
-        if ($config['enabled'] && $page->template() == 'presentation') {
+        include_once __DIR__ . '/API/Content.php';
+        include_once __DIR__ . '/Utilities.php';
+        if ($config['enabled'] && $grav['page']->template() == 'presentation') {
             if (!isset($this->grav['twig']->twig_vars['reveal_init'])) {
-                $utility = new Utilities($config);
-                $tree = $utility->buildTree($page->route());
-                $slides = $utility->buildContent($tree);
-                $page->setRawContent($slides);
-                $menu = $utility->buildMenu($tree);
-                $menu = $utility->flattenArray($menu, 1);
-                $options = json_encode($config['options'], JSON_PRETTY_PRINT);
+                $content = new Content($grav, $config);
+                $tree = $content->buildTree($grav['page']->route());
+                // dump($tree);
+                $slides = $content->buildContent($tree);
+                $grav['page']->setRawContent($slides);
+                $menu = $content->buildMenu($tree);
+                $menu = Utilities::flattenArray($menu, 1);
+                $options = Utilities::parseAmbiguousArrayValues($config['options']);
+                $options = json_encode($options, JSON_PRETTY_PRINT);
                 $this->grav['twig']->twig_vars['reveal_init'] = $options;
                 $this->grav['twig']->twig_vars['presentation_menu'] = $options;
             }

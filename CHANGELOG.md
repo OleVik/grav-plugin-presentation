@@ -1,8 +1,19 @@
+# v0.0.5
+## 27-12-2018
+
+1. [](#new)
+    * Content API
+2. [](#improved)
+    * Broke up Utilities into Content API
+    * Broke up Content API methods
+    * Cascading blueprint-options for Plugin, Presentation, Slide
+    * Options-handling in blueprint
+    * Tweaked plugin's CSS
+
 # v0.0.4
 ## 27-12-2018
 
 1. [](#new)
-    * Remote-sync API (Push)
     * Blueprints, translations
 2. [](#improved)
     * Code-quality, code standards

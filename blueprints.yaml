@@ -1,7 +1,7 @@
 name: Presentation
-version: 0.0.4
+version: 0.0.5
 testing: true
-description: Fullscreen navigational slideshows through Reveal.js
+description: Responsive navigational slideshows with Reveal.js
 icon: arrows-alt
 author:
   name: Ole Vik
@@ -34,8 +34,6 @@ form:
       data-options@: '\Grav\Plugin\PresentationPlugin::getRevealThemes'
     order.by:
       type: select
-      size: medium
-      classes: fancy
       label: PLUGIN_PRESENTATION.ADMIN.COMMON.ORDER.BY.LABEL
       options:
         default: PLUGIN_PRESENTATION.ADMIN.COMMON.ORDER.BY.OPTIONS.DEFAULT
@@ -73,69 +71,96 @@ form:
         0: PLUGIN_ADMIN.DISABLED
       validate:
         type: bool
-    fontscale:
-      type: toggle
-      label: PLUGIN_PRESENTATION.ADMIN.AUTOSCALE.LABEL
-      help: PLUGIN_PRESENTATION.ADMIN.AUTOSCALE.HELP
-      default: 0
-      options:
-        1: PLUGIN_ADMIN.YES
-        0: PLUGIN_ADMIN.NO
-      validate:
-        type: bool
-    fontratio:
-      type: range
-      label: PLUGIN_PRESENTATION.ADMIN.FONTRATIO.LABEL
-      help: PLUGIN_PRESENTATION.ADMIN.FONTRATIO.HELP
-      description: PLUGIN_PRESENTATION.ADMIN.FONTRATIO.DESCRIPTION
-      default: 30
-      validate:
-        min: 1
-        max: 100
-    sync:
-      type: select
-      label: PLUGIN_PRESENTATION.ADMIN.ASSETS.SYNC.LABEL
-      description: PLUGIN_PRESENTATION.ADMIN.ASSETS.SYNC.DESCRIPTION
-      options:
-        browser: PLUGIN_PRESENTATION.ADMIN.ASSETS.SYNC.OPTIONS.BROWSER
-        api: PLUGIN_PRESENTATION.ADMIN.ASSETS.SYNC.OPTIONS.API
-    footer:
-      type: text
-      label: PLUGIN_PRESENTATION.ADMIN.ASSETS.FOOTER.LABEL
-      description: PLUGIN_PRESENTATION.ADMIN.ASSETS.FOOTER.DESCRIPTION
-    shortcodes:
-      type: toggle
-      label: PLUGIN_PRESENTATION.ADMIN.ASSETS.SHORTCODES.LABEL
-      description: PLUGIN_PRESENTATION.ADMIN.ASSETS.SHORTCODES.DESCRIPTION
-      highlight: 1
-      default: 1
-      options:
-        1: PLUGIN_ADMIN.ENABLED
-        0: PLUGIN_ADMIN.DISABLED
-      validate:
-        type: bool
-    transition:
-      type: toggle
-      label: OnLoad Transition
-      description: Fade in from white when page (DOM-structure) is ready.
-      highlight: 1
-      default: 1
-      options:
-        1: PLUGIN_ADMIN.ENABLED
-        0: PLUGIN_ADMIN.DISABLED
-      validate:
-        type: bool
-    unwrap_images:
-      type: toggle
-      label: PLUGIN_PRESENTATION.ADMIN.ASSETS.UNWRAP_IMAGES.LABEL
-      description: PLUGIN_PRESENTATION.ADMIN.ASSETS.UNWRAP_IMAGES.DESCRIPTION
-      highlight: 1
-      default: 1
-      options:
-        1: PLUGIN_ADMIN.ENABLED
-        0: PLUGIN_ADMIN.DISABLED
-      validate:
-        type: bool
+    styling:
+      type: section
+      title: PLUGIN_PRESENTATION.ADMIN.STYLING.TITLE
+      underline: true
+      fields:
+        textsize.scale:
+          type: select
+          label: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.SCALE.LABEL
+          help: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.SCALE.HELP
+          description: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.SCALE.DESCRIPTION
+          default: 'major sixth'
+          data-options@: '\Grav\Plugin\PresentationPlugin::getModularScaleBlueprintOptions'
+        textsize.header:
+          type: range
+          label: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.HEADER.LABEL
+          help: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.HEADER.HELP
+          description: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.HEADER.DESCRIPTION
+          default: 3
+          validate:
+            min: -6
+            max: 16
+        textsize.text:
+          type: range
+          label: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.TEXT.LABEL
+          help: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.TEXT.HELP
+          description: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.TEXT.DESCRIPTION
+          default: 0
+          validate:
+            min: -6
+            max: 16
+        fontscale:
+          type: toggle
+          label: PLUGIN_PRESENTATION.ADMIN.AUTOSCALE.LABEL
+          help: PLUGIN_PRESENTATION.ADMIN.AUTOSCALE.HELP
+          default: 0
+          options:
+            1: PLUGIN_ADMIN.YES
+            0: PLUGIN_ADMIN.NO
+          validate:
+            type: bool
+        fontratio:
+          type: range
+          label: PLUGIN_PRESENTATION.ADMIN.FONTRATIO.LABEL
+          help: PLUGIN_PRESENTATION.ADMIN.FONTRATIO.HELP
+          description: PLUGIN_PRESENTATION.ADMIN.FONTRATIO.DESCRIPTION
+          default: 30
+          validate:
+            min: 1
+            max: 100
+        sync:
+          type: select
+          label: PLUGIN_PRESENTATION.ADMIN.ASSETS.SYNC.LABEL
+          description: PLUGIN_PRESENTATION.ADMIN.ASSETS.SYNC.DESCRIPTION
+          options:
+            browser: PLUGIN_PRESENTATION.ADMIN.ASSETS.SYNC.OPTIONS.BROWSER
+            api: PLUGIN_PRESENTATION.ADMIN.ASSETS.SYNC.OPTIONS.API
+        footer:
+          type: text
+          label: PLUGIN_PRESENTATION.ADMIN.ASSETS.FOOTER.LABEL
+          description: PLUGIN_PRESENTATION.ADMIN.ASSETS.FOOTER.DESCRIPTION
+        shortcodes:
+          type: toggle
+          label: PLUGIN_PRESENTATION.ADMIN.ASSETS.SHORTCODES.LABEL
+          description: PLUGIN_PRESENTATION.ADMIN.ASSETS.SHORTCODES.DESCRIPTION
+          default: 1
+          options:
+            1: PLUGIN_ADMIN.ENABLED
+            0: PLUGIN_ADMIN.DISABLED
+          validate:
+            type: bool
+        transition:
+          type: toggle
+          label: OnLoad Transition
+          description: Fade in from white when page (DOM-structure) is ready.
+          default: 1
+          options:
+            1: PLUGIN_ADMIN.ENABLED
+            0: PLUGIN_ADMIN.DISABLED
+          validate:
+            type: bool
+        unwrap_images:
+          type: toggle
+          label: PLUGIN_PRESENTATION.ADMIN.ASSETS.UNWRAP_IMAGES.LABEL
+          description: PLUGIN_PRESENTATION.ADMIN.ASSETS.UNWRAP_IMAGES.DESCRIPTION
+          default: 1
+          options:
+            1: PLUGIN_ADMIN.ENABLED
+            0: PLUGIN_ADMIN.DISABLED
+          validate:
+            type: bool
     options:
       type: section
       title: PLUGIN_PRESENTATION.ADMIN.OPTIONS.TITLE
