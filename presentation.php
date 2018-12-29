@@ -24,7 +24,7 @@ use Grav\Common\Page\Collection;
 use RocketTheme\Toolbox\Event\Event;
 
 use Grav\Plugin\PresentationPlugin\API\Content;
-use Grav\Plugin\PresentationPlugin\API\Push;
+use Grav\Plugin\PresentationPlugin\API\Poll;
 use Grav\Plugin\PresentationPlugin\Utilities;
 
 /**
@@ -106,7 +106,7 @@ class PresentationPlugin extends Plugin
     }
 
     /**
-     * Push styles to via Assets Manager
+     * Handle Poll API
      *
      * @return void
      */
@@ -116,36 +116,36 @@ class PresentationPlugin extends Plugin
         $page = $this->grav['page'];
         $url = $page->url(true, true, true);
         $config = $this->config();
-        if ($config['sync'] == 'api') {
-            if ($uri->path() == '/' . $this->route) {
-                header('Cache-Control: no-cache, no-store, max-age=0, must-revalidate');
-                header('Pragma: no-cache');
-                if (!isset($_GET['mode'])) {
-                    header('HTTP/1.1 400 Bad Request');
-                    exit('HTTP/1.1 400 Bad Request');
-                }
-                $res = Grav::instance()['locator'];
-                $target = $res->findResource('cache://') . '/presentation';
-                include_once __DIR__ . '/API/Push.php';
-                $Push = new Push($target, 'PushCommand.json');
-                if ($_GET['mode'] == 'set' && isset($_GET['command'])) {
-                    $Push->set(urldecode($_GET['command']));
-                } elseif ($_GET['mode'] == 'get') {
-                    $Push->get();
-                } elseif ($_GET['mode'] == 'remove') {
-                    $Push->remove();
-                } elseif ($_GET['mode'] == 'serve') {
-                    $Push->serve();
-                }
-                exit();
+        if ($config['sync'] == 'poll' && $uri->path() == '/' . $this->route) {
+            set_time_limit(0);
+            header('Cache-Control: no-cache, no-store, max-age=0, must-revalidate');
+            header('Pragma: no-cache');
+            if (!isset($_GET['mode'])) {
+                header('HTTP/1.1 400 Bad Request');
+                exit('400 Bad Request');
             }
+            $res = Grav::instance()['locator'];
+            $target = $res->findResource('cache://') . '/presentation';
+            include_once __DIR__ . '/API/Poll.php';
+            $poll = new Poll($target, 'Poll.json');
+            if ($_GET['mode'] == 'set' && isset($_GET['data'])) {
+                $poll->remove();
+                header('Content-Type:text/plain');
+                header('HTTP/1.1 202 Accepted');
+                $poll->set(urldecode($_GET['data']));
+            } elseif ($_GET['mode'] == 'get') {
+                header('Content-Type: application/json');
+                header('HTTP/1.1 200 OK');
+                $poll->get();
+            } elseif ($_GET['mode'] == 'remove') {
+                header('Content-Type:text/plain');
+                header('HTTP/1.1 200 OK');
+                $poll->remove();
+            }
+            unset($poll);
+            clearstatcache();
+            exit();
         }
-        /* WORK IN PROGRESS */
-        /*$userData = Grav::instance()['locator']->findResource('user://data/charts', false);
-        $files = self::filesFinder($userData, ['js']);
-        foreach ($files as $file) {
-            Grav::instance()['assets']->addJs($userData . '/' . $file->getFilename(), 100, false, null, 'bottom');
-        }*/
     }
 
     /**

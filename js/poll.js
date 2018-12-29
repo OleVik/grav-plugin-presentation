@@ -1,86 +1,96 @@
-// https://github.com/axios/axios/issues/164#issuecomment-327837467
-axios.interceptors.response.use(undefined, function axiosRetryInterceptor(err) {
-  var config = err.config;
-  if(!config || !config.retry) return Promise.reject(err);
-  config.__retryCount = config.__retryCount || 0;
-  if(config.__retryCount >= config.retry) {
-      return Promise.reject(err);
+/**
+ * Continual querying of a set route, executing Reveal.js events in callback through Axios
+ */
+function poll() {
+  var now = new Date();
+  axios.get(location.origin + presentationAPIRoute, {
+      params: {
+        mode: 'get'
+      }
+    })
+    .then(function (response) {
+      if (response.data.hasOwnProperty('command')) {
+        console.info('Ping at ' + ISODateString(now) + ', ' + response.status + ' OK');
+        var data = response.data;
+        try {
+          switch (data.command) {
+            case 'slidechanged':
+              Reveal.slide(data.indexh, data.indexv);
+              break;
+            case 'fragmentshown':
+              Reveal.slide(data.indexh, data.indexv, data.indexf);
+              break;
+            case 'fragmenthidden':
+              Reveal.slide(data.indexh, response.data.indexv, data.indexf);
+              break;
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      } else {
+        console.info('Ping at ' + ISODateString(now) + ': ' + response.status);
+      }
+    })
+    .catch(function (error) {
+      console.error(error);
+      pollingErrors++;
+      showError('Connection failure.');
+    });
+  if (pollingErrors >= presentationAPIRetryLimit) {
+    console.warn('Retry limit reached at ' + ISODateString(now));
+    return;
+  } else {
+    setTimeout(poll, presentationAPITimeout);
   }
-  config.__retryCount += 1;
-  var backoff = new Promise(function(resolve) {
-      setTimeout(function() {
-          resolve();
-      }, config.retryDelay || 1);
-  });
-  return backoff.then(function() {
-      return axios(config);
-  });
-});
-
-function refresh() {
-  axios.get(location.origin + '/presentationapi', {
-    params: {
-      mode: 'get'
-    },
-    retry: 5,
-    retryDelay: 5000
-  })
-  .then(function (response) {
-    var now = new Date();
-    console.log(now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds());
-    if (response.data != '') {
-      console.log(response.status, response.data);
-      var command = response.data
-      axios.get(location.origin + '/presentationapi', {
-        params: {
-          mode: 'remove'
-        }
-      }).then(function (response) {
-        console.log(response.status, response.data);
-        if (command == 'next') {
-          Reveal.next();
-        } else if (command == 'previous') {
-          Reveal.prev();
-        }
-        switch(command) {
-          case 'next':
-            Reveal.next();
-            break;
-          case 'previous':
-            Reveal.prev();
-            break;
-          case 'left':
-            Reveal.left();
-            break;
-          case 'right':
-            Reveal.right();
-            break;
-          case 'up':
-            Reveal.up();
-            break;
-          case 'down':
-            Reveal.down();
-            break;
-          case 'prevFragment':
-            Reveal.prevFragment();
-            break;
-          case 'nextFragment':
-            Reveal.nextFragment();
-            break;
-          case 'toggleOverview':
-            Reveal.toggleOverview();
-            break;
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    }
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
-  setTimeout(refresh, 2000);
 }
 
-refresh();
+/**
+ * Handle data-input from master, using Axios
+ */
+var revealMasterEventHandler = function (event) {
+  var request = {
+    command: event.type,
+    indexh: event.indexh,
+    indexv: event.indexv,
+    indexf: event.indexf ? event.indexf : 0
+  };
+  axios.get(location.origin + presentationAPIRoute, {
+      params: {
+        mode: 'set',
+        data: encodeURIComponent(JSON.stringify(request))
+      },
+      retry: 5,
+      retryDelay: presentationAPITimeout * 2.5
+    })
+    .then(function (response) {
+      var now = new Date();
+      console.info('Action at ' + ISODateString(now) + ', ' + response.data.command);
+    })
+    .catch(function (error) {
+      console.error(error);
+      showError('Connection failure.');
+    });
+};
+
+/**
+ * Handle changes in slave
+ */
+var revealSlaveEventHandler = function (event) {
+  var now = new Date();
+  console.info('Action at ' + ISODateString(now) + ', ' + event.type);
+};
+
+/* If Admin, handle input, otherwise poll server */
+var pollingErrors = 0;
+window.addEventListener("load", function (event) {
+  if (findGetParameter('admin') == 'yes') {
+    Reveal.addEventListener('slidechanged', revealMasterEventHandler);
+    Reveal.addEventListener('fragmentshown', revealMasterEventHandler);
+    Reveal.addEventListener('fragmenthidden', revealMasterEventHandler);
+  } else {
+    Reveal.addEventListener('slidechanged', revealSlaveEventHandler);
+    Reveal.addEventListener('fragmentshown', revealSlaveEventHandler);
+    Reveal.addEventListener('fragmenthidden', revealSlaveEventHandler);
+    poll();
+  }
+}, false);

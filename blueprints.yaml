@@ -1,5 +1,5 @@
 name: Presentation
-version: 0.0.5
+version: 0.0.6
 testing: true
 description: Responsive navigational slideshows with Reveal.js
 icon: arrows-alt
@@ -71,6 +71,30 @@ form:
         0: PLUGIN_ADMIN.DISABLED
       validate:
         type: bool
+    api_route:
+      type: text
+      label: PLUGIN_PRESENTATION.ADMIN.ASSETS.API_ROUTE.LABEL
+      description: PLUGIN_PRESENTATION.ADMIN.ASSETS.API_ROUTE.DESCRIPTION
+      validate:
+        type: string
+    poll_timeout:
+      type: range
+      label: PLUGIN_PRESENTATION.ADMIN.ASSETS.POLL_TIMEOUT.LABEL
+      description: PLUGIN_PRESENTATION.ADMIN.ASSETS.POLL_TIMEOUT.DESCRIPTION
+      validate:
+        type: int
+        min: 1000
+        max: 10000
+        step: 1000
+    poll_retry_limit:
+      type: number
+      label: PLUGIN_PRESENTATION.ADMIN.ASSETS.POLL_RETRY_LIMIT.LABEL
+      description: PLUGIN_PRESENTATION.ADMIN.ASSETS.POLL_RETRY_LIMIT.DESCRIPTION
+      validate:
+        type: int
+        min: 1
+        max: 10
+        step: 1
     styling:
       type: section
       title: PLUGIN_PRESENTATION.ADMIN.STYLING.TITLE

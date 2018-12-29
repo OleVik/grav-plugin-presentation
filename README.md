@@ -169,6 +169,17 @@ If the shortcode is found and applied, it is stripped from the further evaluated
 
 **Note**: The syntax is restricted to `[property=value]`. Quotes or other unexpected characters not conforming to alphanumerics or dashes will make the expression fail to pick up the shortcode. The `property` or `value` must basically conform to the [a-zA-Z0-9-]+ regular expression, separated by an equal-character (`=`) and wrapped in square brackets (`[]`). For testing, use [Regex101](https://regex101.com/r/GlH65o/1).
 
+#### Full background image or video with Reveal.js, through data-attributres
+
+Reveal.js supports easy usage of background images or videos for slides, with their [Slide background](https://github.com/hakimel/reveal.js/#slide-backgrounds). As well as inline styles through shortcodes, any property that begins with `data` is passed as a data-attribute to the slide, so you can do things like add a background video, like this:
+
+```
+[data-background-video=https://dl3.webmfiles.org/big-buck-bunny_trailer.webm]
+[data-background-video-loop=true]
+[data-background-video-muted=true]
+[data-background-size=contain]
+```
+
 ### Injecting Twig
 
 Using the `footer`-setting you can append a Twig-template to each section globally, or a specific page's section. For example, `footer: "partials/presentation_footer.html.twig"` will render the theme's `partials/presentation_footer.html.twig`-template and append it to the section(s). If the element was constructed like this: `<div class="footer">My footer</div>`, you could style it like this:
@@ -223,9 +234,11 @@ Each slide can have notes associated with it, like a PowerPoint-presentation wou
 
 ### Presenting
 
-The plugin, like the Reveal.js-library, makes available a Presenter-mode. There are two modes available for using this: Locally, with `sync: 'browser'`, or remotely, with `sync: 'api'`. When running locally, you need to access your presentation with a special URL -- `http://yourgrav.tld/book?admin=yes&showNotes=true` -- **and in a new window from the same browser** open the same URL without these parameters -- `http://yourgrav.tld/book`. 
+The plugin, like the Reveal.js-library, makes available a Presenter-mode. There are two modes available for using this: Locally, with `sync: 'browser'`, or remotely, with `sync: 'poll'`. When running locally, you need to access your presentation with a special URL -- `http://yourgrav.tld/book?admin=yes&showNotes=true` -- **and in a new window from the same browser** open the same URL without these parameters -- `http://yourgrav.tld/book`. 
 
-The synchronization between Presenter-mode and the Presentation happens by sending data from one browser-window to the other, requiring JavaScript. When running remotely, the synchronization happens by polling and checking if the presentation has changed. **Remote-mode is currently disabled.**
+The synchronization between Presenter-mode and the Presentation happens by sending data from one browser-window to the other, requiring JavaScript. When running remotely, the synchronization happens by polling and checking if the presentation has changed.
+
+**Note:** The polling approach needs a stable server to work, more so than Grav itself. It has been tested extensively with PHP 7.1 and 7.2, running on Caddy Server and with PHP's built-in server, with fairly standard production-setups of PHP. If your server-connection crashes with a 502 error -- usually with the error "No connection could be made because the target machine actively refused it.", it is because PHP is set up to forcibly time out despite being long-polled.
 
 ## Contributing
 
@@ -240,10 +253,13 @@ Use a SCSS-compiler, like [LibSass](https://github.com/sass/libsass), eg. [node-
 ## TODO
 
 - Test fontsizing
+  - Decide on FlowType or Modular Scaling
+    - Modular Scaling: Use ElementQueries on slide
 - Test responsive
 - Test print
   - Consider blueprint addition to presentation.yaml for quick-linking
-- Test API-sync
+- Replace `+++`-fragment with shortcodes
+- Token-auth polling (take from Stat API)
 
 ## Credits
 

@@ -10,9 +10,12 @@ textsize:
   scale: 1.667
   header: 3
   text: 0
-fontscale: false
+fontscale: true
 fontratio: 30
 sync: 'browser'
+api_route: 'presentationapi'
+poll_timeout: 2000
+poll_retry_limit: 10
 footer: ''
 transition: true
 shortcodes: true
@@ -26,3 +29,4 @@ options:
   transition: 'fade'
   controlsTutorial: 'false'
   history: 'true'
+  display: 'flex'

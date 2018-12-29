@@ -1,3 +1,19 @@
+# v0.0.6
+## 29-12-2018
+
+1. [](#new)
+    * Data-attributes from styles
+    * Enabled Poll API
+    * Added customizable API route, polling timeout
+    * Responsive media-queries
+2. [](#improved)
+    * Flexbox-structure on slides
+    * Renamed Push API to Poll API
+    * Renamed `sync`-setting from `api` to `poll`
+    * Poll API PHP, JS, blueprints
+    * Poll API resource-handling
+    * Presentation-template
+
 # v0.0.5
 ## 27-12-2018
 

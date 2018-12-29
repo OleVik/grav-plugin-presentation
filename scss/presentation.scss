@@ -59,6 +59,18 @@ $rhythm: 1.5em;
 				@include maximizeSize(true, true, #{$base*2}rem, #{$base*6}rem, false, true);
 				padding: #{$base*4}rem #{$base}rem #{$base*2}rem #{$base}rem !important;
 
+				@include media(">=small") {
+					$base: 1.5;
+					@include maximizeSize(true, true, #{$base*2}rem, #{$base*6}rem, false, true);
+					padding: #{$base*4}rem #{$base}rem #{$base*2}rem #{$base}rem !important;
+				}
+
+				@include media(">=medium") {
+					$base: 2;
+					@include maximizeSize(true, true, #{$base*2}rem, #{$base*6}rem, false, true);
+					padding: #{$base*4}rem #{$base}rem #{$base*2}rem #{$base}rem !important;
+				}
+
 				@include media(">=massive") {
 					$base: 3;
 					@include maximizeSize(true, true, #{$base*2}rem, #{$base*6}rem, false, true);
@@ -90,6 +102,10 @@ $rhythm: 1.5em;
 	.slides {
 		section {
 			section {
+				display: flex;
+				align-items: center;
+				justify-content: flex-start;
+				flex-direction: column;
 				font-size: 2rem;
 
 				@include media(">=massive") {
@@ -105,10 +121,10 @@ $rhythm: 1.5em;
 				canvas {
 					display: block;
 					width: auto;
-					height: 100%;
+					height: fit-content;
 					max-width: 100%;
 					max-height: 100%;
-					margin: 0 auto;
+					margin: auto 0;
 				}
 
 				blockquote {
@@ -196,6 +212,40 @@ $rhythm: 1.5em;
 	right: 0.25rem;
 	bottom: 0.25rem;
 	z-index: 9999;
+}
+
+#snackbar {
+	visibility: hidden;
+	color: #ffffff;
+	background-color: #dc3545;
+	text-align: center;
+	border-radius: 0.125em;
+	padding: 1em;
+	position: fixed;
+	z-index: 9999;
+	left: 2.5%;
+	bottom: 2.5%;
+
+	&.visible {
+		visibility: visible !important;
+		-webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+		animation: fadein 0.5s, fadeout 0.5s 2.5s;
+	}
+
+	a,
+	a:link,
+	a:visited,
+	a:hover,
+	a:active {
+		color: #ffffff;
+		font-weight: bold;
+		text-decoration: none;
+	}
+
+	a:hover,
+	a:active {
+		text-decoration: underline;
+	}
 }
 
 /* Include theme template */

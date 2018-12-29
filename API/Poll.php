@@ -1,12 +1,12 @@
 <?php
 /**
- * Presentation Plugin, Push API
+ * Presentation Plugin, Poll API
  *
  * PHP version 7
  *
  * @category   API
  * @package    Grav\Plugin\PresentationPlugin
- * @subpackage Grav\Plugin\PresentationPlugin\Push
+ * @subpackage Grav\Plugin\PresentationPlugin\Poll
  * @author     Ole Vik <git@olevik.net>
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @link       https://github.com/OleVik/grav-plugin-presentation
@@ -15,9 +15,9 @@
 namespace Grav\Plugin\PresentationPlugin\API;
 
 /**
- * Push API
+ * Poll API
  *
- * Simple REST API for communicating commands between pages
+ * Simple REST API for communicating Event Data between pages
  *
  * @category Extensions
  * @package  Grav\Plugin\PresentationPlugin
@@ -25,10 +25,10 @@ namespace Grav\Plugin\PresentationPlugin\API;
  * @license  http://www.opensource.org/licenses/mit-license.html MIT License
  * @link     https://github.com/OleVik/grav-plugin-presentation
  */
-class Push
+class Poll
 {
     /**
-     * Initiate Push Storage
+     * Initiate Poll Storage
      *
      * @param string $directory Path to directory.
      * @param string $file      Filename.
@@ -41,15 +41,15 @@ class Push
     }
 
     /**
-     * Set Push Command
+     * Set Poll Event Data
      *
-     * @param string $command Command to execute.
+     * @param string $data Event Data to execute.
      *
      * @throws Exception Errors from file operations.
      *
      * @return bool State of execution.
      */
-    public function set($command)
+    public function set($data)
     {
         try {
             if (!is_writable($this->directory)) {
@@ -60,7 +60,6 @@ class Push
                 }
             }
             try {
-                $data = json_encode($command);
                 file_put_contents($this->directory . $this->DS . $this->file, $data);
                 echo $data;
                 return true;
@@ -74,11 +73,11 @@ class Push
     }
 
     /**
-     * Get Push Command
+     * Get Poll Event Data
      *
      * @throws Exception Errors from file operations.
      *
-     * @return bool Command to execute.
+     * @return bool State of execution.
      */
     public function get()
     {
@@ -88,6 +87,9 @@ class Push
                 $data = file_get_contents($target);
                 echo $data;
                 return true;
+            } else {
+                echo '100 Continue';
+                return false;
             }
         } catch (\Exception $e) {
             throw new \Exception($e);
@@ -95,7 +97,7 @@ class Push
     }
 
     /**
-     * Remove Push Command
+     * Remove Poll Event Data
      *
      * @throws Exception Errors from file operations.
      *
@@ -105,9 +107,12 @@ class Push
     {
         try {
             $target = $this->directory . $this->DS . $this->file;
-            unlink($target);
-            echo 'removed ' . $this->file;
-            return true;
+            if (file_exists($target)) {
+                unlink($target);
+                return true;
+            } else {
+                return false;
+            }
         } catch (\Exception $e) {
             throw new \Exception($e);
         }

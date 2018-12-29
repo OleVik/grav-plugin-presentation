@@ -39,6 +39,15 @@ en:
           OPTIONS:
             BROWSER: Locally (Browser)
             API: Remotely (API)
+        API_ROUTE:
+          LABEL: API Route
+          DESCRIPTION: Route for API-access.
+        POLL_TIMEOUT:
+          LABEL: Poll Timeout
+          DESCRIPTION: Milliseconds to wait between each API-query.
+        POLL_RETRY_LIMIT:
+          LABEL: Poll Retry Limit
+          DESCRIPTION: Number of times to retry on error before cancelling API-querying.
         FOOTER:
           LABEL: Inject Twig-footer
           DESCRIPTION: "Render a theme's Twig-template and append it to each section, eg. 'partials/presentation_footer.html.twig'."

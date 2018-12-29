@@ -14,6 +14,7 @@
 
 namespace Grav\Plugin\PresentationPlugin\API;
 
+use Grav\Common\Utils;
 use Michelf\SmartyPants;
 
 /**
@@ -43,7 +44,7 @@ class Content
      * @param object $grav   Grav-instance
      * @param array  $config Plugin configuration
      */
-    public function __construct($grav, $config)
+    public function __construct(object $grav, array $config)
     {
         $this->grav = $grav;
         $this->config = $config;
@@ -251,9 +252,9 @@ class Content
         echo 'class="' . $config['class'] . '" ';
         echo 'data-title="' . $page['title'] . '"';
         if (!empty($config['styles'])) {
-            echo ' style="';
-            echo self::inlineStyles($config['styles'], $config['route']);
-            echo '"';
+            // echo ' style="';
+            echo self::inlineStylesData($config['styles'], $config['route']);
+            // echo '"';
         }
         if (isset($page['header']->textsize['scale'])) {
             echo ' data-textsize-scale="' . $page['header']->textsize['scale'] . '"';
@@ -365,24 +366,26 @@ class Content
     }
 
     /**
-     * Process styles
+     * Process styles and data-attributes
      *
-     * @param array  $styles List of key-value pairs
-     * @param string $route  Route to Page for relative assets
+     * @param array  $data  List of key-value pairs
+     * @param string $route Route to Page for relative assets
      *
      * @return string Processed styles, in inline string
      */
-    public static function inlineStyles(array $styles, string $route)
+    public static function inlineStylesData(array $styles, string $route)
     {
-        $return = '';
+        $inline = $data = '';
         foreach ($styles as $property => $value) {
             if ($property == 'background-image') {
-                $return .= $property . ': url(' . $route . '/' . $value . ');';
+                $inline .= $property . ': url(' . $route . '/' . $value . ');';
+            } elseif (Utils::startsWith($property, 'data')) {
+                $data .= ' ' . $property . '="' . $value . '"';
             } else {
-                $return .= $property . ': ' . $value . ';';
+                $inline .= $property . ': ' . $value . ';';
             }
         }
-        return $return;
+        return ' style="' . $inline . '"' . $data;
     }
 
     /**

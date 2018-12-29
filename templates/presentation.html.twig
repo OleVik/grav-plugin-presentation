@@ -67,12 +67,17 @@
       {% endif %}
     {% endblock %}
     {% block scripts %}
+      {% do assets.addInlineJs('const reveal_init = ' ~ reveal_init ~ ';') %}
+      {% do assets.addInlineJs('const presentationAPIRoute = "/' ~ config.plugins['presentation'].api_route ~ '";') %}
+      {% do assets.addInlineJs('const presentationAPITimeout = ' ~ config.plugins['presentation'].poll_timeout ~ ';') %}
+      {% do assets.addInlineJs('const presentationAPIRetryLimit = ' ~ config.plugins['presentation'].poll_retry_limit ~ ';') %}
       {% if config.plugins['presentation'].builtin_js %}
         {% do assets.addJs('plugin://presentation/node_modules/reveal.js/lib/js/head.min.js', {'group': 'presentation'}) %}
         {% do assets.addJs('plugin://presentation/node_modules/reveal.js/js/reveal.js', {'group': 'presentation'}) %}
         {% do assets.addJs('plugin://presentation/node_modules/axios/dist/axios.min.js', {'group': 'presentation'}) %}
         {% do assets.addJs('plugin://presentation/node_modules/css-element-queries/src/ResizeSensor.js', {'group': 'presentation'}) %}
         {% do assets.addJs('plugin://presentation/node_modules/css-element-queries/src/ElementQueries.js', {'group': 'presentation'}) %}
+        {% do assets.addJs('plugin://presentation/js/presentation.js', {'group': 'presentation'}) %}
       {% endif %}
       {% if config.plugins['presentation'].fontscale %}
         {% do assets.addJs('plugin://presentation/js/FlowType.js', {'group': 'presentation'}) %}
@@ -85,64 +90,23 @@
     {% endblock %}
     {{ assets.js('presentation')|raw }}
     <script type="text/javascript">
-    var reveal_init = {{ reveal_init }};
     window.addEventListener("load", function(event) {
       Reveal.initialize(reveal_init);
     }, false);
-    </script>
-    {% if config.plugins['presentation'].sync == 'browser' %}
-    <script type="text/javascript">
-    function findGetParameter(parameterName) {
-      var result = null,
-          tmp = [];
-      location.search
-          .substr(1)
-          .split("&")
-          .forEach(function (item) {
-            tmp = item.split("=");
-            if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
-          });
-      return result;
-    }
-    function GetClock() {
-      var d = new Date();
-      var nhour = d.getHours();
-      var nmin = d.getMinutes();
-      var nsec = d.getSeconds();
-      if (nmin <= 9) {
-        nmin = "0" + nmin;
-      }
-      if (nsec <= 9) {
-        nsec = "0" + nsec;
-      }
-      var clocktext = "" + nhour + ":" + nmin + ":" + nsec + "";
-      document.getElementById('clockbox').innerHTML=clocktext;
-    }
 
     ElementQueries.listen();
-
-    var bc = new BroadcastChannel('grav-presentation');
+    
     window.addEventListener("load", function(event) {
+      /*setTimeout(function() {
+        showError('Connection failure.');
+      }, 5000);*/
       if (findGetParameter('admin') == 'yes') {
-        Reveal.addEventListener('slidechanged', function( event ) {
-          bc.postMessage({
-            indexh: event.indexh,
-            indexv: event.indexv,
-            indexf: typeof event.indexf !== 'undefined' ? event.indexf : 0 
-          });
-        });
         Reveal.addEventListener('ready', function(event) {
-          if (findGetParameter('admin') == 'yes') {
-            var body = document.getElementById('top');
-            body.insertAdjacentHTML('beforeend', '<div id="clockbox"></div>');
-            GetClock();
-            setInterval(GetClock, 1000);
-          }
+          var body = document.getElementById('top');
+          body.insertAdjacentHTML('beforeend', '<div id="clockbox"></div>');
+          initClock();
+          setInterval(initClock, 1000);
         });
-      } else {
-        bc.onmessage = function (event) {
-          Reveal.slide(event.data.indexh, event.data.indexv, event.data.indexf);
-        }
       }
 
       Reveal.addEventListener('ready', function(event) {
@@ -151,16 +115,21 @@
             window.flowtype( el, {fontRatio: el.dataset.fontratio} );
         });
       });
-
     }, false);
     </script>
-    {% elseif config.plugins['presentation'].sync == 'api' %}
-        {% do assets.addJs('plugin://presentation/js/poll.js', {'group': 'bottom'}) %}
+    {% if config.plugins['presentation'].sync == 'browser' %}
+      {% do assets.addJs('plugin://presentation/js/broadcast.js', {'group': 'bottom'}) %}
+    {% elseif config.plugins['presentation'].sync == 'poll' %}
+      {% do assets.addJs('plugin://presentation/js/poll.js', {'group': 'bottom'}) %}
     {% endif %}
     {% if config.system.debugger.enabled %}
       {{ assets.css() }}
       {{ assets.js() }}
     {% endif %}
     {{ assets.js('bottom') }}
+    <div id="snackbar">
+      <span id="snackbar-message"></span>
+      <a href="javascript:window.location.reload(true)">Reload?</a>
+    </div>
   </body>
 </html>
