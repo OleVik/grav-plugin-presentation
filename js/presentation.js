@@ -59,9 +59,40 @@ function initClock() {
  */
 function ISODateString(d) {
   function pad(n) {
-    return n < 10 ? '0' + n : n
+    return n < 10 ? '0' + n : n;
   }
-  return pad(d.getUTCHours()) + ':' +
-    pad(d.getUTCMinutes()) + ':' +
-    pad(d.getUTCSeconds())
+  return pad(d.getHours()) + ':' +
+    pad(d.getMinutes()) + ':' +
+    pad(d.getSeconds());
+}
+
+/**
+ * Check if number is in range
+ * @param {int} x Number to check
+ * @param {int} min Minimum
+ * @param {int} max Maximum
+ * @deprecated 0.0.7
+ */
+function between(x, min, max) {
+  return x >= min && x < max;
+}
+
+/**
+ * Check if an element overflows
+ * @param {HTMLElement} el Element to check
+ * @see https://stackoverflow.com/a/143889/603387
+ * @deprecated 0.0.7
+ */
+function checkOverflow(el) {
+  var curOverflow = el.style.overflow;
+
+  if (!curOverflow || curOverflow === "visible")
+    el.style.overflow = "hidden";
+
+  var isOverflowing = el.clientWidth < el.scrollWidth ||
+    el.clientHeight < el.scrollHeight;
+
+  el.style.overflow = curOverflow;
+
+  return isOverflowing;
 }

@@ -1,3 +1,18 @@
+# v0.0.7
+## 05-01-2019
+
+1. [](#new)
+    * Dynamic, responsive text-sizing
+    * Switch to border-box sizing
+    * Token-auth for Poll API and Broadcast Channel
+    * Fragment-handling
+2. [](#improved)
+    * Content-handling
+    * Responsive styling
+    * Poll API garbage collection and stability
+    * Made API Route configurable
+    * Blueprints and languages
+
 # v0.0.6
 ## 29-12-2018
 

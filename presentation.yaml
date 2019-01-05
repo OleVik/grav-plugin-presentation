@@ -6,16 +6,14 @@ order:
 theme_css: true
 builtin_css: true
 builtin_js: true
-textsize:
-  scale: 1.667
-  header: 3
-  text: 0
-fontscale: true
-fontratio: 30
+textsizing: true
+textsizing_factor: 1.25
 sync: 'browser'
 api_route: 'presentationapi'
 poll_timeout: 2000
 poll_retry_limit: 10
+token_auth: 0
+token: Hd4HFdPvbpKzTqz
 footer: ''
 transition: true
 shortcodes: true

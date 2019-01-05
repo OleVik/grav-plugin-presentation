@@ -37,6 +37,9 @@ class Content
     const REGEX_IMG_P = "/<p>\s*?(<a .*<img.*<\/a>|<img.*)?\s*<\/p>/";
     const REGEX_IMG_TITLE = "/<img[^>]*?title[ ]*=[ ]*[\"](.*?)[\"][^>]*?>/";
     const REGEX_IMG_WRAPPING_LINK = '/\[(?\'image\'\!.*)\]\((?\'url\'https?:\/\/.*)\)/';
+    const REGEX_FRAGMENT_SHORTCODE = '~\[fragment=*([a-zA-Z-]*)\](.*)\[\/fragment\]~im';
+    const REGEX_P_EMPTY = '/<p[^>]*>\n* *<\/p[^>]*>/im';
+    const REGEX_SHORTCODES = '~((?:\[\s*(?<name>[a-zA-Z0-9-_]+)\s*(?:\=\s*(?<bbCode>\"(?:[^\"\\\\]*(?:\\\\.[^\"\\\\]*)*)\"|((?:(?!=\s*|\]|\/\])[^\s])+)))?\s*(?<parameters>(?:\s*(?:\w+(?:\s*\=\s*\"(?:[^\"\\\\]*(?:\\\\.[^\"\\\\]*)*)\"|\s*\=\s*((?:(?!=\s*|\]|\/\])[^\s])+)|(?=\s|\]|\/\s*\]|$))))*)\s*(?:\](?<content>.*?)\[\s*(?<markerContent>\/)\s*(\k<name>)\s*\]|\]|(?<marker>\/)\s*\])))~u';
 
     /**
      * Instantiate Presentation Utilities
@@ -48,6 +51,7 @@ class Content
     {
         $this->grav = $grav;
         $this->config = $config;
+        $this->parsedown = new \Parsedown();
     }
 
     /**
@@ -104,9 +108,6 @@ class Content
                     ['page' => $page]
                 );
             }
-            if (isset($page->header()->horizontal)) {
-                $paths[$route]['horizontal'] = $page->header()->horizontal;
-            }
             if (isset($page->header()->styles)) {
                 $paths[$route]['style'] = $page->header()->styles;
             } elseif (isset($config['style'])) {
@@ -137,7 +138,6 @@ class Content
      */
     public function buildContent($pages)
     {
-        $parsedown = new \Parsedown();
         include_once __DIR__ . '/../vendor/autoload.php';
         $return = '';
         foreach ($pages as $route => $page) {
@@ -146,8 +146,11 @@ class Content
             $styles = array();
             $config = $this->config;
             $config['route'] = $route;
-            $content = $parsedown->text($page['content']);
-            $content = str_replace('<p></p>', '', $content);
+            $content = $page['content'];
+            if (preg_match(self::REGEX_FRAGMENT_SHORTCODE, $content)) {
+                $content = $this->processFragments($content);
+            }
+            $content = $this->parsedown->text($content);
             $breaks = explode('<hr />', $content);
             if (count($breaks) > 0) {
                 $this->breakContent($page, $config, $breaks);
@@ -226,10 +229,7 @@ class Content
                     $config['class'] .= ' ' . $item;
                 }
             }
-            if (strpos($break, '<p>+++</p>') !== false) {
-                $fragments = explode('<p>+++</p>', $break);
-                $this->buildFragments($page, $config, $fragments);
-            } elseif ($hide !== true) {
+            if ($hide !== true) {
                 $this->buildSlide($page, $config, $break);
             }
             $index++;
@@ -257,46 +257,16 @@ class Content
             // echo '"';
         }
         if (isset($page['header']->textsize['scale'])) {
-            echo ' data-textsize-scale="' . $page['header']->textsize['scale'] . '"';
-            if (isset($page['header']->textsize['header']) && is_int($page['header']->textsize['header'])) {
-                echo ' data-textsize-header="' . $page['header']->textsize['header'] . '"';
+            echo ' data-textsize-scale="' . (int) $page['header']->textsize['scale'] . '"';
+            if (isset($page['header']->textsize['base'])) {
+                echo ' data-textsize-base="' . (int) $page['header']->textsize['base'] . '"';
             }
-            if (isset($page['header']->textsize['text']) && is_int($page['header']->textsize['text'])) {
-                echo ' data-textsize-text="' . $page['header']->textsize['text'] . '"';
-            }
-        }
-        if ($config['fontscale'] == true || isset($page['header']->fontscale)) {
-            if (isset($page['header']->fontratio)) {
-                $config['fontratio'] = $page['header']->fontratio;
-            }
-            echo ' data-fontratio="' . $config['fontratio'] . '"';
         }
         echo '>';
-        echo str_replace('<p></p>', '', $break);
+        $break = preg_replace(self::REGEX_P_EMPTY, '', $break);
+        echo $break;
         if (isset($page['footer'])) {
             echo $page['footer'];
-        }
-        echo '</section>';
-    }
-    
-    /**
-     * Create HTML for fragments
-     *
-     * @param object $page      Grav Page-instance
-     * @param array  $config    Plugin- and slide-configuration
-     * @param array  $fragments Fragments from Markdown
-     *
-     * @return void
-     */
-    public function buildFragments($page, $config, $fragments)
-    {
-        echo '<section id="' . $config['id'] . ' ';
-        echo 'class="' . $config['class'] . '" ';
-        echo 'data-title="' . $page['title'] . '">';
-        foreach ($fragments as $fragment) {
-            echo '<span class="fragment fade-in-then-out">';
-            echo $fragment;
-            echo '</span>';
         }
         echo '</section>';
     }
@@ -311,23 +281,49 @@ class Content
     public function interpretShortcodes($content)
     {
         $return = array();
-        $re = '~((?:\[\s*(?<name>[a-zA-Z0-9-_]+)\s*(?:\=\s*(?<bbCode>\"(?:[^\"\\\\]*(?:\\\\.[^\"\\\\]*)*)\"|((?:(?!=\s*|\]|\/\])[^\s])+)))?\s*(?<parameters>(?:\s*(?:\w+(?:\s*\=\s*\"(?:[^\"\\\\]*(?:\\\\.[^\"\\\\]*)*)\"|\s*\=\s*((?:(?!=\s*|\]|\/\])[^\s])+)|(?=\s|\]|\/\s*\]|$))))*)\s*(?:\](?<content>.*?)\[\s*(?<markerContent>\/)\s*(\k<name>)\s*\]|\]|(?<marker>\/)\s*\])))~u';
-        preg_match_all($re, $content, $matches, PREG_SET_ORDER, 0);
+        preg_match_all(
+            self::REGEX_SHORTCODES,
+            $content,
+            $matches,
+            PREG_SET_ORDER,
+            0
+        );
         if (!empty($matches)) {
             foreach ($matches as $match) {
                 $name = $match['name'];
                 $value = $match['bbCode'];
                 $content = str_replace($match[0], '', $content);
-                if ($name == 'class') {
+                $this->grav['debugger']->addMessage($name);
+                if (Utils::startsWith($name, 'class')) {
                     $return['class'] = $value;
-                } elseif ($name == 'hide') {
+                } elseif (Utils::startsWith($name, 'hide')) {
                     $return['hide'] = true;
-                } else {
+                } elseif (Utils::startsWith($name, 'style')) {
+                    $name = str_replace('style-', '', $name);
+                    $return['styles'][$name] = $value;
+                } elseif (Utils::startsWith($name, 'data')) {
                     $return['styles'][$name] = $value;
                 }
             }
         }
         return ['content' => $content, 'props' => $return];
+    }
+
+    /**
+     * Create HTML for fragments
+     *
+     * @param string $content Markdown content in Page
+     *
+     * @return string Processed contents
+     */
+    public function processFragments($content)
+    {
+        $content = preg_replace(
+            self::REGEX_FRAGMENT_SHORTCODE,
+            '<span class="fragment \\1">\\2</span>',
+            $content
+        );
+        return $content;
     }
 
     /**

@@ -54,14 +54,21 @@ var revealMasterEventHandler = function (event) {
     indexv: event.indexv,
     indexf: event.indexf ? event.indexf : 0
   };
-  axios.get(location.origin + presentationAPIRoute, {
-      params: {
-        mode: 'set',
-        data: encodeURIComponent(JSON.stringify(request))
-      },
-      retry: 5,
-      retryDelay: presentationAPITimeout * 2.5
-    })
+
+  if (presentationAPIAuth == '1') {
+    if (findGetParameter('token') !== presentationAuthToken) {
+      return;
+    }
+  }
+
+  axios.defaults.params = {
+    mode: 'set',
+    data: encodeURIComponent(JSON.stringify(request))
+  };
+  if (presentationAuthToken) {
+    axios.defaults.params['token'] = presentationAuthToken;
+  }
+  axios.get(location.origin + presentationAPIRoute)
     .then(function (response) {
       var now = new Date();
       console.info('Action at ' + ISODateString(now) + ', ' + response.data.command);

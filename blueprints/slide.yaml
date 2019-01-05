@@ -29,43 +29,16 @@ form:
                   help: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.SCALE.HELP
                   description: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.SCALE.DESCRIPTION
                   data-options@: '\Grav\Plugin\PresentationPlugin::getModularScaleBlueprintOptions'
-                header.textsize.header:
-                  type: range
-                  label: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.HEADER.LABEL
-                  help: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.HEADER.HELP
-                  description: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.HEADER.DESCRIPTION
-                  default: 3
+                header.textsize.base:
+                  type: number
+                  label: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.BASE.LABEL
+                  help: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.BASE.HELP
+                  description: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.BASE.DESCRIPTION
                   validate:
-                    min: -6
-                    max: 16
-                header.textsize.text:
-                  type: range
-                  label: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.TEXT.LABEL
-                  help: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.TEXT.HELP
-                  description: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.TEXT.DESCRIPTION
-                  default: 0
-                  validate:
-                    min: -6
-                    max: 16
-                header.autoscale:
-                  type: toggle
-                  label: PLUGIN_PRESENTATION.ADMIN.AUTOSCALE.LABEL
-                  help: PLUGIN_PRESENTATION.ADMIN.AUTOSCALE.HELP
-                  default: 0
-                  options:
-                    1: PLUGIN_ADMIN.YES
-                    0: PLUGIN_ADMIN.NO
-                  validate:
-                    type: bool
-                header.fontratio:
-                  type: range
-                  label: PLUGIN_PRESENTATION.ADMIN.FONTRATIO.LABEL
-                  help: PLUGIN_PRESENTATION.ADMIN.FONTRATIO.HELP
-                  description: PLUGIN_PRESENTATION.ADMIN.FONTRATIO.DESCRIPTION
-                  default: 30
-                  validate:
-                    min: 1
-                    max: 100
+                    type: int
+                    min: 16
+                    max: 160
+                    step: 2
             style:
               type: section
               title: PLUGIN_PRESENTATION.ADMIN.STYLE.TITLE

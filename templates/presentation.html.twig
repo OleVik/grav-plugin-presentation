@@ -71,16 +71,20 @@
       {% do assets.addInlineJs('const presentationAPIRoute = "/' ~ config.plugins['presentation'].api_route ~ '";') %}
       {% do assets.addInlineJs('const presentationAPITimeout = ' ~ config.plugins['presentation'].poll_timeout ~ ';') %}
       {% do assets.addInlineJs('const presentationAPIRetryLimit = ' ~ config.plugins['presentation'].poll_retry_limit ~ ';') %}
+      {% do assets.addInlineJs('const presentationAPIAuth = ' ~ config.plugins['presentation'].token_auth ~ ';') %}
+      {% if uri.query('admin') == true %}
+        {% do assets.addInlineJs('const presentationAuthToken = "' ~ config.plugins['presentation'].token ~ '";') %}
+      {% endif %}
       {% if config.plugins['presentation'].builtin_js %}
         {% do assets.addJs('plugin://presentation/node_modules/reveal.js/lib/js/head.min.js', {'group': 'presentation'}) %}
         {% do assets.addJs('plugin://presentation/node_modules/reveal.js/js/reveal.js', {'group': 'presentation'}) %}
         {% do assets.addJs('plugin://presentation/node_modules/axios/dist/axios.min.js', {'group': 'presentation'}) %}
         {% do assets.addJs('plugin://presentation/node_modules/css-element-queries/src/ResizeSensor.js', {'group': 'presentation'}) %}
-        {% do assets.addJs('plugin://presentation/node_modules/css-element-queries/src/ElementQueries.js', {'group': 'presentation'}) %}
         {% do assets.addJs('plugin://presentation/js/presentation.js', {'group': 'presentation'}) %}
       {% endif %}
-      {% if config.plugins['presentation'].fontscale %}
-        {% do assets.addJs('plugin://presentation/js/FlowType.js', {'group': 'presentation'}) %}
+      {% if config.plugins['presentation'].textsizing %}
+        {% do assets.addInlineJs('const presentationTextsizingFactor = ' ~ config.plugins['presentation'].textsizing_factor ~ ';') %}
+        {% do assets.addJs('plugin://presentation/js/modularscale.js', {'group': 'bottom'}) %}
       {% endif %}
       {% if config.plugins['nomnoml-uml-diagrams'].enabled %}
         {% do assets.addJs('plugin://nomnoml-uml-diagrams/js/lodash.min.js', {'group': 'presentation'}) %}
@@ -93,13 +97,7 @@
     window.addEventListener("load", function(event) {
       Reveal.initialize(reveal_init);
     }, false);
-
-    ElementQueries.listen();
-    
     window.addEventListener("load", function(event) {
-      /*setTimeout(function() {
-        showError('Connection failure.');
-      }, 5000);*/
       if (findGetParameter('admin') == 'yes') {
         Reveal.addEventListener('ready', function(event) {
           var body = document.getElementById('top');
@@ -108,13 +106,6 @@
           setInterval(initClock, 1000);
         });
       }
-
-      Reveal.addEventListener('ready', function(event) {
-        var els = document.getElementsByClassName("fontscale");
-        Array.prototype.forEach.call(els, function(el) {
-            window.flowtype( el, {fontRatio: el.dataset.fontratio} );
-        });
-      });
     }, false);
     </script>
     {% if config.plugins['presentation'].sync == 'browser' %}

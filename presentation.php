@@ -44,10 +44,9 @@ class PresentationPlugin extends Plugin
     /**
      * Grav cache setting
      *
-     * @var [type]
+     * @var bool
      */
     protected $cache;
-    protected $route = 'presentationapi';
 
     /**
      * Register intial event
@@ -116,7 +115,8 @@ class PresentationPlugin extends Plugin
         $page = $this->grav['page'];
         $url = $page->url(true, true, true);
         $config = $this->config();
-        if ($config['sync'] == 'poll' && $uri->path() == '/' . $this->route) {
+        include_once __DIR__ . '/Utilities.php';
+        if ($config['sync'] == 'poll' && $uri->path() == '/' . $config['api_route']) {
             set_time_limit(0);
             header('Cache-Control: no-cache, no-store, max-age=0, must-revalidate');
             header('Pragma: no-cache');
@@ -128,7 +128,9 @@ class PresentationPlugin extends Plugin
             $target = $res->findResource('cache://') . '/presentation';
             include_once __DIR__ . '/API/Poll.php';
             $poll = new Poll($target, 'Poll.json');
+            gc_enable();
             if ($_GET['mode'] == 'set' && isset($_GET['data'])) {
+                Utilities::authorize($config['token']);
                 $poll->remove();
                 header('Content-Type:text/plain');
                 header('HTTP/1.1 202 Accepted');
@@ -138,12 +140,15 @@ class PresentationPlugin extends Plugin
                 header('HTTP/1.1 200 OK');
                 $poll->get();
             } elseif ($_GET['mode'] == 'remove') {
+                Utilities::authorize($config['token']);
                 header('Content-Type:text/plain');
                 header('HTTP/1.1 200 OK');
                 $poll->remove();
             }
+            $poll = null;
             unset($poll);
-            clearstatcache();
+            gc_collect_cycles();
+            gc_disable();
             exit();
         }
     }
@@ -163,7 +168,6 @@ class PresentationPlugin extends Plugin
             if (!isset($this->grav['twig']->twig_vars['reveal_init'])) {
                 $content = new Content($grav, $config);
                 $tree = $content->buildTree($grav['page']->route());
-                // dump($tree);
                 $slides = $content->buildContent($tree);
                 $grav['page']->setRawContent($slides);
                 $menu = $content->buildMenu($tree);

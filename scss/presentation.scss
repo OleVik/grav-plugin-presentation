@@ -6,9 +6,10 @@
 @import "../node_modules/reveal.js/css/theme/template/mixins";
 @import "../node_modules/reveal.js/css/theme/template/settings";
 @import "../node_modules/include-media/dist/include-media";
+@import "../node_modules/bootstrap/scss/bootstrap-reboot.scss";
 
-$breakpoints: (extrasmall: 576px, small: 576px, medium: 768px, large: 992px, extralarge: 1200px, massive: 1600px);
-$rhythm: 1.5em;
+/* Responsive breakpoints */
+$breakpoints: (extrasmall: 320px, small: 576px, medium: 768px, large: 992px, extralarge: 1200px, massive: 1600px);
 
 @mixin maximizeSize($width: true, $height: true, $widthModifier: '0px', $heightModifier: '0px', $viewportWidth: false, $viewportHeight: false) {
 	@if ($width) {
@@ -55,25 +56,42 @@ $rhythm: 1.5em;
 			@include maximizeSize(true, true, '0px', '0px', true, true);
 
 			section {
-				$base: 2;
-				@include maximizeSize(true, true, #{$base*2}rem, #{$base*6}rem, false, true);
+				$base: 1.75;
+				@include maximizeSize(true, true);
 				padding: #{$base*4}rem #{$base}rem #{$base*2}rem #{$base}rem !important;
+
+				@include media("<extrasmall") {
+					$base: 0.5;
+					padding: #{$base*2}rem #{$base}rem #{$base}rem #{$base}rem !important;
+				}
+
+				@include media(">=extrasmall") {
+					$base: 1;
+					padding: #{$base*2}rem #{$base}rem #{$base}rem #{$base}rem !important;
+				}
 
 				@include media(">=small") {
 					$base: 1.5;
-					@include maximizeSize(true, true, #{$base*2}rem, #{$base*6}rem, false, true);
-					padding: #{$base*4}rem #{$base}rem #{$base*2}rem #{$base}rem !important;
+					padding: #{$base*3}rem #{$base}rem #{$base*2}rem #{$base}rem !important;
 				}
 
 				@include media(">=medium") {
+					$base: 1.75;
+					padding: #{$base*4}rem #{$base}rem #{$base*2}rem #{$base}rem !important;
+				}
+
+				@include media(">=large") {
 					$base: 2;
-					@include maximizeSize(true, true, #{$base*2}rem, #{$base*6}rem, false, true);
+					padding: #{$base*4}rem #{$base}rem #{$base*2}rem #{$base}rem !important;
+				}
+
+				@include media(">=extralarge") {
+					$base: 2.25;
 					padding: #{$base*4}rem #{$base}rem #{$base*2}rem #{$base}rem !important;
 				}
 
 				@include media(">=massive") {
-					$base: 3;
-					@include maximizeSize(true, true, #{$base*2}rem, #{$base*6}rem, false, true);
+					$base: 2.5;
 					padding: #{$base*4}rem #{$base}rem #{$base*2}rem #{$base}rem !important;
 				}
 
@@ -83,13 +101,41 @@ $rhythm: 1.5em;
 				}
 
 				&.skinny {
-					@include maximizeSize(true, true, '2rem', '2rem', true, true);
+					@include maximizeSize(true, true, '0px', '0px', true, true);
 					padding: 1rem !important;
 				}
 
 				&.end {
-					@include maximizeSize(true, true, '4rem', '4rem', true, true);
+					@include maximizeSize(true, true, '0px', '0px', true, true);
 					padding: 2rem 2rem !important;
+				}
+
+				h1 {
+					margin-bottom: 0.8rem;
+				}
+
+				h2 {
+					margin-bottom: 0.7rem;
+				}
+
+				h3 {
+					margin-bottom: 0.6rem;
+				}
+
+				h4 {
+					margin-bottom: 0.5rem;
+				}
+
+				h5 {
+					margin-bottom: 0.4rem;
+				}
+
+				h6 {
+					margin-bottom: 0.3rem;
+				}
+
+				blockquote {
+					margin: 0.75rem;
 				}
 			}
 		}
@@ -120,8 +166,9 @@ $rhythm: 1.5em;
 				img,
 				canvas {
 					display: block;
+					object-fit: initial;
 					width: auto;
-					height: fit-content;
+					height: auto;
 					max-width: 100%;
 					max-height: 100%;
 					margin: auto 0;

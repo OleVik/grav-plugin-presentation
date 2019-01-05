@@ -136,7 +136,7 @@ style:
   color: green
 ```
 
-That is, mapping each property to a value, not as a list. The same could be set for any single slide using `[color=green]`, as described below. Styles are given precedence by where they appear, so the plugins looks for them in this order:
+That is, mapping each property to a value, not as a list. The same could be set for any single slide using `[style-color=green]`, as described below. Styles are given precedence by where they appear, so the plugins looks for them in this order:
 
 1. Plugin-settings
 2. Page FrontMatter
@@ -156,18 +156,29 @@ You can of course also style the plugin using your theme's /css/custom.css-file,
 }
 ```
 
+#### Fitting text to a slide
+
+The plugin makes available a method of dynamically scaling text within a slide, which is similar yet distinct from what happens in PowerPoint 2016. Rather than do this scaling entirely automatically, which tends to work poorly across devices and resolutions, you set a _scale_ and a _base_, eg.:
+
+[data-textsize-scale=1.125]
+[data-textsize-base=16]
+
+If Textsizing is enabled in the plugin's options, the relation between block text -- any text not in a header-element -- and header-text (`h1`, `h2`, `h3`, `h4`, `h5`, `h6`) is determined by the `textsize-scale`-property. That is, the size of the header-element's text relative to the base font-size set by `textsize-base`.
+
+In the example above, the scale is set to the "Major Second" rhythm, and with a base of 16 -- the minimum font-size recommended for web -- this yields the following sizes for headers: 28.83 (`h1`), 25.63 (`h2`),  22.78 (`h3`), 20.25 (`h4`), 18 (`h5`), and 16 (`h6`). The base, and hence text, is adjusted upwards as the size of the screen increases to enable dynamic, responsive text-sizing.
+
 #### Using section- or slide-specific styles
 
-If configured with `shortcodes: true` any section or slide can use shortcodes to declare specific styles. These take the format of `[property=value]` and are defined in multiples, eg:
+If configured with `shortcodes: true` any section or slide can use shortcodes to declare specific styles. These take the format of `[style-property=value]` and are defined in multiples, eg:
 
 ```
-[background=#195b69]
-[color=cyan]
+[style-background=#195b69]
+[style-color=cyan]
 ```
 
 If the shortcode is found and applied, it is stripped from the further evaluated content. This method uses regular expressions for speed, and takes precedence over plugin- or page-defined `styles`.
 
-**Note**: The syntax is restricted to `[property=value]`. Quotes or other unexpected characters not conforming to alphanumerics or dashes will make the expression fail to pick up the shortcode. The `property` or `value` must basically conform to the [a-zA-Z0-9-]+ regular expression, separated by an equal-character (`=`) and wrapped in square brackets (`[]`). For testing, use [Regex101](https://regex101.com/r/GlH65o/1).
+**Note**: The syntax is restricted to `[style-property=value]`. Quotes or other unexpected characters not conforming to alphanumerics or dashes will make the expression fail to pick up the shortcode. The `style-property` or `value` must basically conform to the [a-zA-Z0-9-]+ regular expression, separated by an equal-character (`=`) and wrapped in square brackets (`[]`). For testing, use [Regex101](https://regex101.com/r/GlH65o/3).
 
 #### Full background image or video with Reveal.js, through data-attributres
 
@@ -252,14 +263,11 @@ Use a SCSS-compiler, like [LibSass](https://github.com/sass/libsass), eg. [node-
 
 ## TODO
 
-- Test fontsizing
-  - Decide on FlowType or Modular Scaling
-    - Modular Scaling: Use ElementQueries on slide
+- Modular Scaling: Use ElementQueries on slide for responsiveness
+  - Assume a mid-point as a default (following [Reveal.js](https://github.com/hakimel/reveal.js/blob/3.7.0/js/reveal.js#L42-L50)): 960px width, 48px font-size
 - Test responsive
 - Test print
   - Consider blueprint addition to presentation.yaml for quick-linking
-- Replace `+++`-fragment with shortcodes
-- Token-auth polling (take from Stat API)
 
 ## Credits
 

@@ -1,5 +1,5 @@
 name: Presentation
-version: 0.0.6
+version: 0.0.7
 testing: true
 description: Responsive navigational slideshows with Reveal.js
 icon: arrows-alt
@@ -71,120 +71,110 @@ form:
         0: PLUGIN_ADMIN.DISABLED
       validate:
         type: bool
-    api_route:
+    footer:
       type: text
-      label: PLUGIN_PRESENTATION.ADMIN.ASSETS.API_ROUTE.LABEL
-      description: PLUGIN_PRESENTATION.ADMIN.ASSETS.API_ROUTE.DESCRIPTION
+      label: PLUGIN_PRESENTATION.ADMIN.ASSETS.FOOTER.LABEL
+      description: PLUGIN_PRESENTATION.ADMIN.ASSETS.FOOTER.DESCRIPTION
+    textsizing:
+      type: toggle
+      label: PLUGIN_PRESENTATION.ADMIN.ASSETS.TEXTSIZING.LABEL
+      default: 1
+      options:
+        1: PLUGIN_ADMIN.ENABLED
+        0: PLUGIN_ADMIN.DISABLED
       validate:
-        type: string
-    poll_timeout:
-      type: range
-      label: PLUGIN_PRESENTATION.ADMIN.ASSETS.POLL_TIMEOUT.LABEL
-      description: PLUGIN_PRESENTATION.ADMIN.ASSETS.POLL_TIMEOUT.DESCRIPTION
-      validate:
-        type: int
-        min: 1000
-        max: 10000
-        step: 1000
-    poll_retry_limit:
+        type: bool
+    textsizing_factor:
       type: number
-      label: PLUGIN_PRESENTATION.ADMIN.ASSETS.POLL_RETRY_LIMIT.LABEL
-      description: PLUGIN_PRESENTATION.ADMIN.ASSETS.POLL_RETRY_LIMIT.DESCRIPTION
+      label: PLUGIN_PRESENTATION.ADMIN.ASSETS.TEXTSIZING_FACTOR.LABEL
+      description: PLUGIN_PRESENTATION.ADMIN.ASSETS.TEXTSIZING_FACTOR.DESCRIPTION
       validate:
         type: int
-        min: 1
+        min: 0
         max: 10
-        step: 1
-    styling:
+        step: 0.05
+    shortcodes:
+      type: toggle
+      label: PLUGIN_PRESENTATION.ADMIN.ASSETS.SHORTCODES.LABEL
+      description: PLUGIN_PRESENTATION.ADMIN.ASSETS.SHORTCODES.DESCRIPTION
+      default: 1
+      options:
+        1: PLUGIN_ADMIN.ENABLED
+        0: PLUGIN_ADMIN.DISABLED
+      validate:
+        type: bool
+    transition:
+      type: toggle
+      label: OnLoad Transition
+      description: Fade in from white when page (DOM-structure) is ready.
+      default: 1
+      options:
+        1: PLUGIN_ADMIN.ENABLED
+        0: PLUGIN_ADMIN.DISABLED
+      validate:
+        type: bool
+    unwrap_images:
+      type: toggle
+      label: PLUGIN_PRESENTATION.ADMIN.ASSETS.UNWRAP_IMAGES.LABEL
+      description: PLUGIN_PRESENTATION.ADMIN.ASSETS.UNWRAP_IMAGES.DESCRIPTION
+      default: 1
+      options:
+        1: PLUGIN_ADMIN.ENABLED
+        0: PLUGIN_ADMIN.DISABLED
+      validate:
+        type: bool
+    sync:
       type: section
-      title: PLUGIN_PRESENTATION.ADMIN.STYLING.TITLE
+      title: PLUGIN_PRESENTATION.ADMIN.SYNC.TITLE
       underline: true
       fields:
-        textsize.scale:
+        sync:
           type: select
-          label: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.SCALE.LABEL
-          help: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.SCALE.HELP
-          description: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.SCALE.DESCRIPTION
-          default: 'major sixth'
-          data-options@: '\Grav\Plugin\PresentationPlugin::getModularScaleBlueprintOptions'
-        textsize.header:
-          type: range
-          label: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.HEADER.LABEL
-          help: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.HEADER.HELP
-          description: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.HEADER.DESCRIPTION
-          default: 3
+          label: PLUGIN_PRESENTATION.ADMIN.SYNC.SYNC.LABEL
+          description: PLUGIN_PRESENTATION.ADMIN.SYNC.SYNC.DESCRIPTION
+          options:
+            none: PLUGIN_PRESENTATION.ADMIN.SYNC.SYNC.OPTIONS.NONE
+            browser: PLUGIN_PRESENTATION.ADMIN.SYNC.SYNC.OPTIONS.BROWSER
+            api: PLUGIN_PRESENTATION.ADMIN.SYNC.SYNC.OPTIONS.API
+        api_route:
+          type: text
+          label: PLUGIN_PRESENTATION.ADMIN.SYNC.API_ROUTE.LABEL
+          description: PLUGIN_PRESENTATION.ADMIN.SYNC.API_ROUTE.DESCRIPTION
           validate:
-            min: -6
-            max: 16
-        textsize.text:
+            type: string
+        poll_timeout:
           type: range
-          label: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.TEXT.LABEL
-          help: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.TEXT.HELP
-          description: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.TEXT.DESCRIPTION
-          default: 0
+          label: PLUGIN_PRESENTATION.ADMIN.SYNC.POLL_TIMEOUT.LABEL
+          description: PLUGIN_PRESENTATION.ADMIN.SYNC.POLL_TIMEOUT.DESCRIPTION
           validate:
-            min: -6
-            max: 16
-        fontscale:
+            type: int
+            min: 1000
+            max: 10000
+            step: 1000
+        poll_retry_limit:
+          type: number
+          label: PLUGIN_PRESENTATION.ADMIN.SYNC.POLL_RETRY_LIMIT.LABEL
+          description: PLUGIN_PRESENTATION.ADMIN.SYNC.POLL_RETRY_LIMIT.DESCRIPTION
+          validate:
+            type: int
+            min: 1
+            max: 10
+            step: 1
+        token_auth:
           type: toggle
-          label: PLUGIN_PRESENTATION.ADMIN.AUTOSCALE.LABEL
-          help: PLUGIN_PRESENTATION.ADMIN.AUTOSCALE.HELP
-          default: 0
+          label: PLUGIN_PRESENTATION.ADMIN.SYNC.TOKEN_AUTH.LABEL
+          description: PLUGIN_PRESENTATION.ADMIN.SYNC.TOKEN_AUTH.DESCRIPTION
           options:
             1: PLUGIN_ADMIN.YES
             0: PLUGIN_ADMIN.NO
           validate:
             type: bool
-        fontratio:
-          type: range
-          label: PLUGIN_PRESENTATION.ADMIN.FONTRATIO.LABEL
-          help: PLUGIN_PRESENTATION.ADMIN.FONTRATIO.HELP
-          description: PLUGIN_PRESENTATION.ADMIN.FONTRATIO.DESCRIPTION
-          default: 30
-          validate:
-            min: 1
-            max: 100
-        sync:
-          type: select
-          label: PLUGIN_PRESENTATION.ADMIN.ASSETS.SYNC.LABEL
-          description: PLUGIN_PRESENTATION.ADMIN.ASSETS.SYNC.DESCRIPTION
-          options:
-            browser: PLUGIN_PRESENTATION.ADMIN.ASSETS.SYNC.OPTIONS.BROWSER
-            api: PLUGIN_PRESENTATION.ADMIN.ASSETS.SYNC.OPTIONS.API
-        footer:
+        token:
           type: text
-          label: PLUGIN_PRESENTATION.ADMIN.ASSETS.FOOTER.LABEL
-          description: PLUGIN_PRESENTATION.ADMIN.ASSETS.FOOTER.DESCRIPTION
-        shortcodes:
-          type: toggle
-          label: PLUGIN_PRESENTATION.ADMIN.ASSETS.SHORTCODES.LABEL
-          description: PLUGIN_PRESENTATION.ADMIN.ASSETS.SHORTCODES.DESCRIPTION
-          default: 1
-          options:
-            1: PLUGIN_ADMIN.ENABLED
-            0: PLUGIN_ADMIN.DISABLED
+          label: PLUGIN_PRESENTATION.ADMIN.SYNC.TOKEN.LABEL
+          description: PLUGIN_PRESENTATION.ADMIN.SYNC.TOKEN.DESCRIPTION
           validate:
-            type: bool
-        transition:
-          type: toggle
-          label: OnLoad Transition
-          description: Fade in from white when page (DOM-structure) is ready.
-          default: 1
-          options:
-            1: PLUGIN_ADMIN.ENABLED
-            0: PLUGIN_ADMIN.DISABLED
-          validate:
-            type: bool
-        unwrap_images:
-          type: toggle
-          label: PLUGIN_PRESENTATION.ADMIN.ASSETS.UNWRAP_IMAGES.LABEL
-          description: PLUGIN_PRESENTATION.ADMIN.ASSETS.UNWRAP_IMAGES.DESCRIPTION
-          default: 1
-          options:
-            1: PLUGIN_ADMIN.ENABLED
-            0: PLUGIN_ADMIN.DISABLED
-          validate:
-            type: bool
+            type: string
     options:
       type: section
       title: PLUGIN_PRESENTATION.ADMIN.OPTIONS.TITLE

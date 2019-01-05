@@ -5,6 +5,12 @@ var bc = new BroadcastChannel('grav-presentation');
 window.addEventListener("load", function (event) {
   if (findGetParameter('admin') == 'yes') {
     Reveal.addEventListener('slidechanged', function (event) {
+      if (presentationAPIAuth == '1') {
+        if (findGetParameter('token') !== presentationAuthToken) {
+          return;
+        }
+      }
+
       var now = new Date();
       console.info('Action at ' + ISODateString(now) + ', slidechanged');
       bc.postMessage({

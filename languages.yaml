@@ -33,10 +33,27 @@ en:
           LABEL: Use Plugin's CSS
         BUILTIN_JS:
           LABEL: Use Plugin's JS
+        FOOTER:
+          LABEL: Inject Twig-footer
+          DESCRIPTION: "Render a theme's Twig-template and append it to each section, eg. 'partials/presentation_footer.html.twig'."
+        TEXTSIZING:
+          LABEL: Enable Textsizing
+        TEXTSIZING_FACTOR:
+          LABEL: Textsizing Factor
+          DESCRIPTION: Factor to apply when scaling text upwards for device resolutions.
+        SHORTCODES:
+          LABEL: Shortcodes
+          DESCRIPTION: Enables internal shortcode-processing.
+        UNWRAP_IMAGES:
+          LABEL: Unwrap Images
+          DESCRIPTION: Unwrap images from paragraphs.
+      SYNC:
+        TITLE: Synchronization
         SYNC:
           LABEL: Sync
           DESCRIPTION: Sync locally using browser, or remotely using API.
           OPTIONS:
+            NONE: None (disabled)
             BROWSER: Locally (Browser)
             API: Remotely (API)
         API_ROUTE:
@@ -48,17 +65,12 @@ en:
         POLL_RETRY_LIMIT:
           LABEL: Poll Retry Limit
           DESCRIPTION: Number of times to retry on error before cancelling API-querying.
-        FOOTER:
-          LABEL: Inject Twig-footer
-          DESCRIPTION: "Render a theme's Twig-template and append it to each section, eg. 'partials/presentation_footer.html.twig'."
-        SHORTCODES:
-          LABEL: Shortcodes
-          DESCRIPTION: Enables internal shortcode-processing.
-        UNWRAP_IMAGES:
-          LABEL: Unwrap Images
-          DESCRIPTION: Unwrap images from paragraphs.
-      STYLING:
-        TITLE: Style and design defaults
+        TOKEN_AUTH:
+          LABEL: Token Auth
+          DESCRIPTION: Require a token for Admin-access.
+        TOKEN:
+          LABEL: Token
+          DESCRIPTION: Token to use for authorization.
       CLASS:
         LABEL: Class(es)
         HELP: Classes to add to the Slide
@@ -74,15 +86,11 @@ en:
         SCALE:
           LABEL: Font scale
           HELP: Font scale
-          DESCRIPTION: Use a modular, harmonious, scale to proportionally determine the responsive size of text from a device's base size and the size of the slide.
-        HEADER:
-          LABEL: Header font size
-          HELP: Header font size
-          DESCRIPTION: Sets the text size for header elements, relative to the base and the scale.
-        TEXT:
-          LABEL: Main font size
-          HELP: Main font size
-          DESCRIPTION: Sets the text size for general elements, relative to the base and the scale.
+          DESCRIPTION: Use a modular, harmonious, scale to proportionally determine the size of header elements from the base size.
+        BASE:
+          LABEL: Base font size
+          HELP: Base font size
+          DESCRIPTION: Sets the base text size for all elements.
       STYLE:
         TITLE: Design
         FONT:

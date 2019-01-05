@@ -180,4 +180,22 @@ class Utilities
         );
         return $array;
     }
+
+    /**
+     * Authorize access with a token
+     *
+     * @param string $token Token to validate against.
+     *
+     * @return void
+     */
+    public static function authorize(string $token)
+    {
+        error_reporting(0);
+        if (!strlen($token) >= 16 || !isset($_GET['token']) || $_GET['token'] !== $token) {
+            header('HTTP/1.1 401 Unauthorized');
+            exit('401 Unauthorized');
+        } else {
+            return true;
+        }
+    }
 }
