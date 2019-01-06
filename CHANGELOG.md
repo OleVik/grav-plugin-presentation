@@ -1,3 +1,10 @@
+# v1.0.0-beta.2
+## 06-01-2019
+
+1. [](#bugfix)
+    * Assets
+    * Content API instantiation
+
 # v1.0.0-beta.1
 ## 06-01-2019
 

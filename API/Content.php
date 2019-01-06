@@ -47,7 +47,7 @@ class Content
      * @param object $grav   Grav-instance
      * @param array  $config Plugin configuration
      */
-    public function __construct(object $grav, array $config)
+    public function __construct($grav, $config)
     {
         $this->grav = $grav;
         $this->config = $config;
@@ -293,7 +293,6 @@ class Content
                 $name = $match['name'];
                 $value = $match['bbCode'];
                 $content = str_replace($match[0], '', $content);
-                $this->grav['debugger']->addMessage($name);
                 if (Utils::startsWith($name, 'class')) {
                     $return['class'] = $value;
                 } elseif (Utils::startsWith($name, 'hide')) {
