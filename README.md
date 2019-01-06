@@ -113,7 +113,7 @@ presentation:
     by: date
     dir: desc
   options:
-    navigation: true
+    transition: 'fade'
 ---
 ```
 
@@ -283,10 +283,6 @@ This plugin follows PSR-1, PSR-2, and PEAR coding standards (use CodeSniffer), a
 ### Style-compilation
 
 Use a SCSS-compiler, like [LibSass](https://github.com/sass/libsass), eg. [node-sass](https://github.com/sass/node-sass) and compiled `scss/presentation.scss` to `css/presentation.css` in the theme-folder. For example: `node-sass --watch --source-map true scss/presentation.scss css/presentation.css`. Requires Node-modules to be installed first.
-
-## TODO
-
-- Consider blueprint addition to presentation.yaml for quick-linking
 
 ## Credits
 
