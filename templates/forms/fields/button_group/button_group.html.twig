@@ -1,0 +1,16 @@
+{% extends "forms/field.html.twig" %}
+
+{% block contents %}
+    <div class="button-group">
+        {%- if field.fields -%}
+        {%- for child in field.fields -%}
+            {%-
+                include [
+                    "forms/fields/#{child.type}/#{child.type}.html.twig",
+                    'forms/fields/text/text.html.twig'
+                ] with { field: child, value: null }
+            -%}
+        {%- endfor -%}
+        {%- endif -%}
+    </div>
+{% endblock %}

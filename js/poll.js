@@ -55,7 +55,7 @@ var revealMasterEventHandler = function (event) {
     indexf: event.indexf ? event.indexf : 0
   };
 
-  if (presentationAPIAuth == '1') {
+  if (presentationAPIAuth == 'true') {
     if (findGetParameter('token') !== presentationAuthToken) {
       return;
     }

@@ -1,92 +1,3 @@
-/* Modular Scales */
-var modularScales = {
-  1: {
-    'name': 'minor second',
-    'ratio': '15:16',
-    'numerical': 1.067
-  },
-  2: {
-    'name': 'major second',
-    'ratio': '8:9',
-    'numerical': 1.125
-  },
-  3: {
-    'name': 'minor third',
-    'ratio': '5:6',
-    'numerical': 1.2
-  },
-  4: {
-    'name': 'major third',
-    'ratio': '4:5',
-    'numerical': 1.25
-  },
-  5: {
-    'name': 'perfect fourth',
-    'ratio': '3:4',
-    'numerical': 1.333
-  },
-  6: {
-    'name': 'aug. fourth / dim. fifth',
-    'ratio': '1:√2',
-    'numerical': 1.414
-  },
-  7: {
-    'name': 'perfect fifth',
-    'ratio': '2:3',
-    'numerical': 1.5
-  },
-  8: {
-    'name': 'minor sixth',
-    'ratio': '5:8',
-    'numerical': 1.6
-  },
-  9: {
-    'name': 'golden section',
-    'ratio': '1:1.618',
-    'numerical': 1.618
-  },
-  10: {
-    'name': 'major sixth',
-    'ratio': '3:5',
-    'numerical': 1.667
-  },
-  11: {
-    'name': 'minor seventh',
-    'ratio': '9:16',
-    'numerical': 1.778
-  },
-  12: {
-    'name': 'major seventh',
-    'ratio': '8:15',
-    'numerical': 1.875
-  },
-  13: {
-    'name': 'octave',
-    'ratio': '1:2',
-    'numerical': 2
-  },
-  14: {
-    'name': 'major tenth',
-    'ratio': '2:5',
-    'numerical': 2.5
-  },
-  15: {
-    'name': 'major eleventh',
-    'ratio': '3:8',
-    'numerical': 2.667
-  },
-  16: {
-    'name': 'major twelfth',
-    'ratio': '1:3',
-    'numerical': 3
-  },
-  17: {
-    'name': 'double octave',
-    'ratio': '1:4',
-    'numerical': 4
-  }
-};
-
 /* Responsive breakpoints */
 var breakpoints = {
   'extrasmall': 320,
@@ -107,13 +18,6 @@ function modularScale(base, ratio, value) {
   var ms = base * Math.pow(ratio, value);
   var limit = ms.toFixed(2);
   return Number.parseFloat(limit);
-}
-
-/**
- * Get slides set to apply scaling to
- */
-function getSlides() {
-  return document.querySelectorAll('section[data-textsize-base]');
 }
 
 /**

@@ -67,32 +67,18 @@ function ISODateString(d) {
 }
 
 /**
- * Check if number is in range
- * @param {int} x Number to check
- * @param {int} min Minimum
- * @param {int} max Maximum
- * @deprecated 0.0.7
+ * Get Slides
  */
-function between(x, min, max) {
-  return x >= min && x < max;
+function getSlides() {
+  return document.querySelectorAll('.slides section section');
 }
 
-/**
- * Check if an element overflows
- * @param {HTMLElement} el Element to check
- * @see https://stackoverflow.com/a/143889/603387
- * @deprecated 0.0.7
- */
-function checkOverflow(el) {
-  var curOverflow = el.style.overflow;
-
-  if (!curOverflow || curOverflow === "visible")
-    el.style.overflow = "hidden";
-
-  var isOverflowing = el.clientWidth < el.scrollWidth ||
-    el.clientHeight < el.scrollHeight;
-
-  el.style.overflow = curOverflow;
-
-  return isOverflowing;
-}
+/* If printing, clear color and background*/
+window.addEventListener("load", function (event) {
+  if (findGetParameter('print-pdf')) {
+    Array.prototype.forEach.call(getSlides(), function (element) {
+      element.style.setProperty('color', 'unset', 'important');
+      element.style.setProperty('background', 'unset', 'important');
+    });
+  }
+}, false);

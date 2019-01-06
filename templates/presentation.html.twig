@@ -16,16 +16,17 @@
         {% do assets.addCss('plugin://presentation/css/transition.css', {'group': 'critical'}) %}
       {% endif %}
       {% if config.plugins['presentation'].builtin_css %}
-        {% do assets.addCss('plugin://presentation/node_modules/reveal.js/css/reveal.css', {'group': 'presentation'}) %}
-        {% if uri.query('showNotes') == 'true' and uri.query('print') == true %}
-          {% do assets.addCss('plugin://presentation/node_modules/reveal.js/css/theme/white.css', {'group': 'presentation'}) %}
-          {% do assets.addCss('plugin://presentation/node_modules/reveal.js/css/print/pdf.css', {'group': 'presentation'}) %}
-        {% else %}
+        {% if uri.query('print-pdf') is not defined %}
+          {% do assets.addCss('plugin://presentation/node_modules/reveal.js/css/reveal.css', {'group': 'presentation'}) %}
+          {% if config.plugins['presentation'].theme != 'none' %}
+            {% do assets.addCss('user://plugins/presentation/node_modules/reveal.js/css/theme/' ~ config.plugins['presentation'].theme ~ '.css', {'group': 'presentation'}) %}
+          {% endif %}
           {% do assets.addCss('plugin://presentation/css/presentation.css', {'group': 'presentation'}) %}
+        {% else %}
+          {% do assets.addCss('plugin://presentation/node_modules/reveal.js/css/print/pdf.css', {'group': 'presentation'}) %}
+          {% do assets.addCss('plugin://presentation/node_modules/reveal.js/css/print/paper.css', {'group': 'presentation'}) %}
+          {% do assets.addInlineCss('embed, iframe, video, .pause-overlay, #snackbar {display: none;}.reveal pre code {padding: 0 !important;border: 0 !important;}', {'media': 'print'}) %}
         {% endif %}
-      {% endif %}
-      {% if config.plugins['presentation'].theme != 'none' %}
-        {% do assets.addCss('user://plugins/presentation/node_modules/reveal.js/css/theme/' ~ config.plugins['presentation'].theme ~ '.css', {'group': 'presentation'}) %}
       {% endif %}
       {% if config.plugins['presentation'].theme_css %}
         {% do assets.addCss('theme://css/custom.css') %}
@@ -35,7 +36,6 @@
     {{ assets.css('presentation')|raw }}
   </head>
   {% endblock head %}
-
   <body id="top" class="{{ page.header.body_classes }}">
     {% if config.plugins['presentation'].transition %}
     <div id="page_transition">
@@ -71,7 +71,11 @@
       {% do assets.addInlineJs('const presentationAPIRoute = "/' ~ config.plugins['presentation'].api_route ~ '";') %}
       {% do assets.addInlineJs('const presentationAPITimeout = ' ~ config.plugins['presentation'].poll_timeout ~ ';') %}
       {% do assets.addInlineJs('const presentationAPIRetryLimit = ' ~ config.plugins['presentation'].poll_retry_limit ~ ';') %}
-      {% do assets.addInlineJs('const presentationAPIAuth = ' ~ config.plugins['presentation'].token_auth ~ ';') %}
+      {% if config.plugins['presentation'].token_auth == true %}
+        {% do assets.addInlineJs('const presentationAPIAuth = true;') %}
+      {% else %}
+        {% do assets.addInlineJs('const presentationAPIAuth = false;') %}
+      {% endif %}
       {% if uri.query('admin') == true %}
         {% do assets.addInlineJs('const presentationAuthToken = "' ~ config.plugins['presentation'].token ~ '";') %}
       {% endif %}
@@ -79,20 +83,15 @@
         {% do assets.addJs('plugin://presentation/node_modules/reveal.js/lib/js/head.min.js', {'group': 'presentation'}) %}
         {% do assets.addJs('plugin://presentation/node_modules/reveal.js/js/reveal.js', {'group': 'presentation'}) %}
         {% do assets.addJs('plugin://presentation/node_modules/axios/dist/axios.min.js', {'group': 'presentation'}) %}
-        {% do assets.addJs('plugin://presentation/node_modules/css-element-queries/src/ResizeSensor.js', {'group': 'presentation'}) %}
         {% do assets.addJs('plugin://presentation/js/presentation.js', {'group': 'presentation'}) %}
       {% endif %}
       {% if config.plugins['presentation'].textsizing %}
         {% do assets.addInlineJs('const presentationTextsizingFactor = ' ~ config.plugins['presentation'].textsizing_factor ~ ';') %}
         {% do assets.addJs('plugin://presentation/js/modularscale.js', {'group': 'bottom'}) %}
       {% endif %}
-      {% if config.plugins['nomnoml-uml-diagrams'].enabled %}
-        {% do assets.addJs('plugin://nomnoml-uml-diagrams/js/lodash.min.js', {'group': 'presentation'}) %}
-        {% do assets.addJs('plugin://nomnoml-uml-diagrams/js/dagre.min.js', {'group': 'presentation'}) %}
-        {% do assets.addJs('plugin://nomnoml-uml-diagrams/js/nomnoml.js', {'group': 'presentation'}) %}
-      {% endif %}
     {% endblock %}
     {{ assets.js('presentation')|raw }}
+    {% if config.plugins['presentation'].builtin_js %}
     <script type="text/javascript">
     window.addEventListener("load", function(event) {
       Reveal.initialize(reveal_init);
@@ -108,6 +107,7 @@
       }
     }, false);
     </script>
+    {% endif %}
     {% if config.plugins['presentation'].sync == 'browser' %}
       {% do assets.addJs('plugin://presentation/js/broadcast.js', {'group': 'bottom'}) %}
     {% elseif config.plugins['presentation'].sync == 'poll' %}

@@ -12,6 +12,30 @@ form:
         content:
           type: tab
           fields:
+            button_group:
+              type: button_group
+              ordering@: content
+              fields:
+                view:
+                  type: presentation_link
+                  label: PLUGIN_PRESENTATION.ADMIN.BUTTONS.VIEW
+                  mode: view
+                view_notes:
+                  type: presentation_link
+                  label: PLUGIN_PRESENTATION.ADMIN.BUTTONS.VIEW_NOTES
+                  mode: view_notes
+                admin:
+                  type: presentation_link
+                  label: PLUGIN_PRESENTATION.ADMIN.BUTTONS.ADMIN
+                  mode: admin
+                admin_notes:
+                  type: presentation_link
+                  label: PLUGIN_PRESENTATION.ADMIN.BUTTONS.ADMIN_NOTES
+                  mode: admin_notes
+                print:
+                  type: presentation_link
+                  label: PLUGIN_PRESENTATION.ADMIN.BUTTONS.PRINT
+                  mode: print
             header.class:
               type: selectize
               label: PLUGIN_PRESENTATION.ADMIN.CLASS.LABEL

@@ -4,8 +4,6 @@ The **Presentation** Plugin is an extension for [Grav CMS](http://github.com/get
 
 At its core the plugin facilitates efficient handling of content for use with the library. You can utilize Reveal.js however you want through custom initialization, and still leverage the plugin's content-handling.
 
-## CURRENTLY A WORK IN PROGRESS
-
 ## Features
 
 - Presentations through two-dimensional slideshows
@@ -49,40 +47,63 @@ Before configuring this plugin, you should copy the `user/plugins/presentation/p
 Here is the default configuration and an explanation of available options:
 
 ```yaml
+# Enable Plugin if true, disable if false
 enabled: true
+# Theme to use from Reveal.js (https://github.com/hakimel/reveal.js/#theming)
+theme: moon
+# Order of how pages are rendered
 order:
   by: folder
   dir: asc
+# Include Theme's custom.css
 theme_css: true
+# Enable Plugin's CSS
 builtin_css: true
+# Enable Plugin's JS
 builtin_js: true
-fontscale: true
-fontratio: 30
-sync: 'browser'
-color_function: "50"
-header_font: "'Helvetica Neue', Helvetica, Arial, sans-serif"
-block_font: "Palatino, 'Palatino Linotype', 'Palatino LT STD', 'Book Antiqua', Georgia, serif"
-change_titles: true
-footer: "partials/presentation_footer.html.twig"
+# Enable Plugin's dynamic text sizing
+textsizing: true
+# Dynamic text sizing factor for resolution scaling
+textsizing_factor: 1.25
+# Synchronize Slide-navigation
+sync: 'none'
+# URL Route to use for Poll-sync
+api_route: 'presentationapi'
+# Poll-sync timeout in milliseconds
+poll_timeout: 2000
+# Poll-sync retry limit
+poll_retry_limit: 10
+# Enable Poll-sync token-authorization
+token_auth: false
+# Poll-sync token to use for authorization
+token: Hd4HFdPvbpKzTqz
+# Twig-template to inject below content
+footer: ''
+# Enable onLoad transition
+transition: true
+# Enable Plugin's shortcodes
 shortcodes: true
+# Unwrap images from paragraph
+unwrap_images: true
+# Options to pass to Reveal.js
 options:
-  ...
+  width: "100%"
+  height: "100%"
+  margin: '0'
+  minScale: '1'
+  maxScale: '1'
+  transition: 'fade'
+  controlsTutorial: 'false'
+  history: 'true'
+  display: 'flex'
+  pdfSeparateFragments: false
 ```
 
-All configuration-options available to the Reveal.js-library can be configured through `options`, see its [documentation for available options](https://github.com/hakimel/reveal.js#configuration). For example:
-
-```yaml
-options:
-  controls: true
-  controlsTutorial: true
-  controlsLayout: 'bottom-right'
-```
-
-In addition to options for the Reveal.js-library, you can define the order of the of how the pages are rendered through `order.by` and `order.dir`, and whether to use the plugin's built-in CSS and JS with `builtin_css` and `builtin_js`.
+All configuration-options available to the Reveal.js-library can be configured through `options`, see its [documentation for available options](https://github.com/hakimel/reveal.js#configuration).
 
 ### Page-specific configuration
 
-Any configuration set in `presentation.yaml` can be overridden through a page's FrontMatter, like this:
+Any configuration set in `presentation.yaml` can be overridden through a Page's FrontMatter, like this:
 
 ```yaml
 ---
@@ -98,7 +119,9 @@ presentation:
 
 ## Usage
 
-The page-structure used in presentation is essentially the same as normally in Grav, with a few notable exceptions: Any horizontal rule, `---` in Markdown and `<hr />` in HTML, is treated as a _thematic break_, as it is defined in HTML5. This means that if you separate content with a horizontal rule within a page, the plugin treats this as a new section. This is equivalent to using child-pages for new sections, which work recursively: You can have as many pages below the root-page as you want, each of them will be treated as a section. Further, these methods can be mixed by some pages using horizontal rules, and some not.
+The Page-structure used in the Presentation-plugin is essentially the same as normally in Grav , with a few notable exceptions: Any horizontal rule, `---` in Markdown and `<hr />` in HTML, is treated as a _thematic break_, as it is defined in HTML5. This means that every Page in Grav is treated as a normal, _horizontal Slide_ when the Plugin iterates over them, but a thematic break creates a _vertical Slide_.
+
+You can have as many Pages below the root-page as you want, each of them will be treated as a Slide. When you create thematic breaks within the Page, the Slides are then created _below_ the Page itself -- accommodating Reveal.js' two-dimensional slideshows.
 
 ### Nomenclature
 
@@ -106,30 +129,30 @@ With Reveal.js the presentation is not entirely linear. Rather, it has a linear,
 
 Further, there are [Fragments](https://github.com/hakimel/reveal.js#fragments) that can be used within each slide. These reveal linearly like slides, but make one element appear at a time rather than the full contents of the slide.
 
-### Example structure:
+### Structure
 
 ```
 /user/pages/book
 ├── presentation.md
 ├── 01.down-the-rabbit-hole
-│   └── default.md
+│   └── slide.md
 ├── 02.advice-from-a-caterpillar
-│   └── default.md
+│   └── slide.md
 ├── 03.were-all-mad-here
-│   └── default.md
+│   └── slide.md
 ├── 04.a-mad-tea-party
-│   └── default.md
+│   └── slide.md
 ├── 05.the-queens-crocquet-ground
-│   └── default.md
+│   └── slide.md
 ├── 06.postscript
-└───└── default.md
+└───└── slide.md
 ```
 
-As seen in this example structure, only the initial page uses the `presentation.html.twig`-template. The template used for child-pages is irrelevant, as only the content of these pages are processed. The plugin defines the `presentation.html.twig`-template, but you can override it through your theme.
+As seen in this example structure, only the initial page uses the `presentation.html.twig`-template. The template used for child-pages is `slide.html.twig`, though the content of these pages are processed regardless of template. Naming them `slide.md` enables the blueprints for slides in the Admin-plugin. The plugin defines the `presentation.html.twig`-template, but you can override it through your theme.
 
 ### Styling
 
-The plugin emulates the logic of Cascading Style Sheets (CSS), in that pages can be assigned a class, style-property, or be hidden using FrontMatter or shortcodes. This is as simple as using `class: slide1` in FrontMatter or `[class=slide1]` with a shortcode in the Markdown-content. Styles are applied the same way, where FrontMatter accepts CSS-properties like this:
+The plugin emulates the logic of Cascading Style Sheets (CSS), in that pages can be assigned a class, style-property, or be hidden using FrontMatter or shortcodes. This is as simple as using `class: custom-slide-class` in FrontMatter or `[class=custom-slide-class]` with a shortcode in the Markdown-content. Styles are applied the same way, where FrontMatter accepts CSS-properties like this:
 
 ```
 style:
@@ -263,11 +286,7 @@ Use a SCSS-compiler, like [LibSass](https://github.com/sass/libsass), eg. [node-
 
 ## TODO
 
-- Modular Scaling: Use ElementQueries on slide for responsiveness
-  - Assume a mid-point as a default (following [Reveal.js](https://github.com/hakimel/reveal.js/blob/3.7.0/js/reveal.js#L42-L50)): 960px width, 48px font-size
-- Test responsive
-- Test print
-  - Consider blueprint addition to presentation.yaml for quick-linking
+- Consider blueprint addition to presentation.yaml for quick-linking
 
 ## Credits
 

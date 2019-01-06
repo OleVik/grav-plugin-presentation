@@ -22,6 +22,12 @@ en:
             OPTIONS:
               ASC: Ascending
               DESC: Descending
+      BUTTONS:
+        VIEW: View
+        VIEW_NOTES: View + Notes
+        ADMIN: Admin
+        ADMIN_NOTES: Admin + Notes
+        PRINT: Print
       ASSETS:
         THEME:
           LABEL: Theme

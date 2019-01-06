@@ -1,3 +1,15 @@
+# v1.0.0-beta.1
+## 06-01-2019
+
+1. [](#new)
+    * Page-links from Admin
+2. [](#improved)
+    * Blueprints and languages
+    * Print-capability
+    * Cleanup
+3. [](#bugfix)
+    * Token-auth
+
 # v0.0.7
 ## 05-01-2019
 

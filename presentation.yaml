@@ -8,11 +8,11 @@ builtin_css: true
 builtin_js: true
 textsizing: true
 textsizing_factor: 1.25
-sync: 'browser'
+sync: 'none'
 api_route: 'presentationapi'
 poll_timeout: 2000
 poll_retry_limit: 10
-token_auth: 0
+token_auth: false
 token: Hd4HFdPvbpKzTqz
 footer: ''
 transition: true
@@ -28,3 +28,4 @@ options:
   controlsTutorial: 'false'
   history: 'true'
   display: 'flex'
+  pdfSeparateFragments: false
