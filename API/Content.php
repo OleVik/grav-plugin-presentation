@@ -184,8 +184,12 @@ class Content implements ContentInterface
      */
     public function breakContent(array $page, array $config, array $breaks)
     {
-        echo '<section id="' . $page['slug'] . '" ';
-        echo 'data-title="' . $page['title'] . '">';
+        $header = (array) $page['header'];
+        $this->grav['debugger']->addMessage($header);
+        if (!isset($header['horizontal'])) {
+            echo '<section id="' . $page['slug'] . '" ';
+            echo 'data-title="' . $page['title'] . '">';
+        }
         $index = 0;
         foreach ($breaks as $break) {
             $config['id'] = $page['slug'] . '-' . $index;
@@ -228,11 +232,19 @@ class Content implements ContentInterface
                 }
             }
             if ($hide !== true) {
+                if (isset($header['horizontal']) && $header['horizontal'] == true) {
+                    echo '<section>';
+                }
                 $this->buildSlide($page, $config, $break);
+                if (isset($header['horizontal']) && $header['horizontal'] == true) {
+                    echo '</section>';
+                }
             }
             $index++;
         }
-        echo '</section>';
+        if (!isset($header['horizontal'])) {
+            echo '</section>';
+        }
     }
 
     /**
@@ -257,9 +269,9 @@ class Content implements ContentInterface
             );
         }
         if (isset($page['header']->textsize['scale'])) {
-            echo ' data-textsize-scale="' . (int) $page['header']->textsize['scale'] . '"';
+            echo ' data-textsize-scale="' . (float) $page['header']->textsize['scale'] . '"';
             if (isset($page['header']->textsize['base'])) {
-                echo ' data-textsize-base="' . (int) $page['header']->textsize['base'] . '"';
+                echo ' data-textsize-base="' . (float) $page['header']->textsize['base'] . '"';
             }
         }
         echo '>';

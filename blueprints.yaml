@@ -1,5 +1,5 @@
 name: Presentation
-version: 1.1.0-beta.4
+version: 1.1.0-beta.5
 testing: true
 description: Responsive navigational slideshows with Reveal.js
 icon: arrows-alt
@@ -19,192 +19,198 @@ dependencies:
 form:
   validation: strict
   fields:
-    enabled:
-      type: toggle
-      label: Plugin status
-      options:
-        1: PLUGIN_ADMIN.ENABLED
-        0: PLUGIN_ADMIN.DISABLED
-      validate:
-        type: bool
-    theme:
-      type: select
-      label: PLUGIN_PRESENTATION.ADMIN.ASSETS.THEME.LABEL
-      description: PLUGIN_PRESENTATION.ADMIN.ASSETS.THEME.DESCRIPTION
-      data-options@: '\Grav\Plugin\PresentationPlugin::getRevealThemes'
-    order.by:
-      type: select
-      label: PLUGIN_PRESENTATION.ADMIN.COMMON.ORDER.BY.LABEL
-      options:
-        default: PLUGIN_PRESENTATION.ADMIN.COMMON.ORDER.BY.OPTIONS.DEFAULT
-        folder: PLUGIN_PRESENTATION.ADMIN.COMMON.ORDER.BY.OPTIONS.FOLDER
-        title: PLUGIN_PRESENTATION.ADMIN.COMMON.ORDER.BY.OPTIONS.TITLE
-        date: PLUGIN_PRESENTATION.ADMIN.COMMON.ORDER.BY.OPTIONS.DATE
-    order.dir:
-      type: toggle
-      label: PLUGIN_PRESENTATION.ADMIN.COMMON.ORDER.DIR.LABEL
-      options:
-        asc: PLUGIN_PRESENTATION.ADMIN.COMMON.ORDER.DIR.OPTIONS.ASC
-        desc: PLUGIN_PRESENTATION.ADMIN.COMMON.ORDER.DIR.OPTIONS.DESC
-    theme_css:
-      type: toggle
-      label: PLUGIN_PRESENTATION.ADMIN.ASSETS.THEME_CSS.LABEL
-      description: PLUGIN_PRESENTATION.ADMIN.ASSETS.THEME_CSS.DESCRIPTION
-      options:
-        1: PLUGIN_ADMIN.ENABLED
-        0: PLUGIN_ADMIN.DISABLED
-      validate:
-        type: bool
-    builtin_css:
-      type: toggle
-      label: PLUGIN_PRESENTATION.ADMIN.ASSETS.BUILTIN_CSS.LABEL
-      options:
-        1: PLUGIN_ADMIN.ENABLED
-        0: PLUGIN_ADMIN.DISABLED
-      validate:
-        type: bool
-    builtin_js:
-      type: toggle
-      label: PLUGIN_PRESENTATION.ADMIN.ASSETS.BUILTIN_JS.LABEL
-      options:
-        1: PLUGIN_ADMIN.ENABLED
-        0: PLUGIN_ADMIN.DISABLED
-      validate:
-        type: bool
-    sync:
-      type: section
-      title: PLUGIN_PRESENTATION.ADMIN.SYNC.TITLE
-      underline: true
-      fields:
-        sync:
-          type: select
-          label: PLUGIN_PRESENTATION.ADMIN.SYNC.SYNC.LABEL
-          description: PLUGIN_PRESENTATION.ADMIN.SYNC.SYNC.DESCRIPTION
-          options:
-            none: PLUGIN_PRESENTATION.ADMIN.SYNC.SYNC.OPTIONS.NONE
-            browser: PLUGIN_PRESENTATION.ADMIN.SYNC.SYNC.OPTIONS.BROWSER
-            api: PLUGIN_PRESENTATION.ADMIN.SYNC.SYNC.OPTIONS.API
-        api_route:
-          type: text
-          label: PLUGIN_PRESENTATION.ADMIN.SYNC.API_ROUTE.LABEL
-          description: PLUGIN_PRESENTATION.ADMIN.SYNC.API_ROUTE.DESCRIPTION
-          validate:
-            type: string
-        poll_timeout:
-          type: range
-          label: PLUGIN_PRESENTATION.ADMIN.SYNC.POLL_TIMEOUT.LABEL
-          description: PLUGIN_PRESENTATION.ADMIN.SYNC.POLL_TIMEOUT.DESCRIPTION
-          validate:
-            type: int
-            min: 1000
-            max: 10000
-            step: 1000
-        poll_retry_limit:
-          type: number
-          label: PLUGIN_PRESENTATION.ADMIN.SYNC.POLL_RETRY_LIMIT.LABEL
-          description: PLUGIN_PRESENTATION.ADMIN.SYNC.POLL_RETRY_LIMIT.DESCRIPTION
-          validate:
-            type: int
-            min: 1
-            max: 10
-            step: 1
-        token_auth:
-          type: toggle
-          label: PLUGIN_PRESENTATION.ADMIN.SYNC.TOKEN_AUTH.LABEL
-          description: PLUGIN_PRESENTATION.ADMIN.SYNC.TOKEN_AUTH.DESCRIPTION
-          options:
-            1: PLUGIN_ADMIN.YES
-            0: PLUGIN_ADMIN.NO
-          validate:
-            type: bool
-        token:
-          type: text
-          label: PLUGIN_PRESENTATION.ADMIN.SYNC.TOKEN.LABEL
-          description: PLUGIN_PRESENTATION.ADMIN.SYNC.TOKEN.DESCRIPTION
-          validate:
-            type: string
-    advanced:
-      type: section
-      title: PLUGIN_PRESENTATION.ADMIN.ADVANCED.TITLE
-      underline: true
-      fields:
-        footer:
-          type: text
-          label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.FOOTER.LABEL
-          description: PLUGIN_PRESENTATION.ADMIN.ADVANCED.FOOTER.DESCRIPTION
-        textsizing:
-          type: toggle
-          label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.TEXTSIZING.LABEL
-          default: 1
-          options:
-            1: PLUGIN_ADMIN.ENABLED
-            0: PLUGIN_ADMIN.DISABLED
-          validate:
-            type: bool
-        textsizing_factor:
-          type: number
-          label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.TEXTSIZING_FACTOR.LABEL
-          description: PLUGIN_PRESENTATION.ADMIN.ADVANCED.TEXTSIZING_FACTOR.DESCRIPTION
-          validate:
-            type: int
-            min: 0
-            max: 10
-            step: 0.05
-        shortcodes:
-          type: toggle
-          label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.SHORTCODES.LABEL
-          description: PLUGIN_PRESENTATION.ADMIN.ADVANCED.SHORTCODES.DESCRIPTION
-          default: 1
-          options:
-            1: PLUGIN_ADMIN.ENABLED
-            0: PLUGIN_ADMIN.DISABLED
-          validate:
-            type: bool
-        transition:
-          type: toggle
-          label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.TRANSITION.LABEL
-          description: PLUGIN_PRESENTATION.ADMIN.ADVANCED.TRANSITION.DESCRIPTION
-          default: 1
-          options:
-            1: PLUGIN_ADMIN.ENABLED
-            0: PLUGIN_ADMIN.DISABLED
-          validate:
-            type: bool
-        unwrap_images:
-          type: toggle
-          label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.UNWRAP_IMAGES.LABEL
-          description: PLUGIN_PRESENTATION.ADMIN.ADVANCED.UNWRAP_IMAGES.DESCRIPTION
-          default: 1
-          options:
-            1: PLUGIN_ADMIN.ENABLED
-            0: PLUGIN_ADMIN.DISABLED
-          validate:
-            type: bool
-        content:
-          type: select
-          label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.CONTENT.LABEL
-          description: PLUGIN_PRESENTATION.ADMIN.ADVANCED.CONTENT.DESCRIPTION
-          data-options@: ['\Grav\Plugin\PresentationPlugin::getClassNamesBlueprintOptions', 'Content']
-        parser:
-          type: select
-          label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.PARSER.LABEL
-          description: PLUGIN_PRESENTATION.ADMIN.ADVANCED.PARSER.DESCRIPTION
-          data-options@: ['\Grav\Plugin\PresentationPlugin::getClassNamesBlueprintOptions', 'Parser']
-        styles:
-          type: select
-          label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.STYLES.LABEL
-          description: PLUGIN_PRESENTATION.ADMIN.ADVANCED.STYLES.DESCRIPTION
-          data-options@: ['\Grav\Plugin\PresentationPlugin::getClassNamesBlueprintOptions', 'Styles']
-    options:
-      type: section
-      title: PLUGIN_PRESENTATION.ADMIN.OPTIONS.TITLE
-      underline: true
+    tabs:
+      type: tabs
+      active: 1
       fields:
         options:
-          type: array
-          label: PLUGIN_PRESENTATION.ADMIN.OPTIONS.LABEL
-          placeholder_key: PLUGIN_PRESENTATION.ADMIN.COMMON.KEY
-          placeholder_value: PLUGIN_PRESENTATION.ADMIN.COMMON.VALUE
-          required: false
-          validate:
-            type: array
+          type: tab
+          title: PLUGIN_PRESENTATION.ADMIN.TABS.OPTIONS
+          fields:
+            enabled:
+              type: toggle
+              label: Plugin status
+              options:
+                1: PLUGIN_ADMIN.ENABLED
+                0: PLUGIN_ADMIN.DISABLED
+              validate:
+                type: bool
+            theme:
+              type: select
+              label: PLUGIN_PRESENTATION.ADMIN.OPTIONS.ASSETS.THEME.LABEL
+              description: PLUGIN_PRESENTATION.ADMIN.OPTIONS.ASSETS.THEME.DESCRIPTION
+              data-options@: '\Grav\Plugin\PresentationPlugin::getRevealThemes'
+            order.by:
+              type: select
+              label: PLUGIN_PRESENTATION.ADMIN.COMMON.ORDER.BY.LABEL
+              options:
+                default: PLUGIN_PRESENTATION.ADMIN.COMMON.ORDER.BY.OPTIONS.DEFAULT
+                folder: PLUGIN_PRESENTATION.ADMIN.COMMON.ORDER.BY.OPTIONS.FOLDER
+                title: PLUGIN_PRESENTATION.ADMIN.COMMON.ORDER.BY.OPTIONS.TITLE
+                date: PLUGIN_PRESENTATION.ADMIN.COMMON.ORDER.BY.OPTIONS.DATE
+            order.dir:
+              type: toggle
+              label: PLUGIN_PRESENTATION.ADMIN.COMMON.ORDER.DIR.LABEL
+              options:
+                asc: PLUGIN_PRESENTATION.ADMIN.COMMON.ORDER.DIR.OPTIONS.ASC
+                desc: PLUGIN_PRESENTATION.ADMIN.COMMON.ORDER.DIR.OPTIONS.DESC
+            theme_css:
+              type: toggle
+              label: PLUGIN_PRESENTATION.ADMIN.OPTIONS.ASSETS.THEME_CSS.LABEL
+              description: PLUGIN_PRESENTATION.ADMIN.OPTIONS.ASSETS.THEME_CSS.DESCRIPTION
+              options:
+                1: PLUGIN_ADMIN.ENABLED
+                0: PLUGIN_ADMIN.DISABLED
+              validate:
+                type: bool
+            textsizing:
+              type: toggle
+              label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.TEXTSIZING.LABEL
+              default: 1
+              options:
+                1: PLUGIN_ADMIN.ENABLED
+                0: PLUGIN_ADMIN.DISABLED
+              validate:
+                type: bool
+            textsizing_factor:
+              type: number
+              label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.TEXTSIZING_FACTOR.LABEL
+              description: PLUGIN_PRESENTATION.ADMIN.ADVANCED.TEXTSIZING_FACTOR.DESCRIPTION
+              validate:
+                type: int
+                min: 0
+                max: 10
+                step: 0.05
+            builtin_css:
+              type: toggle
+              label: PLUGIN_PRESENTATION.ADMIN.OPTIONS.ASSETS.BUILTIN_CSS.LABEL
+              options:
+                1: PLUGIN_ADMIN.ENABLED
+                0: PLUGIN_ADMIN.DISABLED
+              validate:
+                type: bool
+            builtin_js:
+              type: toggle
+              label: PLUGIN_PRESENTATION.ADMIN.OPTIONS.ASSETS.BUILTIN_JS.LABEL
+              options:
+                1: PLUGIN_ADMIN.ENABLED
+                0: PLUGIN_ADMIN.DISABLED
+              validate:
+                type: bool
+        sync:
+          type: tab
+          title: PLUGIN_PRESENTATION.ADMIN.SYNC.TITLE
+          fields:
+            sync:
+              type: select
+              label: PLUGIN_PRESENTATION.ADMIN.SYNC.SYNC.LABEL
+              description: PLUGIN_PRESENTATION.ADMIN.SYNC.SYNC.DESCRIPTION
+              options:
+                none: PLUGIN_PRESENTATION.ADMIN.SYNC.SYNC.OPTIONS.NONE
+                browser: PLUGIN_PRESENTATION.ADMIN.SYNC.SYNC.OPTIONS.BROWSER
+                api: PLUGIN_PRESENTATION.ADMIN.SYNC.SYNC.OPTIONS.API
+            api_route:
+              type: text
+              label: PLUGIN_PRESENTATION.ADMIN.SYNC.API_ROUTE.LABEL
+              description: PLUGIN_PRESENTATION.ADMIN.SYNC.API_ROUTE.DESCRIPTION
+              validate:
+                type: string
+            poll_timeout:
+              type: range
+              label: PLUGIN_PRESENTATION.ADMIN.SYNC.POLL_TIMEOUT.LABEL
+              description: PLUGIN_PRESENTATION.ADMIN.SYNC.POLL_TIMEOUT.DESCRIPTION
+              validate:
+                type: int
+                min: 1000
+                max: 10000
+                step: 1000
+            poll_retry_limit:
+              type: number
+              label: PLUGIN_PRESENTATION.ADMIN.SYNC.POLL_RETRY_LIMIT.LABEL
+              description: PLUGIN_PRESENTATION.ADMIN.SYNC.POLL_RETRY_LIMIT.DESCRIPTION
+              validate:
+                type: int
+                min: 1
+                max: 10
+                step: 1
+            token_auth:
+              type: toggle
+              label: PLUGIN_PRESENTATION.ADMIN.SYNC.TOKEN_AUTH.LABEL
+              description: PLUGIN_PRESENTATION.ADMIN.SYNC.TOKEN_AUTH.DESCRIPTION
+              options:
+                1: PLUGIN_ADMIN.YES
+                0: PLUGIN_ADMIN.NO
+              validate:
+                type: bool
+            token:
+              type: text
+              label: PLUGIN_PRESENTATION.ADMIN.SYNC.TOKEN.LABEL
+              description: PLUGIN_PRESENTATION.ADMIN.SYNC.TOKEN.DESCRIPTION
+              validate:
+                type: string
+        advanced:
+          type: tab
+          title: PLUGIN_PRESENTATION.ADMIN.ADVANCED.TITLE
+          fields:
+            footer:
+              type: text
+              label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.FOOTER.LABEL
+              description: PLUGIN_PRESENTATION.ADMIN.ADVANCED.FOOTER.DESCRIPTION
+            shortcodes:
+              type: toggle
+              label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.SHORTCODES.LABEL
+              description: PLUGIN_PRESENTATION.ADMIN.ADVANCED.SHORTCODES.DESCRIPTION
+              default: 1
+              options:
+                1: PLUGIN_ADMIN.ENABLED
+                0: PLUGIN_ADMIN.DISABLED
+              validate:
+                type: bool
+            transition:
+              type: toggle
+              label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.TRANSITION.LABEL
+              description: PLUGIN_PRESENTATION.ADMIN.ADVANCED.TRANSITION.DESCRIPTION
+              default: 1
+              options:
+                1: PLUGIN_ADMIN.ENABLED
+                0: PLUGIN_ADMIN.DISABLED
+              validate:
+                type: bool
+            unwrap_images:
+              type: toggle
+              label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.UNWRAP_IMAGES.LABEL
+              description: PLUGIN_PRESENTATION.ADMIN.ADVANCED.UNWRAP_IMAGES.DESCRIPTION
+              default: 1
+              options:
+                1: PLUGIN_ADMIN.ENABLED
+                0: PLUGIN_ADMIN.DISABLED
+              validate:
+                type: bool
+            content:
+              type: select
+              label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.CONTENT.LABEL
+              description: PLUGIN_PRESENTATION.ADMIN.ADVANCED.CONTENT.DESCRIPTION
+              data-options@: ['\Grav\Plugin\PresentationPlugin::getClassNamesBlueprintOptions', 'Content']
+            parser:
+              type: select
+              label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.PARSER.LABEL
+              description: PLUGIN_PRESENTATION.ADMIN.ADVANCED.PARSER.DESCRIPTION
+              data-options@: ['\Grav\Plugin\PresentationPlugin::getClassNamesBlueprintOptions', 'Parser']
+            styles:
+              type: select
+              label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.STYLES.LABEL
+              description: PLUGIN_PRESENTATION.ADMIN.ADVANCED.STYLES.DESCRIPTION
+              data-options@: ['\Grav\Plugin\PresentationPlugin::getClassNamesBlueprintOptions', 'Styles']
+            options:
+              type: section
+              title: PLUGIN_PRESENTATION.ADMIN.ADVANCED.REVEAL.TITLE
+              underline: true
+              fields:
+                options:
+                  type: array
+                  label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.REVEAL.LABEL
+                  placeholder_key: PLUGIN_PRESENTATION.ADMIN.COMMON.KEY
+                  placeholder_value: PLUGIN_PRESENTATION.ADMIN.COMMON.VALUE
+                  required: false
+                  validate:
+                    type: array

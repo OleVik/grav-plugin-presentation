@@ -15,7 +15,7 @@ var breakpoints = {
  * @param {int} value Step to apply
  */
 function modularScale(base, ratio, value) {
-  var ms = base * Math.pow(ratio, value);
+  var ms = base + Math.pow(ratio, value);
   var limit = ms.toFixed(2);
   return Number.parseFloat(limit);
 }
@@ -61,7 +61,7 @@ function applyBaseSize(element) {
 function applyHeaderSizes(element) {
   var dataset = element.dataset;
   if (dataset.textsizeBase) {
-    var base = parseInt(dataset.textsizeBase);
+    var base = parseFloat(dataset.textsizeBase);
     if (base <= 16) {
       base = 16;
     }
@@ -94,13 +94,14 @@ function applyHeaderSizes(element) {
   } else {
     var modifier = base;
   }
+  var scale = parseFloat(dataset.textsizeScale);
   var modularScales = {
-    h1: modularScale(modifier, dataset.textsizeScale, 5),
-    h2: modularScale(modifier, dataset.textsizeScale, 4),
-    h3: modularScale(modifier, dataset.textsizeScale, 3),
-    h4: modularScale(modifier, dataset.textsizeScale, 2),
-    h5: modularScale(modifier, dataset.textsizeScale, 1),
-    h6: modularScale(modifier, dataset.textsizeScale, 0)
+    h1: modularScale(modifier, scale, 6),
+    h2: modularScale(modifier, scale, 5),
+    h3: modularScale(modifier, scale, 4),
+    h4: modularScale(modifier, scale, 3),
+    h5: modularScale(modifier, scale, 2),
+    h6: modularScale(modifier, scale, 1)
   };
   Object.entries(headers).forEach(([key, value]) => {
     Array.prototype.forEach.call(value, function (header) {

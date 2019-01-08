@@ -12,42 +12,49 @@ form:
         content:
           type: tab
           fields:
-            header.class:
-              type: selectize
-              label: PLUGIN_PRESENTATION.ADMIN.CLASS.LABEL
-              help: PLUGIN_PRESENTATION.ADMIN.CLASS.HELP
-              validate:
-                type: commalist
             textsize:
               type: section
-              title: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.TITLE
+              title: PLUGIN_PRESENTATION.ADMIN.OPTIONS.TEXTSIZE.TITLE
               underline: true
               fields:
                 header.textsize.scale:
                   type: select
-                  label: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.SCALE.LABEL
-                  help: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.SCALE.HELP
-                  description: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.SCALE.DESCRIPTION
+                  label: PLUGIN_PRESENTATION.ADMIN.OPTIONS.TEXTSIZE.SCALE.LABEL
+                  help: PLUGIN_PRESENTATION.ADMIN.OPTIONS.TEXTSIZE.SCALE.HELP
+                  description: PLUGIN_PRESENTATION.ADMIN.OPTIONS.TEXTSIZE.SCALE.DESCRIPTION
                   data-options@: '\Grav\Plugin\PresentationPlugin::getModularScaleBlueprintOptions'
                 header.textsize.base:
                   type: number
-                  label: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.BASE.LABEL
-                  help: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.BASE.HELP
-                  description: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.BASE.DESCRIPTION
+                  label: PLUGIN_PRESENTATION.ADMIN.OPTIONS.TEXTSIZE.BASE.LABEL
+                  help: PLUGIN_PRESENTATION.ADMIN.OPTIONS.TEXTSIZE.BASE.HELP
+                  description: PLUGIN_PRESENTATION.ADMIN.OPTIONS.TEXTSIZE.BASE.DESCRIPTION
+                  placeholder: 16
                   validate:
                     type: int
-                    min: 16
-                    max: 160
-                    step: 2
+                    min: 6
+                    max: 72
+                    step: 1
             style:
               type: section
               title: PLUGIN_PRESENTATION.ADMIN.STYLE.TITLE
               underline: true
               fields:
-                header.style.color:
+                header.style.header-font-family:
+                  type: text
+                  label: PLUGIN_PRESENTATION.ADMIN.STYLE.FONT.HEADER.LABEL
+                  description: PLUGIN_PRESENTATION.ADMIN.STYLE.FONT.HEADER.DESCRIPTION
+                header.style.header-color:
                   type: colorpicker
-                  label: PLUGIN_PRESENTATION.ADMIN.STYLE.COLOR.LABEL
-                  help: PLUGIN_PRESENTATION.ADMIN.STYLE.COLOR.HELP
+                  label: PLUGIN_PRESENTATION.ADMIN.STYLE.FONT.HEADER_COLOR.LABEL
+                  description: PLUGIN_PRESENTATION.ADMIN.STYLE.FONT.HEADER_COLOR.DESCRIPTION
+                header.style.block-font-family:
+                  type: text
+                  label: PLUGIN_PRESENTATION.ADMIN.STYLE.FONT.BLOCK.LABEL
+                  description: PLUGIN_PRESENTATION.ADMIN.STYLE.FONT.BLOCK.DESCRIPTION
+                header.style.block-color:
+                  type: colorpicker
+                  label: PLUGIN_PRESENTATION.ADMIN.STYLE.FONT.BLOCK_COLOR.LABEL
+                  description: PLUGIN_PRESENTATION.ADMIN.STYLE.FONT.BLOCK_COLOR.DESCRIPTION
                 header.style.background-color:
                   type: colorpicker
                   label: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-COLOR.LABEL

@@ -36,43 +36,23 @@ form:
                   type: presentation_link
                   label: PLUGIN_PRESENTATION.ADMIN.BUTTONS.PRINT
                   mode: print
-            header.class:
-              type: selectize
-              label: PLUGIN_PRESENTATION.ADMIN.CLASS.LABEL
-              help: PLUGIN_PRESENTATION.ADMIN.CLASS.HELP
-              validate:
-                type: commalist
-            footer:
-              type: text
-              label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.FOOTER.LABEL
-              description: PLUGIN_PRESENTATION.ADMIN.ADVANCED.FOOTER.DESCRIPTION
-            shortcodes:
-              type: toggle
-              label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.SHORTCODES.LABEL
-              description: PLUGIN_PRESENTATION.ADMIN.ADVANCED.SHORTCODES.DESCRIPTION
-              highlight: 1
-              default: 1
-              options:
-                1: PLUGIN_ADMIN.ENABLED
-                0: PLUGIN_ADMIN.DISABLED
-              validate:
-                type: bool
             textsize:
               type: section
-              title: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.TITLE
+              title: PLUGIN_PRESENTATION.ADMIN.OPTIONS.TEXTSIZE.TITLE
               underline: true
               fields:
                 header.textsize.scale:
                   type: select
-                  label: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.SCALE.LABEL
-                  help: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.SCALE.HELP
-                  description: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.SCALE.DESCRIPTION
+                  label: PLUGIN_PRESENTATION.ADMIN.OPTIONS.TEXTSIZE.SCALE.LABEL
+                  help: PLUGIN_PRESENTATION.ADMIN.OPTIONS.TEXTSIZE.SCALE.HELP
+                  description: PLUGIN_PRESENTATION.ADMIN.OPTIONS.TEXTSIZE.SCALE.DESCRIPTION
                   data-options@: '\Grav\Plugin\PresentationPlugin::getModularScaleBlueprintOptions'
                 header.textsize.base:
                   type: number
-                  label: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.BASE.LABEL
-                  help: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.BASE.HELP
-                  description: PLUGIN_PRESENTATION.ADMIN.TEXTSIZE.BASE.DESCRIPTION
+                  label: PLUGIN_PRESENTATION.ADMIN.OPTIONS.TEXTSIZE.BASE.LABEL
+                  help: PLUGIN_PRESENTATION.ADMIN.OPTIONS.TEXTSIZE.BASE.HELP
+                  description: PLUGIN_PRESENTATION.ADMIN.OPTIONS.TEXTSIZE.BASE.DESCRIPTION
+                  placeholder: 16
                   validate:
                     type: int
                     min: 6
@@ -87,24 +67,26 @@ form:
                   type: text
                   label: PLUGIN_PRESENTATION.ADMIN.STYLE.FONT.HEADER.LABEL
                   description: PLUGIN_PRESENTATION.ADMIN.STYLE.FONT.HEADER.DESCRIPTION
+                header.style.header-color:
+                  type: colorpicker
+                  label: PLUGIN_PRESENTATION.ADMIN.STYLE.FONT.HEADER_COLOR.LABEL
+                  description: PLUGIN_PRESENTATION.ADMIN.STYLE.FONT.HEADER_COLOR.DESCRIPTION
                 header.style.block-font-family:
                   type: text
                   label: PLUGIN_PRESENTATION.ADMIN.STYLE.FONT.BLOCK.LABEL
                   description: PLUGIN_PRESENTATION.ADMIN.STYLE.FONT.BLOCK.DESCRIPTION
-                header.style.color:
+                header.style.block-color:
                   type: colorpicker
-                  label: PLUGIN_PRESENTATION.ADMIN.STYLE.COLOR.LABEL
-                  help: PLUGIN_PRESENTATION.ADMIN.STYLE.COLOR.HELP
+                  label: PLUGIN_PRESENTATION.ADMIN.STYLE.FONT.BLOCK_COLOR.LABEL
+                  description: PLUGIN_PRESENTATION.ADMIN.STYLE.FONT.BLOCK_COLOR.DESCRIPTION
                 header.style.background-color:
                   type: colorpicker
                   label: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-COLOR.LABEL
-                  help: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-COLOR.HELP
                 header.style.background-image:
                   type: filepicker
                   folder: '@self'
                   preview_images: true
                   label: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-IMAGE.LABEL
-                  help: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-IMAGE.HELP
                   accept:
                     - .png
                     - .jpg
@@ -113,7 +95,6 @@ form:
                 header.style.background-size:
                   type: select
                   label: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-SIZE.LABEL
-                  help: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-SIZE.HELP
                   options:
                     '': PLUGIN_PRESENTATION.ADMIN.COMMON.NONE
                     auto: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-SIZE.OPTIONS.AUTO
@@ -124,7 +105,6 @@ form:
                 header.style.background-repeat:
                   type: select
                   label: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-REPEAT.LABEL
-                  help: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-REPEAT.HELP
                   options:
                     '': PLUGIN_PRESENTATION.ADMIN.COMMON.NONE
                     no-repeat: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-REPEAT.OPTIONS.NO-REPEAT
@@ -135,3 +115,66 @@ form:
                     round: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-REPEAT.OPTIONS.ROUND
                     initial: PLUGIN_PRESENTATION.ADMIN.COMMON.INITIAL
                     inherit: PLUGIN_PRESENTATION.ADMIN.COMMON.INHERIT
+        options:
+          type: tab
+          fields:
+            options:
+              type: section
+              title: PLUGIN_PRESENTATION.ADMIN.COMMON.TITLE
+              underline: true
+              fields:
+                header.class:
+                  type: selectize
+                  label: PLUGIN_PRESENTATION.ADMIN.OPTIONS.CLASS.LABEL
+                  help: PLUGIN_PRESENTATION.ADMIN.OPTIONS.CLASS.HELP
+                  validate:
+                    type: commalist
+                header.horizontal:
+                  type: toggle
+                  label: PLUGIN_PRESENTATION.ADMIN.OPTIONS.HORIZONTAL.LABEL
+                  help: PLUGIN_PRESENTATION.ADMIN.OPTIONS.HORIZONTAL.HELP
+                  highlight: 0
+                  default: 0
+                  options:
+                    1: PLUGIN_ADMIN.ENABLED
+                    0: PLUGIN_ADMIN.DISABLED
+                  validate:
+                    type: bool
+                header.footer:
+                  type: text
+                  label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.FOOTER.LABEL
+                  description: PLUGIN_PRESENTATION.ADMIN.ADVANCED.FOOTER.DESCRIPTION
+                header.shortcodes:
+                  type: toggle
+                  label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.SHORTCODES.LABEL
+                  description: PLUGIN_PRESENTATION.ADMIN.ADVANCED.SHORTCODES.DESCRIPTION
+                  highlight: 1
+                  default: 1
+                  options:
+                    1: PLUGIN_ADMIN.ENABLED
+                    0: PLUGIN_ADMIN.DISABLED
+                  validate:
+                    type: bool
+        advanced:
+          type: tab
+          fields:
+            advanced:
+              type: section
+              title: PLUGIN_PRESENTATION.ADMIN.ADVANCED.TITLE
+              underline: true
+              fields:
+                header.presentation.content:
+                  type: select
+                  label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.CONTENT.LABEL
+                  description: PLUGIN_PRESENTATION.ADMIN.ADVANCED.CONTENT.DESCRIPTION
+                  data-options@: ['\Grav\Plugin\PresentationPlugin::getClassNamesBlueprintOptions', 'Content']
+                header.presentation.parser:
+                  type: select
+                  label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.PARSER.LABEL
+                  description: PLUGIN_PRESENTATION.ADMIN.ADVANCED.PARSER.DESCRIPTION
+                  data-options@: ['\Grav\Plugin\PresentationPlugin::getClassNamesBlueprintOptions', 'Parser']
+                header.presentation.styles:
+                  type: select
+                  label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.STYLES.LABEL
+                  description: PLUGIN_PRESENTATION.ADMIN.ADVANCED.STYLES.DESCRIPTION
+                  data-options@: ['\Grav\Plugin\PresentationPlugin::getClassNamesBlueprintOptions', 'Styles']

@@ -122,9 +122,13 @@ class Parser implements ParserInterface
             } elseif (Utils::startsWith($property, 'data')) {
                 $data .= ' ' . $property . '="' . $value . '"';
             } elseif ($property == 'header-font-family') {
-                $this->styles->setStyle($id, "{\nfont-family:$value\n}", 'h1,h2,h3,h4,h5,h6');
+                $this->styles->setStyle($id, "{\nfont-family:$value;\n}", 'h1,h2,h3,h4,h5,h6');
+            } elseif ($property == 'header-color') {
+                $this->styles->setStyle($id, "{\ncolor:$value;\n}", 'h1,h2,h3,h4,h5,h6');
             } elseif ($property == 'block-font-family') {
-                $this->styles->setStyle($id, "{\nfont-family:$value\n}");
+                $this->styles->setStyle($id, "{\nfont-family:$value;\n}");
+            } elseif ($property == 'block-color') {
+                $this->styles->setStyle($id, "{\ncolor:$value;\n}");
             } else {
                 $inline .= $property . ': ' . $value . ';';
             }

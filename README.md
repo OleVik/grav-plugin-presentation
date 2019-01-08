@@ -192,9 +192,11 @@ The plugin makes available a method of dynamically scaling text within a slide, 
   [data-textsize-scale=1.125]
   [data-textsize-base=16]
 
-If Textsizing is enabled in the plugin's options, the relation between block text -- any text not in a header-element -- and header-text (`h1`, `h2`, `h3`, `h4`, `h5`, `h6`) is determined by the `textsize-scale`-property. That is, the size of the header-element's text relative to the base font-size set by `textsize-base`.
+If Textsizing is enabled in the plugin's options and on the Page, the relation between block text -- any text not in a header-element -- and header-text (`h1`, `h2`, `h3`, `h4`, `h5`, `h6`) is determined by the `textsize-scale`-property. That is, the size of the header-element's text relative to the base font-size set by `textsize-base`.
 
 In the example above, the scale is set to the "Major Second" rhythm, and with a base of 16 -- the minimum font-size recommended for web -- this yields the following sizes for headers: 28.83 (`h1`), 25.63 (`h2`),  22.78 (`h3`), 20.25 (`h4`), 18 (`h5`), and 16 (`h6`). The base, and hence text, is adjusted upwards as the size of the screen increases to enable dynamic, responsive text-sizing.
+
+**The normal base size is 16, because the recommended minimum font size for text on the web is 16px. The higher the number in the scale is, header-elements will be correspondly larger - exponentially so.**
 
 #### Using section- or slide-specific styles
 

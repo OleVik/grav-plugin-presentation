@@ -1,3 +1,16 @@
+# v1.1.0-beta.5
+## 08-01-2019
+
+1. [](#improved)
+    * README
+    * Blueprints and languages
+    * Replaced general color-option with one for header and one for block text
+    * Modular scale sizes
+2. [](#new)
+    * Horizontal-option
+3. [](#bugfix)
+    * Cast textsizing-properties as float
+
 # v1.1.0-beta.4
 ## 08-01-2019
 

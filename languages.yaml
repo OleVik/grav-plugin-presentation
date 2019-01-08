@@ -2,6 +2,7 @@ en:
   PLUGIN_PRESENTATION:
     ADMIN:
       COMMON:
+        TITLE: Presentation
         INITIAL: Initial
         INHERIT: Inherit
         NONE: None
@@ -22,23 +23,42 @@ en:
             OPTIONS:
               ASC: Ascending
               DESC: Descending
+      TABS:
+        OPTIONS: Options
       BUTTONS:
         VIEW: View
         VIEW_NOTES: View + Notes
         ADMIN: Admin
         ADMIN_NOTES: Admin + Notes
         PRINT: Print
-      ASSETS:
-        THEME:
-          LABEL: Theme
-          DESCRIPTION: "Reveal.js theme to use."
-        THEME_CSS:
-          LABEL: Use Theme's CSS
-          DESCRIPTION: "Import current theme's /css/custom.css into presentation.html.twig's assets"
-        BUILTIN_CSS:
-          LABEL: Use Plugin's CSS
-        BUILTIN_JS:
-          LABEL: Use Plugin's JS
+      OPTIONS:
+        CLASS:
+          LABEL: Class(es)
+          HELP: Classes to add to the Slide
+        HORIZONTAL:
+          LABEL: Horizontal
+          HELP: Transpose slides from vertical to horizontal
+        ASSETS:
+          THEME:
+            LABEL: Theme
+            DESCRIPTION: "Reveal.js theme to use."
+          THEME_CSS:
+            LABEL: Use Theme's CSS
+            DESCRIPTION: "Import current theme's /css/custom.css into presentation.html.twig's assets"
+          BUILTIN_CSS:
+            LABEL: Use Plugin's CSS
+          BUILTIN_JS:
+            LABEL: Use Plugin's JS
+        TEXTSIZE:
+          TITLE: Font Sizing
+          SCALE:
+            LABEL: Font scale
+            HELP: Font scale
+            DESCRIPTION: Use a modular, harmonious, scale to proportionally determine the size of header elements from the base size.
+          BASE:
+            LABEL: Base font size
+            HELP: Base font size
+            DESCRIPTION: Sets the base text size for all elements.
       SYNC:
         TITLE: Synchronization
         SYNC:
@@ -63,54 +83,33 @@ en:
         TOKEN:
           LABEL: Token
           DESCRIPTION: Token to use for authorization.
-      CLASS:
-        LABEL: Class(es)
-        HELP: Classes to add to the Slide
-      AUTOSCALE:
-        LABEL: Autoscale
-        HELP: Scale text to fit slide
-      FONTRATIO:
-        LABEL: Font Ratio
-        HELP: Scale text by ratio
-        DESCRIPTION: Lower numbers increase text size, and vice versa.
-      TEXTSIZE:
-        TITLE: Font Sizing
-        SCALE:
-          LABEL: Font scale
-          HELP: Font scale
-          DESCRIPTION: Use a modular, harmonious, scale to proportionally determine the size of header elements from the base size.
-        BASE:
-          LABEL: Base font size
-          HELP: Base font size
-          DESCRIPTION: Sets the base text size for all elements.
       STYLE:
         TITLE: Design
         FONT:
           HEADER:
             LABEL: Heading Font-Family
             DESCRIPTION: CSS Font-Family to use for headings.
+          HEADER_COLOR:
+            LABEL: Heading Text Color
+            DESCRIPTION: CSS Color to use for headings.
           BLOCK:
             LABEL: Block Font-Family
             DESCRIPTION: CSS Font-Family to use for block-text.
-        COLOR:
-          LABEL: Text Color
-          HELP: Text Color
+          BLOCK_COLOR:
+            LABEL: Block Text Color
+            DESCRIPTION: CSS Color to use for block-text.
         BACKGROUND-COLOR:
           LABEL: Background Color
-          HELP: Background Color
         BACKGROUND-IMAGE:
           LABEL: Background Image
-          HELP: Background Image
         BACKGROUND-SIZE:
           LABEL: Background Size
-          HELP: Background Size
           OPTIONS:
             AUTO: Auto
             COVER: Cover
             CONTAIN: Contain
         BACKGROUND-REPEAT:
           LABEL: Background Repeat
-          HELP: Background Repeat
           OPTIONS:
             NO-REPEAT: No repeat
             REPEAT: Repeat both
@@ -146,6 +145,6 @@ en:
         STYLES:
           LABEL: Custom Styles
           DESCRIPTION: Use a custom styles getter/setter.
-      OPTIONS:
-        TITLE: Reveal.js Options
-        LABEL: Settings to pass to Reveal.js.
+        REVEAL:
+          TITLE: Reveal.js Options
+          LABEL: Settings to pass to Reveal.js.

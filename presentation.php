@@ -301,7 +301,7 @@ class PresentationPlugin extends Plugin
     {
         $options = ['' => 'None'];
         foreach (self::getModularScale() as $scale) {
-            $options[(string) $scale['numerical']] = ucwords($scale['name']) . ' (' . $scale['ratio'] . ')';
+            $options[(string) $scale['numerical']] = $scale['numerical'] . ' (' . ucwords($scale['name']) . ', ' . $scale['ratio'] . ')';
         }
         return $options;
     }
@@ -319,7 +319,7 @@ class PresentationPlugin extends Plugin
         $regex = '/Grav\\\\Plugin\\\\PresentationPlugin\\\\API\\\\(?<api>.*)/i';
         $classes = preg_grep($regex, get_declared_classes());
         $matches = preg_grep('/' . $key . '/i', $classes);
-        $options = array();
+        $options = array('none' => 'None');
         foreach ($matches as $match) {
             $match = str_replace('Grav\Plugin\PresentationPlugin\API\\', '', $match);
             $options[$match] = $match;
