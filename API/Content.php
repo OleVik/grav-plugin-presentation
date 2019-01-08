@@ -219,10 +219,8 @@ class Content implements ContentInterface
                     );
                 }
             }
-            if (isset($config['textsizing'])) {
-                if (isset($page['header']->textsizing) && $page['header']->textsizing == true) {
-                    $config['class'] .= ' textsizing';
-                }
+            if (isset($config['textsizing']) && isset($page['header']->textsize)) {
+                $config['class'] .= ' textsizing';
             }
             if (isset($page['header']->class) && !empty($page['header']->class)) {
                 foreach ($page['header']->class as $item) {
@@ -252,7 +250,11 @@ class Content implements ContentInterface
         echo 'class="' . $config['class'] . '" ';
         echo 'data-title="' . $page['title'] . '"';
         if (!empty($config['styles'])) {
-            echo $this->parser::inlineStylesData($config['styles'], $config['route']);
+            echo $this->parser->inlineStylesData(
+                $config['styles'],
+                $config['route'],
+                $config['id']
+            );
         }
         if (isset($page['header']->textsize['scale'])) {
             echo ' data-textsize-scale="' . (int) $page['header']->textsize['scale'] . '"';

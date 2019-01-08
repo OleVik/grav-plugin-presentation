@@ -109,10 +109,11 @@ class Parser implements ParserInterface
      *
      * @param array  $styles List of key-value pairs
      * @param string $route  Route to Page for relative assets
+     * @param string $id     Slide id-attribute
      *
      * @return string Processed styles, in inline string
      */
-    public static function inlineStylesData(array $styles, string $route)
+    public function inlineStylesData(array $styles, string $route, string $id)
     {
         $inline = $data = '';
         foreach ($styles as $property => $value) {
@@ -120,6 +121,10 @@ class Parser implements ParserInterface
                 $inline .= $property . ': url(' . $route . '/' . $value . ');';
             } elseif (Utils::startsWith($property, 'data')) {
                 $data .= ' ' . $property . '="' . $value . '"';
+            } elseif ($property == 'header-font-family') {
+                $this->styles->setStyle($id, "{\nfont-family:$value\n}", 'h1,h2,h3,h4,h5,h6');
+            } elseif ($property == 'block-font-family') {
+                $this->styles->setStyle($id, "{\nfont-family:$value\n}");
             } else {
                 $inline .= $property . ': ' . $value . ';';
             }

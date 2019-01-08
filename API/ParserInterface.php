@@ -51,10 +51,11 @@ interface ParserInterface
      *
      * @param array  $styles List of key-value pairs
      * @param string $route  Route to Page for relative assets
+     * @param string $id     Slide id-attribute
      *
      * @return string Processed styles, in inline string
      */
-    public static function inlineStylesData(array $styles, string $route);
+    public function inlineStylesData(array $styles, string $route, string $id);
 
     /**
      * Remove wrapping paragraph from img-element

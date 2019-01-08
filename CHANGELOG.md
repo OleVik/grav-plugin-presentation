@@ -1,3 +1,10 @@
+# v1.1.0-beta.4
+## 08-01-2019
+
+1. [](#bugfix)
+    * Fix support for font-family
+    * Fix textsizing-application, again
+
 # v1.1.0-beta.3
 ## 08-01-2019
 

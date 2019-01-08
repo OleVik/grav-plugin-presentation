@@ -189,8 +189,8 @@ You can of course also style the plugin using your theme's /css/custom.css-file,
 
 The plugin makes available a method of dynamically scaling text within a slide, which is similar yet distinct from what happens in PowerPoint 2016. Rather than do this scaling entirely automatically, which tends to work poorly across devices and resolutions, you set a _scale_ and a _base_, eg.:
 
-[data-textsize-scale=1.125]
-[data-textsize-base=16]
+  [data-textsize-scale=1.125]
+  [data-textsize-base=16]
 
 If Textsizing is enabled in the plugin's options, the relation between block text -- any text not in a header-element -- and header-text (`h1`, `h2`, `h3`, `h4`, `h5`, `h6`) is determined by the `textsize-scale`-property. That is, the size of the header-element's text relative to the base font-size set by `textsize-base`.
 
