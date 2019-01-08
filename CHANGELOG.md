@@ -1,3 +1,9 @@
+# v1.1.0-beta.3
+## 08-01-2019
+
+1. [](#bugfix)
+    * Fix textsizing-application
+
 # v1.1.0-beta.2
 ## 08-01-2019
 

@@ -144,7 +144,9 @@ function applyModularScale(target) {
  */
 function onChange() {
   var currentSlide = document.querySelector('section section.present');
-  applyModularScale(currentSlide);
+  if (currentSlide.classList.contains('textsizing')) {
+    applyModularScale(currentSlide);
+  }
 }
 
 /* Debounce and throttle */

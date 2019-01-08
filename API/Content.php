@@ -219,8 +219,10 @@ class Content implements ContentInterface
                     );
                 }
             }
-            if (isset($page['header']->fontscale) && $page['header']->fontscale == true) {
-                $config['class'] .= ' fontscale';
+            if (isset($config['textsizing'])) {
+                if (isset($page['header']->textsizing) && $page['header']->textsizing == true) {
+                    $config['class'] .= ' textsizing';
+                }
             }
             if (isset($page['header']->class) && !empty($page['header']->class)) {
                 foreach ($page['header']->class as $item) {
