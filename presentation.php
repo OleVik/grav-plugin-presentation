@@ -24,6 +24,8 @@ use Grav\Common\Page\Collection;
 use RocketTheme\Toolbox\Event\Event;
 
 use Grav\Plugin\PresentationPlugin\API\Content;
+use Grav\Plugin\PresentationPlugin\API\Parser;
+use Grav\Plugin\PresentationPlugin\API\Styles;
 use Grav\Plugin\PresentationPlugin\API\Poll;
 use Grav\Plugin\PresentationPlugin\Utilities;
 
@@ -60,31 +62,24 @@ class PresentationPlugin extends Plugin
         ];
     }
 
-    /**
-     * Declare config from plugin-config
-     *
-     * @return array Plugin configuration
-     */
-    public function config()
-    {
-        $pluginsobject = (array) $this->config->get('plugins');
-        if (isset($pluginsobject) && $pluginsobject['presentation']['enabled']) {
-            $config = $pluginsobject['presentation'];
-        } else {
-            return;
-        }
-        return $config;
-    }
 
     /**
      * Initialize the plugin and events
      *
-     * @param Event $event RocketTheme events
-     *
      * @return void
      */
-    public function onPluginsInitialized(Event $event)
+    public function onPluginsInitialized()
     {
+        if ($this->config->get('system')['debugger']['enabled']) {
+            $this->grav['debugger']->startTimer('presentation', 'Presentation');
+        }
+        include_once __DIR__ . '/API/ContentInterface.php';
+        include_once __DIR__ . '/API/Content.php';
+        include_once __DIR__ . '/API/ParserInterface.php';
+        include_once __DIR__ . '/API/Parser.php';
+        include_once __DIR__ . '/API/StylesInterface.php';
+        include_once __DIR__ . '/API/Styles.php';
+        include_once __DIR__ . '/Utilities.php';
         if ($this->isAdmin()) {
             $this->enable(
                 [
@@ -102,6 +97,60 @@ class PresentationPlugin extends Plugin
                 'onShutdown' => ['onShutdown', 0]
             ]
         );
+        if ($this->config->get('system')['debugger']['enabled']) {
+            $this->grav['debugger']->stopTimer('presentation');
+        }
+    }
+
+    /**
+     * Declare config from plugin-config
+     *
+     * @return array Plugin configuration
+     */
+    public function config()
+    {
+        $pluginsobject = (array) $this->config->get('plugins');
+        if (isset($pluginsobject) && $pluginsobject['presentation']['enabled']) {
+            $config = $pluginsobject['presentation'];
+        } else {
+            return;
+        }
+        return $config;
+    }
+
+    /**
+     * Construct the page function
+     *
+     * @return void
+     */
+    public function pageIteration()
+    {
+        $grav = $this->grav;
+        $config = $this->config();
+        if ($config['enabled'] && $grav['page']->template() == 'presentation') {
+            if (!isset($this->grav['twig']->twig_vars['reveal_init'])) {
+                $header = (array) $grav['page']->header();
+                if (isset($header['presentation'])) {
+                    $config = Utils::arrayMergeRecursiveUnique(
+                        $config,
+                        $header['presentation']
+                    );
+                }
+                $styles = $this->getAPIInstance($config['styles']);
+                $parser = $this->getAPIInstance($config['parser'], $styles);
+                $content = $this->getAPIInstance($config['content'], $grav, $config, $parser);
+                $tree = $content->buildTree($grav['page']->route());
+                $slides = $content->buildContent($tree);
+                $grav['page']->setRawContent($slides);
+                $menu = $content->buildMenu($tree);
+                $menu = Utilities::flattenArray($menu, 1);
+                $options = Utilities::parseAmbiguousArrayValues($config['options']);
+                $options = json_encode($options, JSON_PRETTY_PRINT);
+                $this->grav['twig']->twig_vars['reveal_init'] = $options;
+                $this->grav['twig']->twig_vars['presentation_menu'] = $options;
+                $grav['assets']->addInlineCss($styles->getStyles(), null, 'presentation');
+            }
+        }
     }
 
     /**
@@ -115,7 +164,6 @@ class PresentationPlugin extends Plugin
         $page = $this->grav['page'];
         $url = $page->url(true, true, true);
         $config = $this->config();
-        include_once __DIR__ . '/Utilities.php';
         if ($config['sync'] == 'poll' && $uri->path() == '/' . $config['api_route']) {
             set_time_limit(0);
             header('Cache-Control: no-cache, no-store, max-age=0, must-revalidate');
@@ -126,6 +174,7 @@ class PresentationPlugin extends Plugin
             }
             $res = Grav::instance()['locator'];
             $target = $res->findResource('cache://') . '/presentation';
+            include_once __DIR__ . '/API/PollInterface.php';
             include_once __DIR__ . '/API/Poll.php';
             $poll = new Poll($target, 'Poll.json');
             gc_enable();
@@ -150,33 +199,6 @@ class PresentationPlugin extends Plugin
             gc_collect_cycles();
             gc_disable();
             exit();
-        }
-    }
-
-    /**
-     * Construct the page
-     *
-     * @return void
-     */
-    public function pageIteration()
-    {
-        $grav = $this->grav;
-        $config = $this->config();
-        include_once __DIR__ . '/API/Content.php';
-        include_once __DIR__ . '/Utilities.php';
-        if ($config['enabled'] && $grav['page']->template() == 'presentation') {
-            if (!isset($this->grav['twig']->twig_vars['reveal_init'])) {
-                $content = new Content($grav, $config);
-                $tree = $content->buildTree($grav['page']->route());
-                $slides = $content->buildContent($tree);
-                $grav['page']->setRawContent($slides);
-                $menu = $content->buildMenu($tree);
-                $menu = Utilities::flattenArray($menu, 1);
-                $options = Utilities::parseAmbiguousArrayValues($config['options']);
-                $options = json_encode($options, JSON_PRETTY_PRINT);
-                $this->grav['twig']->twig_vars['reveal_init'] = $options;
-                $this->grav['twig']->twig_vars['presentation_menu'] = $options;
-            }
         }
     }
 
@@ -216,16 +238,28 @@ class PresentationPlugin extends Plugin
     /**
      * Register Page templates
      *
-     * @param RocketTheme\Toolbox\Event\Event $event Event hooked into
-     *
      * @return void
      */
-    public function onGetPageTemplates($event)
+    public function onGetPageTemplates()
     {
         $types = $event->types;
         $locator = Grav::instance()['locator'];
         $path = $locator->findResource('plugin://' . $this->name . '/blueprints');
         $types->scanBlueprints($path);
+    }
+
+    /**
+     * Get API Instance
+     *
+     * @param string $class   Class name
+     * @param mixed  ...$args Class arguments
+     *
+     * @return mixed Class Instance
+     */
+    public function getAPIInstance(string $class, ...$args)
+    {
+        $caller = '\Grav\Plugin\PresentationPlugin\API\\' . $class;
+        return new $caller(...$args);
     }
 
     /**
@@ -270,6 +304,26 @@ class PresentationPlugin extends Plugin
         return $options;
     }
 
+    /**
+     * Get class names for blueprints
+     *
+     * @param string $key Needle to search for
+     *
+     * @return array Blueprint-friendly list of class names
+     */
+    public static function getClassNamesBlueprintOptions(string $key)
+    {
+        $inflector = new Inflector();
+        $regex = '/Grav\\\\Plugin\\\\PresentationPlugin\\\\API\\\\(?<api>.*)/i';
+        $classes = preg_grep($regex, get_declared_classes());
+        $matches = preg_grep('/' . $key . '/i', $classes);
+        $options = array();
+        foreach ($matches as $match) {
+            $match = str_replace('Grav\Plugin\PresentationPlugin\API\\', '', $match);
+            $options[$match] = $match;
+        }
+        return $options;
+    }
 
     /**
      * Get reveal.js themes

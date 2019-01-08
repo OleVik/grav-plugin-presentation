@@ -1,3 +1,17 @@
+# v1.1.0-beta.1
+## 08-01-2019
+
+1. [](#new)
+    * API Interfaces
+    * Custom Content option
+    * Custom Parser option
+    * Custom Styles option
+    * Merge Page-header presentation-options
+2. [](#improved)
+    * Refactor API
+    * Code Quality
+    * PHP 7 Features
+
 # v1.0.0-beta.2
 ## 06-01-2019
 

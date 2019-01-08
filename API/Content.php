@@ -6,7 +6,7 @@
  *
  * @category   API
  * @package    Grav\Plugin\PresentationPlugin
- * @subpackage Grav\Plugin\PresentationPlugin\Push
+ * @subpackage Grav\Plugin\PresentationPlugin\API
  * @author     Ole Vik <git@olevik.net>
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @link       https://github.com/OleVik/grav-plugin-presentation
@@ -15,42 +15,40 @@
 namespace Grav\Plugin\PresentationPlugin\API;
 
 use Grav\Common\Utils;
+use Grav\Plugin\PresentationPlugin\API\Parser;
 use Michelf\SmartyPants;
 
 /**
  * Content API
  *
- * Simple REST API for communicating commands between pages
+ * Content API for aggregating content
  *
  * @category Extensions
- * @package  Grav\Plugin\PresentationPlugin
+ * @package  Grav\Plugin\PresentationPlugin\API
  * @author   Ole Vik <git@olevik.net>
  * @license  http://www.opensource.org/licenses/mit-license.html MIT License
  * @link     https://github.com/OleVik/grav-plugin-presentation
  */
-class Content
+class Content implements ContentInterface
 {
     /**
      * Regular expressions
      */
-    const REGEX_IMG = "/(<img(?:(\s*(class)\s*=\s*\x22([^\x22]+)\x22*)+|[^>]+?)*>)/";
-    const REGEX_IMG_P = "/<p>\s*?(<a .*<img.*<\/a>|<img.*)?\s*<\/p>/";
-    const REGEX_IMG_TITLE = "/<img[^>]*?title[ ]*=[ ]*[\"](.*?)[\"][^>]*?>/";
-    const REGEX_IMG_WRAPPING_LINK = '/\[(?\'image\'\!.*)\]\((?\'url\'https?:\/\/.*)\)/';
     const REGEX_FRAGMENT_SHORTCODE = '~\[fragment=*([a-zA-Z-]*)\](.*)\[\/fragment\]~im';
     const REGEX_P_EMPTY = '/<p[^>]*>\n* *<\/p[^>]*>/im';
-    const REGEX_SHORTCODES = '~((?:\[\s*(?<name>[a-zA-Z0-9-_]+)\s*(?:\=\s*(?<bbCode>\"(?:[^\"\\\\]*(?:\\\\.[^\"\\\\]*)*)\"|((?:(?!=\s*|\]|\/\])[^\s])+)))?\s*(?<parameters>(?:\s*(?:\w+(?:\s*\=\s*\"(?:[^\"\\\\]*(?:\\\\.[^\"\\\\]*)*)\"|\s*\=\s*((?:(?!=\s*|\]|\/\])[^\s])+)|(?=\s|\]|\/\s*\]|$))))*)\s*(?:\](?<content>.*?)\[\s*(?<markerContent>\/)\s*(\k<name>)\s*\]|\]|(?<marker>\/)\s*\])))~u';
 
     /**
-     * Instantiate Presentation Utilities
+     * Instantiate Content API
      *
-     * @param object $grav   Grav-instance
+     * @param Grav $grav   Grav-instance
      * @param array  $config Plugin configuration
+     * @param Parser $parser Parser utility
      */
-    public function __construct($grav, $config)
+    public function __construct($grav, $config, $parser)
     {
         $this->grav = $grav;
         $this->config = $config;
+        $this->parser = $parser;
         $this->parsedown = new \Parsedown();
     }
 
@@ -63,7 +61,7 @@ class Content
      *
      * @return array Page-structure with children
      */
-    public function buildTree($route, $mode = false, $depth = 0)
+    public function buildTree(string $route, $mode = false, $depth = 0)
     {
         $page = $this->grav['page'];
         $depth++;
@@ -136,7 +134,7 @@ class Content
      *
      * @return string HTML-structure
      */
-    public function buildContent($pages)
+    public function buildContent(array $pages)
     {
         include_once __DIR__ . '/../vendor/autoload.php';
         $return = '';
@@ -178,13 +176,13 @@ class Content
     /**
      * Create HTML from content
      *
-     * @param object $page   Grav Page-instance
-     * @param array  $config Plugin- and slide-configuration
-     * @param array  $breaks Slides from Markdown
+     * @param array $page   Grav Page-instance
+     * @param array $config Plugin- and slide-configuration
+     * @param array $breaks Slides from Markdown
      *
      * @return void
      */
-    public function breakContent($page, $config, $breaks)
+    public function breakContent(array $page, array $config, array $breaks)
     {
         echo '<section id="' . $page['slug'] . '" ';
         echo 'data-title="' . $page['title'] . '">';
@@ -195,7 +193,7 @@ class Content
             $hide = false;
             $config['styles'] = array();
             if ($this->config['unwrap_images']) {
-                $break = self::unwrapImage($break);
+                $break = $this->parser::unwrapImage($break);
             }
             if (isset($page['header']->style)) {
                 $config['styles'] = array_merge(
@@ -205,7 +203,7 @@ class Content
             }
             if ($config['shortcodes']) {
                 $break = self::pushNotes($break);
-                $shortcodes = $this->interpretShortcodes($break);
+                $shortcodes = $this->parser->interpretShortcodes($break, $config['id']);
                 $break = $shortcodes['content'];
                 $break = SmartyPants::defaultTransform($break);
                 if (isset($shortcodes['props']['class'])) {
@@ -240,21 +238,19 @@ class Content
     /**
      * Create HTML for slides
      *
-     * @param object $page   Grav Page-instance
+     * @param array  $page   Grav Page-instance
      * @param array  $config Plugin- and slide-configuration
-     * @param array  $break  Slides from Markdown
+     * @param string $break  Slides from Markdown
      *
      * @return void
      */
-    public function buildSlide($page, $config, $break)
+    public function buildSlide(array $page, array $config, string $break)
     {
         echo '<section id="' . $config['id'] . '" ';
         echo 'class="' . $config['class'] . '" ';
         echo 'data-title="' . $page['title'] . '"';
         if (!empty($config['styles'])) {
-            // echo ' style="';
-            echo self::inlineStylesData($config['styles'], $config['route']);
-            // echo '"';
+            echo $this->parser::inlineStylesData($config['styles'], $config['route']);
         }
         if (isset($page['header']->textsize['scale'])) {
             echo ' data-textsize-scale="' . (int) $page['header']->textsize['scale'] . '"';
@@ -272,50 +268,13 @@ class Content
     }
 
     /**
-     * Parse shortcodes
-     *
-     * @param string $content Markdown content in Page
-     *
-     * @return array Processed contents and properties
-     */
-    public function interpretShortcodes($content)
-    {
-        $return = array();
-        preg_match_all(
-            self::REGEX_SHORTCODES,
-            $content,
-            $matches,
-            PREG_SET_ORDER,
-            0
-        );
-        if (!empty($matches)) {
-            foreach ($matches as $match) {
-                $name = $match['name'];
-                $value = $match['bbCode'];
-                $content = str_replace($match[0], '', $content);
-                if (Utils::startsWith($name, 'class')) {
-                    $return['class'] = $value;
-                } elseif (Utils::startsWith($name, 'hide')) {
-                    $return['hide'] = true;
-                } elseif (Utils::startsWith($name, 'style')) {
-                    $name = str_replace('style-', '', $name);
-                    $return['styles'][$name] = $value;
-                } elseif (Utils::startsWith($name, 'data')) {
-                    $return['styles'][$name] = $value;
-                }
-            }
-        }
-        return ['content' => $content, 'props' => $return];
-    }
-
-    /**
      * Create HTML for fragments
      *
      * @param string $content Markdown content in Page
      *
      * @return string Processed contents
      */
-    public function processFragments($content)
+    public function processFragments(string $content)
     {
         $content = preg_replace(
             self::REGEX_FRAGMENT_SHORTCODE,
@@ -332,7 +291,7 @@ class Content
      *
      * @return string Processed content
      */
-    public function pushNotes($content)
+    public function pushNotes(string $content)
     {
         $content = str_replace('[notes]', '<aside class="notes">', $content);
         $content = str_replace('[/notes]', '</aside>', $content);
@@ -346,7 +305,7 @@ class Content
      *
      * @return array Slide-anchors with titles
      */
-    public function buildMenu($tree)
+    public function buildMenu(array $tree)
     {
         $items = array();
         foreach ($tree as $key => $value) {
@@ -358,122 +317,5 @@ class Content
             }
         }
         return $items;
-    }
-
-    /**
-     * Process styles and data-attributes
-     *
-     * @param array  $data  List of key-value pairs
-     * @param string $route Route to Page for relative assets
-     *
-     * @return string Processed styles, in inline string
-     */
-    public static function inlineStylesData(array $styles, string $route)
-    {
-        $inline = $data = '';
-        foreach ($styles as $property => $value) {
-            if ($property == 'background-image') {
-                $inline .= $property . ': url(' . $route . '/' . $value . ');';
-            } elseif (Utils::startsWith($property, 'data')) {
-                $data .= ' ' . $property . '="' . $value . '"';
-            } else {
-                $inline .= $property . ': ' . $value . ';';
-            }
-        }
-        return ' style="' . $inline . '"' . $data;
-    }
-
-    /**
-     * Format styles for inlining
-     *
-     * @param array  $styles Array of quote-enclosed properties and values
-     * @param string $mode   'background' or 'font'
-     *
-     * @return string CSS-styles
-     *
-     * @deprecated 0.0.3 Needs backporting
-     */
-    public function applyStyles($styles, $mode = 'background')
-    {
-        if (empty($styles)) {
-            return false;
-        }
-        if (isset($config['color_function'])) {
-            $function = $config['color_function'];
-        } else {
-            $function = '50';
-        }
-
-        if ($mode == 'text') {
-            if (array_key_exists('color', $styles)) {
-                return $styles['color'];
-            } elseif (array_key_exists('background', $styles)) {
-                if ($function == '50') {
-                    return $this->getContrast50($styles['background']);
-                } elseif ($function == 'YIQ') {
-                    return $this->getContrastYIQ($styles['background']);
-                }
-            } else {
-                return false;
-            }
-        } elseif ($mode == 'background') {
-            if (array_key_exists('background', $styles)) {
-                return $styles['background'];
-            } elseif (array_key_exists('color', $styles)) {
-                if ($function == '50') {
-                    return $this->getContrast50($styles['color']);
-                } elseif ($function == 'YIQ') {
-                    return $this->getContrastYIQ($styles['color']);
-                }
-            } else {
-                return false;
-            }
-        }
-        /*foreach ($styles as $key => $value) {
-            // If background is defined, and color is not, try to find a suitable contrast
-            if (array_key_exists('background', $styles) && !array_key_exists('color', $styles)) {
-                if (isset($config['color_function'])) {
-                    if ($config['color_function'] == '50') {
-                        $color = $this->getContrast50($styles['background']);
-                    } elseif ($config['color_function'] == 'YIQ') {
-                        $color = $this->getContrastYIQ($styles['background']);
-                    }
-                } else {
-                    $color = $this->getContrast50($styles['background']);
-                }
-                $return .= 'color: ' . $color . ';';
-            }
-            $return .= $key . ': ' . $value . ';';
-        }
-        return $return;*/
-    }
-
-    /**
-     * Remove wrapping paragraph from img-element
-     *
-     * @param string  $content Markdown content in Page
-     * @param boolean $figure  Optional wrapping in figure-element
-     *
-     * @return string Processed content
-     */
-    public static function unwrapImage($content, $figure = false)
-    {
-        $unwrap = self::REGEX_IMG_P;
-        $content = preg_replace($unwrap, "$1", $content);
-        if ($figure) {
-            $wrap = self::REGEX_IMG;
-            $content = preg_replace(
-                $wrap,
-                '<figure role="group" $2>$1</figure>',
-                $content
-            );
-            $title = self::REGEX_IMG_TITLE;
-            $content = preg_replace(
-                $title,
-                "$0<figcaption>$1</figcaption>",
-                $content
-            );
-        }
-        return $content;
     }
 }

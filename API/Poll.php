@@ -25,7 +25,7 @@ namespace Grav\Plugin\PresentationPlugin\API;
  * @license  http://www.opensource.org/licenses/mit-license.html MIT License
  * @link     https://github.com/OleVik/grav-plugin-presentation
  */
-class Poll
+class Poll implements PollInterface
 {
     /**
      * Initiate Poll Storage

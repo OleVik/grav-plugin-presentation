@@ -85,6 +85,12 @@ transition: true
 shortcodes: true
 # Unwrap images from paragraph
 unwrap_images: true
+# Class to use for Content building
+content: 'Content'
+# Class to use for Content parsing
+parser: 'Parser'
+# Class to use for Styles management
+styles: 'Styles'
 # Options to pass to Reveal.js
 options:
   width: "100%"
@@ -283,6 +289,10 @@ This plugin follows PSR-1, PSR-2, and PEAR coding standards (use CodeSniffer), a
 ### Style-compilation
 
 Use a SCSS-compiler, like [LibSass](https://github.com/sass/libsass), eg. [node-sass](https://github.com/sass/node-sass) and compiled `scss/presentation.scss` to `css/presentation.css` in the theme-folder. For example: `node-sass --watch --source-map true scss/presentation.scss css/presentation.css`. Requires Node-modules to be installed first.
+
+### Extending
+
+As demonstrated by the `content`, `parser`, and `styles` options above, you can fairly easily extend the behavior of the plugin. For example, if you install the [Presentation Deckset Plugin](https://github.com/OleVik/grav-plugin-presentation-deckset/), you could set this to `parser: 'DecksetParser'` to use the [Deckset](https://www.deckset.com/)-syntax. Addons written this way must implement the correspond interface, and extend the base class provided by the plugin. Eg., `class DecksetParser extends Parser implements ParserInterface`.
 
 ## Credits
 

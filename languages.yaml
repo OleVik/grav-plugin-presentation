@@ -39,20 +39,6 @@ en:
           LABEL: Use Plugin's CSS
         BUILTIN_JS:
           LABEL: Use Plugin's JS
-        FOOTER:
-          LABEL: Inject Twig-footer
-          DESCRIPTION: "Render a theme's Twig-template and append it to each section, eg. 'partials/presentation_footer.html.twig'."
-        TEXTSIZING:
-          LABEL: Enable Textsizing
-        TEXTSIZING_FACTOR:
-          LABEL: Textsizing Factor
-          DESCRIPTION: Factor to apply when scaling text upwards for device resolutions.
-        SHORTCODES:
-          LABEL: Shortcodes
-          DESCRIPTION: Enables internal shortcode-processing.
-        UNWRAP_IMAGES:
-          LABEL: Unwrap Images
-          DESCRIPTION: Unwrap images from paragraphs.
       SYNC:
         TITLE: Synchronization
         SYNC:
@@ -132,6 +118,34 @@ en:
             REPEAT-Y: Repeat vertically
             SPACE: Repeat without clipping
             ROUND: Repeat and stretch
+      ADVANCED:
+        TITLE: Advanced
+        FOOTER:
+          LABEL: Inject Twig-footer
+          DESCRIPTION: "Render a theme's Twig-template and append it to each section, eg. 'partials/presentation_footer.html.twig'."
+        TEXTSIZING:
+          LABEL: Enable Textsizing
+        TEXTSIZING_FACTOR:
+          LABEL: Textsizing Factor
+          DESCRIPTION: Factor to apply when scaling text upwards for device resolutions.
+        SHORTCODES:
+          LABEL: Shortcodes
+          DESCRIPTION: Enables internal shortcode-processing.
+        TRANSITION:
+          LABEL: OnLoad Transition
+          DESCRIPTION: Fade in from white when page (DOM-structure) is ready.
+        UNWRAP_IMAGES:
+          LABEL: Unwrap Images
+          DESCRIPTION: Unwrap images from paragraphs.
+        CONTENT:
+          LABEL: Custom Content
+          DESCRIPTION: Use a custom aggregator for content.
+        PARSER:
+          LABEL: Custom Parser
+          DESCRIPTION: Use a custom parser for content.
+        STYLES:
+          LABEL: Custom Styles
+          DESCRIPTION: Use a custom styles getter/setter.
       OPTIONS:
         TITLE: Reveal.js Options
         LABEL: Settings to pass to Reveal.js.

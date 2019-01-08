@@ -18,6 +18,9 @@ footer: ''
 transition: true
 shortcodes: true
 unwrap_images: true
+content: 'Content'
+parser: 'Parser'
+styles: 'Styles'
 options:
   width: "100%"
   height: "100%"
