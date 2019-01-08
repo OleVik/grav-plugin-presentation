@@ -1,3 +1,10 @@
+# v1.1.0-beta.2
+## 08-01-2019
+
+1. [](#bugfix)
+    * Missing Event
+    * Blueprints
+
 # v1.1.0-beta.1
 ## 08-01-2019
 

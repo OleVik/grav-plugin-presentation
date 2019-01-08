@@ -44,12 +44,12 @@ form:
                 type: commalist
             footer:
               type: text
-              label: PLUGIN_PRESENTATION.ADMIN.ASSETS.FOOTER.LABEL
-              description: PLUGIN_PRESENTATION.ADMIN.ASSETS.FOOTER.DESCRIPTION
+              label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.FOOTER.LABEL
+              description: PLUGIN_PRESENTATION.ADMIN.ADVANCED.FOOTER.DESCRIPTION
             shortcodes:
               type: toggle
-              label: PLUGIN_PRESENTATION.ADMIN.ASSETS.SHORTCODES.LABEL
-              description: PLUGIN_PRESENTATION.ADMIN.ASSETS.SHORTCODES.DESCRIPTION
+              label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.SHORTCODES.LABEL
+              description: PLUGIN_PRESENTATION.ADMIN.ADVANCED.SHORTCODES.DESCRIPTION
               highlight: 1
               default: 1
               options:

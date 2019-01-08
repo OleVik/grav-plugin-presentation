@@ -238,9 +238,11 @@ class PresentationPlugin extends Plugin
     /**
      * Register Page templates
      *
+     * @param Event $event RocketTheme\Toolbox\Event\Event
+     *
      * @return void
      */
-    public function onGetPageTemplates()
+    public function onGetPageTemplates(Event $event)
     {
         $types = $event->types;
         $locator = Grav::instance()['locator'];
