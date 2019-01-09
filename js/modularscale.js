@@ -157,7 +157,20 @@ var delay = 200;
 var throttled = false;
 var calls = 0;
 
-/* Run after slide changes or loads */
+/* Run after slide loads */
+Reveal.addEventListener('ready', function (event) {
+  if (!throttled) {
+    onChange();
+    throttled = true;
+    setTimeout(function () {
+      throttled = false;
+    }, delay);
+  }
+  clearTimeout(forLastExec);
+  forLastExec = setTimeout(onChange, delay);
+});
+
+/* Run after slide changes */
 Reveal.addEventListener('slidechanged', function (event) {
   if (!throttled) {
     onChange();

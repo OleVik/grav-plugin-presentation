@@ -90,10 +90,13 @@ class PresentationPlugin extends Plugin
         $this->grav['config']->set('system.cache.enabled', false);
         $this->enable(
             [
+                'onPageContentRaw' => ['processPresentationShortcode', 0],
                 'onPageContentProcessed' => ['pageIteration', 0],
                 'onTwigExtensions' => ['onTwigExtensions', 0],
                 'onTwigTemplatePaths' => ['templates', 0],
                 'onPagesInitialized' => ['onPagesInitialized', 0],
+                'onShortcodeHandlers' => ['onShortcodeHandlers', 0],
+                'onAssetsInitialized' => ['onAssetsInitialized', 0],
                 'onShutdown' => ['onShutdown', 0]
             ]
         );
@@ -119,7 +122,7 @@ class PresentationPlugin extends Plugin
     }
 
     /**
-     * Construct the page function
+     * Construct the page
      *
      * @return void
      */
@@ -345,5 +348,66 @@ class PresentationPlugin extends Plugin
             $themes[$key] = $inflector->titleize($key);
         }
         return $themes;
+    }
+
+    /**
+     * Process Presentation Shortcode
+     *
+     * @param Event $event RocketTheme\Toolbox\Event\Event
+     *
+     * @return void
+     */
+    public function processPresentationShortcode(Event $event)
+    {
+        $page = $event['page'];
+        $twig = $this->grav['twig'];
+        $config = $this->mergeConfig($page, true);
+        $raw = $page->getRawContent();
+        $function = function ($matches) use ($twig, $config) {
+            $search = $matches[0];
+            if (!isset($matches[1])) {
+                return $search;
+            }
+            $replace = $twig->processTemplate(
+                'partials/presentation_iframe.html.twig',
+                array(
+                    'src' => $matches[1]
+                )
+            );
+            return str_replace($search, $replace, $search);
+        };
+        $page->setRawContent($this->parseLinks($raw, $function));
+    }
+
+    /**
+     * Register shortcodes
+     *
+     * @return void
+     */
+    public function onShortcodeHandlers()
+    {
+        if ($this->grav['config']->get('plugins.shortcode-core.enabled') == 'true') {
+            $this->grav['shortcode']->registerAllShortcodes(__DIR__ . '/shortcodes');
+        }
+    }
+
+    /**
+     * Add general assets
+     *
+     * @return void
+     */
+    public function onAssetsInitialized()
+    {
+        $css = '.presentation-iframe {
+            width: 100%;
+            width: -moz-available;
+            width: -webkit-fill-available;
+            width: fill-available;
+            height: 100%;
+            height: -moz-available;
+            height: -webkit-fill-available;
+            height: fill-available;
+          }';
+        $this->grav['assets']->addInlineCss($css);
     }
 }

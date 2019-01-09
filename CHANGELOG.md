@@ -1,3 +1,14 @@
+# v1.1.0-beta.6
+## 09-01-2019
+
+1. [](#new)
+    * Presentation-shortcode
+    * Presentation-shortcode styles
+2. [](#bugfix)
+    * Fire textsizing on Reveal ready
+    * Links in blueprints
+    * Asset groups
+
 # v1.1.0-beta.5
 ## 08-01-2019
 

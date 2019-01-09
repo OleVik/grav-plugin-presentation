@@ -185,7 +185,6 @@ class Content implements ContentInterface
     public function breakContent(array $page, array $config, array $breaks)
     {
         $header = (array) $page['header'];
-        $this->grav['debugger']->addMessage($header);
         if (!isset($header['horizontal'])) {
             echo '<section id="' . $page['slug'] . '" ';
             echo 'data-title="' . $page['title'] . '">';
@@ -262,7 +261,7 @@ class Content implements ContentInterface
         echo 'class="' . $config['class'] . '" ';
         echo 'data-title="' . $page['title'] . '"';
         if (!empty($config['styles'])) {
-            echo $this->parser->inlineStylesData(
+            echo $this->parser->processStylesData(
                 $config['styles'],
                 $config['route'],
                 $config['id']

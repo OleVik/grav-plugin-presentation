@@ -296,6 +296,11 @@ Use a SCSS-compiler, like [LibSass](https://github.com/sass/libsass), eg. [node-
 
 As demonstrated by the `content`, `parser`, and `styles` options above, you can fairly easily extend the behavior of the plugin. For example, if you install the [Presentation Deckset Plugin](https://github.com/OleVik/grav-plugin-presentation-deckset/), you could set this to `parser: 'DecksetParser'` to use the [Deckset](https://www.deckset.com/)-syntax. Addons written this way must implement the correspond interface, and extend the base class provided by the plugin. Eg., `class DecksetParser extends Parser implements ParserInterface`.
 
+## TODO
+
+- Shortcode-syntax for nested properties passed to setStyle()
+- Presentation-shortcode (iframe)
+
 ## Credits
 
 - Grav [presentation](https://github.com/OleVik/grav-plugin-presentation)-plugin is written by [Ole Vik](https://github.com/OleVik)

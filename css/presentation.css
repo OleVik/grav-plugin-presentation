@@ -444,6 +444,16 @@ template {
     margin: 0;
     padding: 2rem; }
 
+.presentation-iframe {
+  width: 100%;
+  width: -moz-available;
+  width: -webkit-fill-available;
+  width: fill-available;
+  height: 100%;
+  height: -moz-available;
+  height: -webkit-fill-available;
+  height: fill-available; }
+
 #clockbox {
   padding: 0.1rem;
   color: #222222;

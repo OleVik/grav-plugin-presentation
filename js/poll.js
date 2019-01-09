@@ -90,7 +90,7 @@ var revealSlaveEventHandler = function (event) {
 /* If Admin, handle input, otherwise poll server */
 var pollingErrors = 0;
 window.addEventListener("load", function (event) {
-  if (findGetParameter('admin') == 'yes') {
+  if (findGetParameter('admin') == 'true') {
     Reveal.addEventListener('slidechanged', revealMasterEventHandler);
     Reveal.addEventListener('fragmentshown', revealMasterEventHandler);
     Reveal.addEventListener('fragmenthidden', revealMasterEventHandler);

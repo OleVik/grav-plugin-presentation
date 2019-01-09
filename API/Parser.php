@@ -113,7 +113,7 @@ class Parser implements ParserInterface
      *
      * @return string Processed styles, in inline string
      */
-    public function inlineStylesData(array $styles, string $route, string $id)
+    public function processStylesData(array $styles, string $route, string $id)
     {
         $inline = $data = '';
         foreach ($styles as $property => $value) {

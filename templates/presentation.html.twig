@@ -67,17 +67,17 @@
       {% endif %}
     {% endblock %}
     {% block scripts %}
-      {% do assets.addInlineJs('const reveal_init = ' ~ reveal_init ~ ';') %}
-      {% do assets.addInlineJs('const presentationAPIRoute = "/' ~ config.plugins['presentation'].api_route ~ '";') %}
-      {% do assets.addInlineJs('const presentationAPITimeout = ' ~ config.plugins['presentation'].poll_timeout ~ ';') %}
-      {% do assets.addInlineJs('const presentationAPIRetryLimit = ' ~ config.plugins['presentation'].poll_retry_limit ~ ';') %}
+      {% do assets.addInlineJs('const reveal_init = ' ~ reveal_init ~ ';', {'group': 'presentation'}) %}
+      {% do assets.addInlineJs('const presentationAPIRoute = "/' ~ config.plugins['presentation'].api_route ~ '";', {'group': 'presentation'}) %}
+      {% do assets.addInlineJs('const presentationAPITimeout = ' ~ config.plugins['presentation'].poll_timeout ~ ';', {'group': 'presentation'}) %}
+      {% do assets.addInlineJs('const presentationAPIRetryLimit = ' ~ config.plugins['presentation'].poll_retry_limit ~ ';', {'group': 'presentation'}) %}
       {% if config.plugins['presentation'].token_auth == true %}
-        {% do assets.addInlineJs('const presentationAPIAuth = true;') %}
+        {% do assets.addInlineJs('const presentationAPIAuth = true;', {'group': 'presentation'}) %}
       {% else %}
-        {% do assets.addInlineJs('const presentationAPIAuth = false;') %}
+        {% do assets.addInlineJs('const presentationAPIAuth = false;', {'group': 'presentation'}) %}
       {% endif %}
       {% if uri.query('admin') == true %}
-        {% do assets.addInlineJs('const presentationAuthToken = "' ~ config.plugins['presentation'].token ~ '";') %}
+        {% do assets.addInlineJs('const presentationAuthToken = "' ~ config.plugins['presentation'].token ~ '";', {'group': 'presentation'}) %}
       {% endif %}
       {% if config.plugins['presentation'].builtin_js %}
         {% do assets.addJs('plugin://presentation/node_modules/reveal.js/lib/js/head.min.js', {'group': 'presentation'}) %}
@@ -97,7 +97,7 @@
       Reveal.initialize(reveal_init);
     }, false);
     window.addEventListener("load", function(event) {
-      if (findGetParameter('admin') == 'yes') {
+      if (findGetParameter('admin') == 'true') {
         Reveal.addEventListener('ready', function(event) {
           var body = document.getElementById('top');
           body.insertAdjacentHTML('beforeend', '<div id="clockbox"></div>');

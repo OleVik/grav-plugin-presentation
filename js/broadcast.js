@@ -3,7 +3,7 @@
  */
 var bc = new BroadcastChannel('grav-presentation');
 window.addEventListener("load", function (event) {
-  if (findGetParameter('admin') == 'yes') {
+  if (findGetParameter('admin') == 'true') {
     Reveal.addEventListener('slidechanged', function (event) {
       if (presentationAPIAuth == 'true') {
         if (findGetParameter('token') !== presentationAuthToken) {
