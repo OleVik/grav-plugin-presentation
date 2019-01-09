@@ -1,3 +1,9 @@
+# v1.1.0-beta.7
+## 09-01-2019
+
+1. [](#bugfix)
+    * Presentation-shortcode
+
 # v1.1.0-beta.6
 ## 09-01-2019
 
