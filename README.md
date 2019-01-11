@@ -63,8 +63,6 @@ builtin_css: true
 builtin_js: true
 # Enable Plugin's dynamic text sizing
 textsizing: true
-# Dynamic text sizing factor for resolution scaling
-textsizing_factor: 1.25
 # Synchronize Slide-navigation
 sync: 'none'
 # URL Route to use for Poll-sync
@@ -91,6 +89,22 @@ content: 'Content'
 parser: 'Parser'
 # Class to use for Styles management
 styles: 'Styles'
+# Breakpoints for responsive textsizing
+breakpoints:
+  - width: 240
+    font_size: 8
+  - width: 320
+    font_size: 12
+  - width: 576
+    font_size: 16
+  - width: 768
+    font_size: 20
+  - width: 992
+    font_size: 24
+  - width: 1200
+    font_size: 28
+  - width: 1600
+    font_size: 32
 # Options to pass to Reveal.js
 options:
   width: "100%"
@@ -187,16 +201,16 @@ You can of course also style the plugin using your theme's /css/custom.css-file,
 
 #### Fitting text to a slide
 
-The plugin makes available a method of dynamically scaling text within a slide, which is similar yet distinct from what happens in PowerPoint 2016. Rather than do this scaling entirely automatically, which tends to work poorly across devices and resolutions, you set a _scale_ and a _base_, eg.:
+The plugin makes available a method of dynamically scaling text within a slide, which is similar yet distinct from what happens in PowerPoint 2016. Rather than do this scaling entirely automatically, which tends to work poorly across devices and resolutions, you set a _scale_ and an optional _base_, eg.:
 
   [data-textsize-scale=1.125]
   [data-textsize-base=16]
 
-If Textsizing is enabled in the plugin's options and on the Page, the relation between block text -- any text not in a header-element -- and header-text (`h1`, `h2`, `h3`, `h4`, `h5`, `h6`) is determined by the `textsize-scale`-property. That is, the size of the header-element's text relative to the base font-size set by `textsize-base`.
+If Textsizing is enabled in the plugin's options and on the Page, the relation between block text -- any text not in a header-element -- and header-text (`h1`, `h2`, `h3`, `h4`, `h5`, `h6`) is determined by the `textsize-scale`-property. That is, the size of the header-element's text relative to the base font-size.
 
 In the example above, the scale is set to the "Major Second" rhythm, and with a base of 16 -- the minimum font-size recommended for web -- this yields the following sizes for headers: 28.83 (`h1`), 25.63 (`h2`),  22.78 (`h3`), 20.25 (`h4`), 18 (`h5`), and 16 (`h6`). The base, and hence text, is adjusted upwards as the size of the screen increases to enable dynamic, responsive text-sizing.
 
-**The normal base size is 16, because the recommended minimum font size for text on the web is 16px. The higher the number in the scale is, header-elements will be correspondly larger - exponentially so.**
+**Note: The base should be the minimum size of text. The higher the number in the scale is, header-elements will be correspondly larger - exponentially so.**
 
 #### Using section- or slide-specific styles
 

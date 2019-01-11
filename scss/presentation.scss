@@ -51,6 +51,34 @@ $breakpoints: (extrasmall: 320px, small: 576px, medium: 768px, large: 992px, ext
 }
 
 .reveal:not(.overview) {
+  @include media("<extrasmall") {
+    font-size: 16px;
+  }
+
+  @include media(">=extrasmall") {
+    font-size: 18px;
+  }
+
+  @include media(">=small") {
+    font-size: 20px;
+  }
+
+  @include media(">=medium") {
+    font-size: 22px;
+  }
+
+  @include media(">=large") {
+    font-size: 24px;
+  }
+
+  @include media(">=extralarge") {
+    font-size: 26px;
+  }
+
+  @include media(">=massive") {
+    font-size: 28px;
+  }
+
   .slides {
     section {
       @include maximizeSize(true, true, '0px', '0px', true, true);
@@ -159,7 +187,9 @@ $breakpoints: (extrasmall: 320px, small: 576px, medium: 768px, large: 992px, ext
         }
 
         * {
+          width: 100%;
           max-width: 100%;
+          height: auto;
           max-height: 100%;
         }
 

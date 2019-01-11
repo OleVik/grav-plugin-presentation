@@ -12,6 +12,7 @@
     "axios": "^0.18.0",
     "bootstrap": "^4.2.1",
     "include-media": "^1.4.9",
+    "modular-scale": "^5.1.0",
     "reveal.js": "^3.7.0"
   }
 }

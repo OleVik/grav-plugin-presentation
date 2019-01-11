@@ -124,9 +124,13 @@ en:
           DESCRIPTION: "Render a theme's Twig-template and append it to each section, eg. 'partials/presentation_footer.html.twig'."
         TEXTSIZING:
           LABEL: Enable Textsizing
-        TEXTSIZING_FACTOR:
-          LABEL: Textsizing Factor
-          DESCRIPTION: Factor to apply when scaling text upwards for device resolutions.
+        BREAKPOINTS:
+          LABEL: Breakpoints
+          DESCRIPTION: Each breakpoint has an associated Width, at which the Font Size is applied to the Slide.
+          WIDTH:
+            LABEL: Width
+          FONT_SIZE:
+            LABEL: Font Size
         SHORTCODES:
           LABEL: Shortcodes
           DESCRIPTION: Enables internal shortcode-processing.

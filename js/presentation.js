@@ -67,6 +67,27 @@ function ISODateString(d) {
 }
 
 /**
+ * Find closest number
+ * @param {float} number Number to search for
+ * @param {array} array Numbers to search in
+ * 
+ * @see https://jsfiddle.net/jaggedsoftware/g40krr4n/
+ */
+function getClosest(number, array) {
+  var current = array[0];
+  var difference = Math.abs(number - current);
+  var index = array.length;
+  while (index--) {
+    var newDifference = Math.abs(number - array[index]);
+    if (newDifference < difference) {
+      difference = newDifference;
+      current = array[index];
+    }
+  }
+  return current;
+};
+
+/**
  * Get Slides
  */
 function getSlides() {

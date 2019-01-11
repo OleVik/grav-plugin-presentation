@@ -274,6 +274,34 @@ template {
   .reveal.overview .slides section section {
     padding-top: 9rem !important; }
 
+@media (max-width: 319px) {
+  .reveal:not(.overview) {
+    font-size: 16px; } }
+
+@media (min-width: 320px) {
+  .reveal:not(.overview) {
+    font-size: 18px; } }
+
+@media (min-width: 576px) {
+  .reveal:not(.overview) {
+    font-size: 20px; } }
+
+@media (min-width: 768px) {
+  .reveal:not(.overview) {
+    font-size: 22px; } }
+
+@media (min-width: 992px) {
+  .reveal:not(.overview) {
+    font-size: 24px; } }
+
+@media (min-width: 1200px) {
+  .reveal:not(.overview) {
+    font-size: 26px; } }
+
+@media (min-width: 1600px) {
+  .reveal:not(.overview) {
+    font-size: 28px; } }
+
 .reveal:not(.overview) .slides section {
   width: calc(100% - 0px) !important;
   min-width: calc(100% - 0px) !important;
@@ -363,7 +391,9 @@ template {
       font-size: 3rem; } }
   .reveal .slides section section *,
   .reveal.center .slides section section * {
+    width: 100%;
     max-width: 100%;
+    height: auto;
     max-height: 100%; }
   .reveal .slides section section img,
   .reveal .slides section section canvas,

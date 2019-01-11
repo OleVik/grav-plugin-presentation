@@ -1,3 +1,12 @@
+# v1.2.0-beta.1
+## 11-01-2019
+
+1. [](#new)
+    * Customizable breakpoints
+2. [](#improved)
+    * Textsizing-logic
+    * Purer implementation of Modular Scales
+
 # v1.1.0-beta.7
 ## 09-01-2019
 

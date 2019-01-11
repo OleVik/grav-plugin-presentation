@@ -1,5 +1,5 @@
 name: Presentation
-version: 1.1.0-beta.7
+version: 1.2.0-beta.1
 testing: true
 description: Responsive navigational slideshows with Reveal.js
 icon: arrows-alt
@@ -63,24 +63,6 @@ form:
                 0: PLUGIN_ADMIN.DISABLED
               validate:
                 type: bool
-            textsizing:
-              type: toggle
-              label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.TEXTSIZING.LABEL
-              default: 1
-              options:
-                1: PLUGIN_ADMIN.ENABLED
-                0: PLUGIN_ADMIN.DISABLED
-              validate:
-                type: bool
-            textsizing_factor:
-              type: number
-              label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.TEXTSIZING_FACTOR.LABEL
-              description: PLUGIN_PRESENTATION.ADMIN.ADVANCED.TEXTSIZING_FACTOR.DESCRIPTION
-              validate:
-                type: int
-                min: 0
-                max: 10
-                step: 0.05
             builtin_css:
               type: toggle
               label: PLUGIN_PRESENTATION.ADMIN.OPTIONS.ASSETS.BUILTIN_CSS.LABEL
@@ -97,6 +79,40 @@ form:
                 0: PLUGIN_ADMIN.DISABLED
               validate:
                 type: bool
+            textsizing:
+              type: toggle
+              label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.TEXTSIZING.LABEL
+              default: 1
+              options:
+                1: PLUGIN_ADMIN.ENABLED
+                0: PLUGIN_ADMIN.DISABLED
+              validate:
+                type: bool
+            breakpoints_section:
+              type: section
+              title: PLUGIN_PRESENTATION.ADMIN.ADVANCED.BREAKPOINTS.LABEL
+              text: PLUGIN_PRESENTATION.ADMIN.ADVANCED.BREAKPOINTS.DESCRIPTION
+              underline: true
+              fields:
+                breakpoints:
+                  type: list
+                  style: vertical
+                  label: false
+                  fields:
+                    .width:
+                      type: number
+                      label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.BREAKPOINTS.WIDTH.LABEL
+                      validate:
+                        type: int
+                        min: 80
+                        max: 20000
+                    .font_size:
+                      type: number
+                      label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.BREAKPOINTS.FONT_SIZE.LABEL
+                      validate:
+                        type: int
+                        min: 4
+                        max: 4000
         sync:
           type: tab
           title: PLUGIN_PRESENTATION.ADMIN.SYNC.TITLE
