@@ -1,3 +1,9 @@
+# v1.2.0-beta.2
+## 11-01-2019
+
+1. [](#improved)
+    * Breakpoints as array-field
+
 # v1.2.0-beta.1
 ## 11-01-2019
 

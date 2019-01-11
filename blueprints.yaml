@@ -1,5 +1,5 @@
 name: Presentation
-version: 1.2.0-beta.1
+version: 1.2.0-beta.2
 testing: true
 description: Responsive navigational slideshows with Reveal.js
 icon: arrows-alt
@@ -88,31 +88,13 @@ form:
                 0: PLUGIN_ADMIN.DISABLED
               validate:
                 type: bool
-            breakpoints_section:
-              type: section
-              title: PLUGIN_PRESENTATION.ADMIN.ADVANCED.BREAKPOINTS.LABEL
-              text: PLUGIN_PRESENTATION.ADMIN.ADVANCED.BREAKPOINTS.DESCRIPTION
-              underline: true
-              fields:
-                breakpoints:
-                  type: list
-                  style: vertical
-                  label: false
-                  fields:
-                    .width:
-                      type: number
-                      label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.BREAKPOINTS.WIDTH.LABEL
-                      validate:
-                        type: int
-                        min: 80
-                        max: 20000
-                    .font_size:
-                      type: number
-                      label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.BREAKPOINTS.FONT_SIZE.LABEL
-                      validate:
-                        type: int
-                        min: 4
-                        max: 4000
+            breakpoints:
+              type: array
+              label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.BREAKPOINTS.LABEL
+              description: PLUGIN_PRESENTATION.ADMIN.ADVANCED.BREAKPOINTS.DESCRIPTION
+              placeholder_key: PLUGIN_PRESENTATION.ADMIN.ADVANCED.BREAKPOINTS.WIDTH.LABEL
+              placeholder_value: PLUGIN_PRESENTATION.ADMIN.ADVANCED.BREAKPOINTS.FONT_SIZE.LABEL
+              required: true
         sync:
           type: tab
           title: PLUGIN_PRESENTATION.ADMIN.SYNC.TITLE

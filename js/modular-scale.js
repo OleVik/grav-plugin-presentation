@@ -3,13 +3,8 @@
  * @param {int} width Element width
  */
 function getFontSize(width) {
-  var keys = [];
-  Array.prototype.forEach.call(presentationBreakpoints, function (breakpoint) {
-    keys.push(breakpoint.width);
-  });
-  var match = getClosest(width, keys);
-  var result = presentationBreakpoints.filter(breakpoint => breakpoint.width == match);
-  return result[0].font_size;
+  var match = getClosest(width, Object.keys(presentationBreakpoints));
+  return presentationBreakpoints[match];
 }
 
 /**
