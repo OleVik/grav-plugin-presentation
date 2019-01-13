@@ -6,7 +6,7 @@
 @import "../node_modules/reveal.js/css/theme/template/mixins";
 @import "../node_modules/reveal.js/css/theme/template/settings";
 @import "../node_modules/include-media/dist/include-media";
-@import "../node_modules/bootstrap/scss/bootstrap-reboot.scss";
+@import "../node_modules/normalize.css/normalize.css";
 
 /* Responsive breakpoints */
 $breakpoints: (extrasmall: 320px, small: 576px, medium: 768px, large: 992px, extralarge: 1200px, massive: 1600px);
@@ -177,6 +177,7 @@ $breakpoints: (extrasmall: 320px, small: 576px, medium: 768px, large: 992px, ext
     section {
       section {
         display: flex;
+        box-sizing: border-box;
         align-items: center;
         justify-content: flex-start;
         flex-direction: column;
@@ -337,4 +338,4 @@ $breakpoints: (extrasmall: 320px, small: 576px, medium: 768px, large: 992px, ext
 }
 
 /* Include theme template */
-@import "../node_modules/reveal.js/css/theme/template/theme";
+// @import "../node_modules/reveal.js/css/theme/template/theme";

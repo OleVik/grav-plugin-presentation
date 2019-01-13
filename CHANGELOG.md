@@ -1,3 +1,14 @@
+# v1.2.0-beta.3
+## 11-01-2019
+
+1. [](#new)
+    * CSS and JS option for plugin assets
+    * Recast Styles API as Transport API
+2. [](#improved)
+    * Optimize assets, breakpoints
+    * Disallow empty API-options
+    * Swap Bootstrap Reboot for Normalize.css
+
 # v1.2.0-beta.2
 ## 11-01-2019
 

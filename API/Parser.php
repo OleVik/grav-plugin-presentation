@@ -33,7 +33,7 @@ class Parser implements ParserInterface
      * Regular expressions
      */
     const REGEX_IMG = "/(<img(?:(\s*(class)\s*=\s*\x22([^\x22]+)\x22*)+|[^>]+?)*>)/";
-    const REGEX_IMG_P = "/<p>\s*?(<a .*<img.*<\/a>|<img.*)?\s*<\/p>/";
+    const REGEX_IMG_P = '/<p>\s*?((<a .*<img.*<\/a>|<img.*\s*)*)\s*<\/p>/mi';
     const REGEX_IMG_TITLE = "/<img[^>]*?title[ ]*=[ ]*[\"](.*?)[\"][^>]*?>/";
     const REGEX_IMG_WRAPPING_LINK = '/\[(?\'image\'\!.*)\]\((?\'url\'https?:\/\/.*)\)/';
     const REGEX_FRAGMENT_SHORTCODE = '~\[fragment=*([a-zA-Z-]*)\](.*)\[\/fragment\]~im';
@@ -42,11 +42,11 @@ class Parser implements ParserInterface
     /**
      * Instantiate Parser API
      *
-     * @param Styles $styles Styles API
+     * @param Transport $transport Transport API
      */
-    public function __construct($styles)
+    public function __construct($transport)
     {
-        $this->styles = $styles;
+        $this->transport = $transport;
     }
 
     /**
@@ -122,13 +122,13 @@ class Parser implements ParserInterface
             } elseif (Utils::startsWith($property, 'data')) {
                 $data .= ' ' . $property . '="' . $value . '"';
             } elseif ($property == 'header-font-family') {
-                $this->styles->setStyle($id, "{\nfont-family:$value;\n}", 'h1,h2,h3,h4,h5,h6');
+                $this->transport->setStyle($id, "{\nfont-family:$value;\n}", 'h1,h2,h3,h4,h5,h6');
             } elseif ($property == 'header-color') {
-                $this->styles->setStyle($id, "{\ncolor:$value;\n}", 'h1,h2,h3,h4,h5,h6');
+                $this->transport->setStyle($id, "{\ncolor:$value;\n}", 'h1,h2,h3,h4,h5,h6');
             } elseif ($property == 'block-font-family') {
-                $this->styles->setStyle($id, "{\nfont-family:$value;\n}");
+                $this->transport->setStyle($id, "{\nfont-family:$value;\n}");
             } elseif ($property == 'block-color') {
-                $this->styles->setStyle($id, "{\ncolor:$value;\n}");
+                $this->transport->setStyle($id, "{\ncolor:$value;\n}");
             } else {
                 $inline .= $property . ': ' . $value . ';';
             }

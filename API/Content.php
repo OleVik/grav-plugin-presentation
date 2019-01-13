@@ -16,6 +16,7 @@ namespace Grav\Plugin\PresentationPlugin\API;
 
 use Grav\Common\Utils;
 use Grav\Plugin\PresentationPlugin\API\Parser;
+use Grav\Plugin\PresentationPlugin\API\Transport;
 use Michelf\SmartyPants;
 
 /**
@@ -40,15 +41,17 @@ class Content implements ContentInterface
     /**
      * Instantiate Content API
      *
-     * @param Grav $grav   Grav-instance
-     * @param array  $config Plugin configuration
-     * @param Parser $parser Parser utility
+     * @param Grav      $grav      Grav-instance
+     * @param array     $config    Plugin configuration
+     * @param Parser    $parser    Parser utility
+     * @param Transport $transport Transport API
      */
-    public function __construct($grav, $config, $parser)
+    public function __construct($grav, $config, $parser, $transport)
     {
         $this->grav = $grav;
         $this->config = $config;
         $this->parser = $parser;
+        $this->transport = $transport;
         $this->parsedown = new \Parsedown();
     }
 
@@ -230,6 +233,9 @@ class Content implements ContentInterface
                     $config['class'] .= ' ' . $item;
                 }
             }
+            if ($this->transport->getClasses($config['id'])) {
+                $config['class'] .= ' ' . $this->transport->getClasses($config['id']);
+            }
             if ($hide !== true) {
                 if (isset($header['horizontal']) && $header['horizontal'] == true) {
                     echo '<section>';
@@ -272,6 +278,9 @@ class Content implements ContentInterface
             if (isset($page['header']->textsize['base'])) {
                 echo ' data-textsize-base="' . (float) $page['header']->textsize['base'] . '"';
             }
+        }
+        if ($this->transport->getDataAttributes($config['id'])) {
+            echo ' ' . $this->transport->getDataAttributes($config['id']);
         }
         echo '>';
         $break = preg_replace(self::REGEX_P_EMPTY, '', $break);

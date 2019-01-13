@@ -25,7 +25,7 @@ use RocketTheme\Toolbox\Event\Event;
 
 use Grav\Plugin\PresentationPlugin\API\Content;
 use Grav\Plugin\PresentationPlugin\API\Parser;
-use Grav\Plugin\PresentationPlugin\API\Styles;
+use Grav\Plugin\PresentationPlugin\API\Transport;
 use Grav\Plugin\PresentationPlugin\API\Poll;
 use Grav\Plugin\PresentationPlugin\Utilities;
 
@@ -77,8 +77,8 @@ class PresentationPlugin extends Plugin
         include_once __DIR__ . '/API/Content.php';
         include_once __DIR__ . '/API/ParserInterface.php';
         include_once __DIR__ . '/API/Parser.php';
-        include_once __DIR__ . '/API/StylesInterface.php';
-        include_once __DIR__ . '/API/Styles.php';
+        include_once __DIR__ . '/API/TransportInterface.php';
+        include_once __DIR__ . '/API/Transport.php';
         include_once __DIR__ . '/Utilities.php';
         if ($this->isAdmin()) {
             $this->enable(
@@ -139,9 +139,9 @@ class PresentationPlugin extends Plugin
                         $header['presentation']
                     );
                 }
-                $styles = $this->getAPIInstance($config['styles']);
-                $parser = $this->getAPIInstance($config['parser'], $styles);
-                $content = $this->getAPIInstance($config['content'], $grav, $config, $parser);
+                $transport = $this->getAPIInstance($config['transport']);
+                $parser = $this->getAPIInstance($config['parser'], $transport);
+                $content = $this->getAPIInstance($config['content'], $grav, $config, $parser, $transport);
                 $tree = $content->buildTree($grav['page']->route());
                 $slides = $content->buildContent($tree);
                 $grav['page']->setRawContent($slides);
@@ -153,7 +153,7 @@ class PresentationPlugin extends Plugin
                 $this->grav['twig']->twig_vars['reveal_init'] = $options;
                 $this->grav['twig']->twig_vars['presentation_menu'] = $options;
                 $this->grav['twig']->twig_vars['presentation_breakpoints'] = $breakpoints;
-                $grav['assets']->addInlineCss($styles->getStyles(), null, 'presentation');
+                $grav['assets']->addInlineCss($transport->getStyles(), null, 'presentation');
             }
         }
     }
@@ -324,7 +324,7 @@ class PresentationPlugin extends Plugin
         $regex = '/Grav\\\\Plugin\\\\PresentationPlugin\\\\API\\\\(?<api>.*)/i';
         $classes = preg_grep($regex, get_declared_classes());
         $matches = preg_grep('/' . $key . '/i', $classes);
-        $options = array('none' => 'None');
+        $options = array();
         foreach ($matches as $match) {
             $match = str_replace('Grav\Plugin\PresentationPlugin\API\\', '', $match);
             $options[$match] = $match;

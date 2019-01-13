@@ -203,8 +203,10 @@ You can of course also style the plugin using your theme's /css/custom.css-file,
 
 The plugin makes available a method of dynamically scaling text within a slide, which is similar yet distinct from what happens in PowerPoint 2016. Rather than do this scaling entirely automatically, which tends to work poorly across devices and resolutions, you set a _scale_ and an optional _base_, eg.:
 
-  [data-textsize-scale=1.125]
-  [data-textsize-base=16]
+```
+[data-textsize-scale=1.125]
+[data-textsize-base=16]
+```
 
 If Textsizing is enabled in the plugin's options and on the Page, the relation between block text -- any text not in a header-element -- and header-text (`h1`, `h2`, `h3`, `h4`, `h5`, `h6`) is determined by the `textsize-scale`-property. That is, the size of the header-element's text relative to the base font-size.
 
@@ -224,6 +226,17 @@ If configured with `shortcodes: true` any section or slide can use shortcodes to
 If the shortcode is found and applied, it is stripped from the further evaluated content. This method uses regular expressions for speed, and takes precedence over plugin- or page-defined `styles`.
 
 **Note**: The syntax is restricted to `[style-property=value]`. Quotes or other unexpected characters not conforming to alphanumerics or dashes will make the expression fail to pick up the shortcode. The `style-property` or `value` must basically conform to the [a-zA-Z0-9-]+ regular expression, separated by an equal-character (`=`) and wrapped in square brackets (`[]`). For testing, use [Regex101](https://regex101.com/r/GlH65o/3).
+
+##### Center content
+
+To center content in the slide, when Reveal.s has `display: 'flex'` set, you need to add `justify-content: center` to the slides. This is as simple as adding the following to a Page's FrontMatter:
+
+```
+style:
+  justify-content: center
+```
+
+Or the shortcode `[style-justify-content=center]` to an individual slide.
 
 #### Full background image or video with Reveal.js, through data-attributres
 
@@ -313,7 +326,12 @@ As demonstrated by the `content`, `parser`, and `styles` options above, you can 
 ## TODO
 
 - Shortcode-syntax for nested properties passed to setStyle()
-- Presentation-shortcode (iframe)
+- Scaling for square, 4:3 ("truncated"), 16:9 (normal widescreen)
+- Calculate all Modular Scales onLoad
+- Reintegrate FlowType as an alternative?
+- Deckset: Image and Media shortcodes
+  - Styles class receiver?
+- Safari: Images are too wide
 
 ## Credits
 
