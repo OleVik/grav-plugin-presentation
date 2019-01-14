@@ -72,8 +72,8 @@ class Transport implements TransportInterface
             if (count($elements) > 1) {
                 foreach ($elements as $element) {
                     $this->styles[$id][] = $element . ' ' . $style;
-                    return true;
                 }
+                return true;
             } else {
                 $this->styles[$id][] = $elements[0] . ' ' .  $style;
                 return true;

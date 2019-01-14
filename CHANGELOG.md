@@ -1,3 +1,9 @@
+# v1.2.1
+## XX-XX-2019
+
+1. [](#bugfix)
+    * Fix foreach-loop in Transport->setStyle()
+
 # v1.2.0
 ## 14-01-2019
 
