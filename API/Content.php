@@ -207,7 +207,7 @@ class Content implements ContentInterface
                     $page['header']->style
                 );
             }
-            if (isset($config['textsizing']) && isset($page['header']->textsize)) {
+            if (isset($config['textsizing']) && isset($page['header']->textsize['scale'])) {
                 $config['class'] .= ' textsizing';
             }
             if (isset($page['header']->class) && !empty($page['header']->class)) {
