@@ -56,12 +56,19 @@ function applyHeaderSizes(element) {
  * Apply modular scale logic
  */
 function applyModularScale() {
+  var currentSlide = document.querySelector('.slides section section.present');
+  applyBaseSize(currentSlide);
+  applyHeaderSizes(currentSlide);
+}
+
+/* Run after slides load */
+Reveal.addEventListener('ready', function (event) {
   var slides = getSlides('.slides section section.textsizing');
   Object.entries(slides).forEach(([key, value]) => {
     applyBaseSize(value);
     applyHeaderSizes(value);
   });
-}
+});
 
 /* Debounce and throttle */
 /* @see https://codepen.io/dreit/pen/gedMez?editors=0010 */
@@ -70,10 +77,9 @@ var delay = 200;
 var throttled = false;
 var calls = 0;
 
-/* Run after slides load */
-Reveal.addEventListener('ready', function (event) {
+/* Run after slide changes size */
+window.addEventListener("resize", function () {
   if (!throttled) {
-    applyModularScale();
     throttled = true;
     setTimeout(function () {
       throttled = false;
@@ -83,10 +89,9 @@ Reveal.addEventListener('ready', function (event) {
   forLastExec = setTimeout(applyModularScale, delay);
 });
 
-/* Run after slide changes size */
-window.addEventListener("resize", function () {
+/* Run after slide changes */
+Reveal.addEventListener('slidechanged', function (event) {
   if (!throttled) {
-    applyModularScale();
     throttled = true;
     setTimeout(function () {
       throttled = false;

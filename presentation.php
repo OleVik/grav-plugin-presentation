@@ -277,6 +277,7 @@ class PresentationPlugin extends Plugin
     public static function getModularScale()
     {
         return array(
+            ['name' => 'unison', 'ratio' => '1:1', 'numerical' => 1],
             ['name' => 'minor second', 'ratio' => '15:16', 'numerical' => 1.067],
             ['name' => 'major second', 'ratio' => '8:9', 'numerical' => 1.125],
             ['name' => 'minor third', 'ratio' => '5:6', 'numerical' => 1.2],
