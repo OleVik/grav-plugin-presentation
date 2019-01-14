@@ -53,12 +53,10 @@ en:
           TITLE: Font Sizing
           SCALE:
             LABEL: Font scale
-            HELP: Font scale
-            DESCRIPTION: Use a modular, harmonious, scale to proportionally determine the size of header elements from the base size.
-          BASE:
-            LABEL: Base font size
-            HELP: Base font size
-            DESCRIPTION: Sets the base text size for all elements.
+            DESCRIPTION: Use a modular, harmonious, scale to proportionally determine the size of header elements from the calculated base font size (derived from breakpoints).
+          MODIFIER:
+            LABEL: Font size modifier
+            DESCRIPTION: Multiplies the calculated font size by this amount, lower numbers yield smaller base font sizes, and vice versa.
       SYNC:
         TITLE: Synchronization
         SYNC:

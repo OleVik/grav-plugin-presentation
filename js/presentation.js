@@ -90,14 +90,14 @@ function getClosest(number, array) {
 /**
  * Get Slides
  */
-function getSlides() {
-  return document.querySelectorAll('.slides section section');
+function getSlides(target) {
+  return document.querySelectorAll(target);
 }
 
 /* If printing, clear color and background*/
 window.addEventListener("load", function (event) {
   if (findGetParameter('print-pdf')) {
-    Array.prototype.forEach.call(getSlides(), function (element) {
+    Array.prototype.forEach.call(getSlides('.slides section section'), function (element) {
       element.style.setProperty('color', 'unset', 'important');
       element.style.setProperty('background', 'unset', 'important');
     });

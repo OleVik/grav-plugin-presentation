@@ -1,3 +1,18 @@
+# v1.2.0
+## 14-01-2019
+
+1. [](#new)
+    * First stable release
+2. [](#improved)
+    * Apply Modular Scale everywhere onLoad
+    * Dropped Textsize Base for Textsize Modifier
+    * Reorder logic Content API
+    * Simplify and extend Parser::unwrapImage()
+3. [](#bugfix)
+    * Textsizing-class application
+    * Audio-element support
+    * Various cleanup
+
 # v1.2.0-beta.3
 ## 11-01-2019
 

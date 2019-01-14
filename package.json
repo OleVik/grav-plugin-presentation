@@ -14,7 +14,6 @@
   },
   "devDependencies": {
     "include-media": "^1.4.9",
-    "modular-scale": "^5.1.0",
-    "normalize.css": "^8.0.1"
+    "modular-scale": "^5.1.0"
   }
 }

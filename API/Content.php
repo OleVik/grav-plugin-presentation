@@ -207,24 +207,6 @@ class Content implements ContentInterface
                     $page['header']->style
                 );
             }
-            if ($config['shortcodes']) {
-                $break = self::pushNotes($break);
-                $shortcodes = $this->parser->interpretShortcodes($break, $config['id']);
-                $break = $shortcodes['content'];
-                $break = SmartyPants::defaultTransform($break);
-                if (isset($shortcodes['props']['class'])) {
-                    $config['class'] = $shortcodes['props']['class'];
-                }
-                if (isset($shortcodes['hide'])) {
-                    $hide = true;
-                }
-                if (isset($shortcodes['props']['styles'])) {
-                    $config['styles'] = array_merge(
-                        $config['styles'],
-                        $shortcodes['props']['styles']
-                    );
-                }
-            }
             if (isset($config['textsizing']) && isset($page['header']->textsize)) {
                 $config['class'] .= ' textsizing';
             }
@@ -232,9 +214,6 @@ class Content implements ContentInterface
                 foreach ($page['header']->class as $item) {
                     $config['class'] .= ' ' . $item;
                 }
-            }
-            if ($this->transport->getClasses($config['id'])) {
-                $config['class'] .= ' ' . $this->transport->getClasses($config['id']);
             }
             if ($hide !== true) {
                 if (isset($header['horizontal']) && $header['horizontal'] == true) {
@@ -263,24 +242,48 @@ class Content implements ContentInterface
      */
     public function buildSlide(array $page, array $config, string $break)
     {
-        echo '<section id="' . $config['id'] . '" ';
-        echo 'class="' . $config['class'] . '" ';
-        echo 'data-title="' . $page['title'] . '"';
+        if ($config['shortcodes']) {
+            $break = self::pushNotes($break);
+            $shortcodes = $this->parser->interpretShortcodes($break, $config['id']);
+            $break = $shortcodes['content'];
+            $break = SmartyPants::defaultTransform($break);
+            if (isset($shortcodes['props']['class'])) {
+                $config['class'] = $shortcodes['props']['class'];
+            }
+            if (isset($shortcodes['hide'])) {
+                $hide = true;
+            }
+            if (isset($shortcodes['props']['styles'])) {
+                $config['styles'] = array_merge(
+                    $config['styles'],
+                    $shortcodes['props']['styles']
+                );
+            }
+        }
         if (!empty($config['styles'])) {
-            echo $this->parser->processStylesData(
+            $inline = $this->parser->processStylesData(
                 $config['styles'],
                 $config['route'],
                 $config['id']
             );
         }
+        if ($this->transport->getClasses($config['id'])) {
+            $config['class'] .= ' ' . $this->transport->getClasses($config['id']);
+        }
+        echo '<section id="' . $config['id'] . '" ';
+        echo 'class="' . $config['class'] . '" ';
+        echo 'data-title="' . $page['title'] . '"';
+        if (!empty($inline)) {
+            echo $inline;
+        }
         if (isset($page['header']->textsize['scale'])) {
             echo ' data-textsize-scale="' . (float) $page['header']->textsize['scale'] . '"';
-            if (isset($page['header']->textsize['base'])) {
-                echo ' data-textsize-base="' . (float) $page['header']->textsize['base'] . '"';
+            if (isset($page['header']->textsize['modifier'])) {
+                echo ' data-textsize-modifier="' . (float) $page['header']->textsize['modifier'] . '"';
             }
         }
-        if ($this->transport->getDataAttributes($config['id'])) {
-            echo ' ' . $this->transport->getDataAttributes($config['id']);
+        if (!empty($this->transport->getDataAttributes($config['id']))) {
+            echo $this->transport->getDataAttributes($config['id']);
         }
         echo '>';
         $break = preg_replace(self::REGEX_P_EMPTY, '', $break);

@@ -20,20 +20,18 @@ form:
                 header.textsize.scale:
                   type: select
                   label: PLUGIN_PRESENTATION.ADMIN.OPTIONS.TEXTSIZE.SCALE.LABEL
-                  help: PLUGIN_PRESENTATION.ADMIN.OPTIONS.TEXTSIZE.SCALE.HELP
                   description: PLUGIN_PRESENTATION.ADMIN.OPTIONS.TEXTSIZE.SCALE.DESCRIPTION
                   data-options@: '\Grav\Plugin\PresentationPlugin::getModularScaleBlueprintOptions'
-                header.textsize.base:
+                header.textsize.modifier:
                   type: number
-                  label: PLUGIN_PRESENTATION.ADMIN.OPTIONS.TEXTSIZE.BASE.LABEL
-                  help: PLUGIN_PRESENTATION.ADMIN.OPTIONS.TEXTSIZE.BASE.HELP
-                  description: PLUGIN_PRESENTATION.ADMIN.OPTIONS.TEXTSIZE.BASE.DESCRIPTION
-                  placeholder: 16
+                  label: PLUGIN_PRESENTATION.ADMIN.OPTIONS.TEXTSIZE.MODIFIER.LABEL
+                  description: PLUGIN_PRESENTATION.ADMIN.OPTIONS.TEXTSIZE.MODIFIER.DESCRIPTION
+                  default: 1
                   validate:
                     type: int
-                    min: 6
-                    max: 72
-                    step: 1
+                    min: 0
+                    max: 100
+                    step: 0.05
             style:
               type: section
               title: PLUGIN_PRESENTATION.ADMIN.STYLE.TITLE

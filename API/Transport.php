@@ -30,14 +30,21 @@ class Transport implements TransportInterface
      *
      * @var array
      */
-    protected $styles;
+    public $styles;
 
     /**
      * Placeholder for slide classes
      *
      * @var array
      */
-    protected $classes;
+    public $classes;
+
+    /**
+     * Placeholder for slide classes
+     *
+     * @var array
+     */
+    public $dataAttributes;
 
     /**
      * Instantiate Transport API

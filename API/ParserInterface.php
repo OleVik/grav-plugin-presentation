@@ -60,10 +60,9 @@ interface ParserInterface
     /**
      * Remove wrapping paragraph from img-element
      *
-     * @param string  $content Markdown content in Page
-     * @param boolean $figure  Optional wrapping in figure-element
+     * @param string $content Markdown content in Page
      *
      * @return string Processed content
      */
-    public static function unwrapImage(string $content, boolean $figure = null);
+    public static function unwrapImage(string $content);
 }

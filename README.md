@@ -87,24 +87,17 @@ unwrap_images: true
 content: 'Content'
 # Class to use for Content parsing
 parser: 'Parser'
-# Class to use for Styles management
-styles: 'Styles'
+# Class to use for Styles, Classes, and Data management
+transport: 'Transport'
 # Breakpoints for responsive textsizing
 breakpoints:
-  - width: 240
-    font_size: 8
-  - width: 320
-    font_size: 12
-  - width: 576
-    font_size: 16
-  - width: 768
-    font_size: 20
-  - width: 992
-    font_size: 24
-  - width: 1200
-    font_size: 28
-  - width: 1600
-    font_size: 32
+  240: '16'
+  320: '20'
+  576: '24'
+  768: '28'
+  992: '32'
+  1200: '36'
+  1600: '40'
 # Options to pass to Reveal.js
 options:
   width: "100%"
@@ -139,13 +132,13 @@ presentation:
 
 ## Usage
 
-The Page-structure used in the Presentation-plugin is essentially the same as normally in Grav , with a few notable exceptions: Any horizontal rule, `---` in Markdown and `<hr />` in HTML, is treated as a _thematic break_, as it is defined in HTML5. This means that every Page in Grav is treated as a normal, _horizontal Slide_ when the Plugin iterates over them, but a thematic break creates a _vertical Slide_.
+The Page-structure used in the Presentation-plugin is essentially the same as normally in Grav, with a few notable exceptions: Any horizontal rule, `---` in Markdown and `<hr />` in HTML, is treated as a _thematic break_, as it is defined in HTML5. This means that every Page in Grav is treated as a normal, _horizontal Slide_ when the Plugin iterates over them, but a thematic break creates a _vertical Slide_.
 
 You can have as many Pages below the root-page as you want, each of them will be treated as a Slide. When you create thematic breaks within the Page, the Slides are then created _below_ the Page itself -- accommodating Reveal.js' two-dimensional slideshows.
 
 ### Nomenclature
 
-With Reveal.js the presentation is not entirely linear. Rather, it has a linear, left-to-right set of sections that each make up a slide, and can have additional slides going dowards. Thus you can progress through the presentation linearly starting at each section, moving downwards until the end, and continuing onto the next section, or move between them as you choose.
+With Reveal.js the presentation is not entirely linear. Rather, it has a linear, left-to-right set of sections that each make up a slide, and can have additional slides going downwards. Thus you can progress through the presentation linearly starting at each section, moving downwards until the end, and continuing onto the next section, or move between them as you choose.
 
 Further, there are [Fragments](https://github.com/hakimel/reveal.js#fragments) that can be used within each slide. These reveal linearly like slides, but make one element appear at a time rather than the full contents of the slide.
 
@@ -188,10 +181,7 @@ That is, mapping each property to a value, not as a list. The same could be set 
 
 The properties are gathered cumulatively, and a property farther down the chain takes precedence over a property further up.
 
-
-The `styles`-property is defined by a list of `property: value`'s and processed by the plugin. If the amount of pages exceed the amount of styles, they will be reused in the order they are defined. If the `background`-property is defined, but `color` is not, the plugin tries to estimate a suitable text-color to apply. The equations available to estimate this color is either `50` or `YIQ`, set by `color_function`.
-
-You can of course also style the plugin using your theme's /css/custom.css-file, by targeting the `.reveal`-selector which wraps around all of the plugin's content. This behavior can be enabled or disabled with the `theme_css`-setting. All slides have an `id`-attribute set on their sections, which can be utilized by CSS like this:
+You can of course also style the plugin using your theme's `/css/custom.css`-file, by targeting the `.reveal`-selector which wraps around all of the plugin's content. This behavior can be enabled or disabled with the `theme_css`-setting. All slides have an `id`-attribute set on their sections, which can be utilized by CSS like this:
 
 ```css
 .reveal #down-the-rabbit-hole-0 {
@@ -201,18 +191,18 @@ You can of course also style the plugin using your theme's /css/custom.css-file,
 
 #### Fitting text to a slide
 
-The plugin makes available a method of dynamically scaling text within a slide, which is similar yet distinct from what happens in PowerPoint 2016. Rather than do this scaling entirely automatically, which tends to work poorly across devices and resolutions, you set a _scale_ and an optional _base_, eg.:
+The plugin makes available a method of dynamically scaling text within a slide, which is similar yet distinct from what happens in PowerPoint 2016. Rather than do this scaling entirely automatically, which tends to work poorly across devices and resolutions, you set a _scale_ and an optional _modifier_, eg.:
 
 ```
 [data-textsize-scale=1.125]
-[data-textsize-base=16]
+[data-textsize-modifier=1.05]
 ```
 
 If Textsizing is enabled in the plugin's options and on the Page, the relation between block text -- any text not in a header-element -- and header-text (`h1`, `h2`, `h3`, `h4`, `h5`, `h6`) is determined by the `textsize-scale`-property. That is, the size of the header-element's text relative to the base font-size.
 
-In the example above, the scale is set to the "Major Second" rhythm, and with a base of 16 -- the minimum font-size recommended for web -- this yields the following sizes for headers: 28.83 (`h1`), 25.63 (`h2`),  22.78 (`h3`), 20.25 (`h4`), 18 (`h5`), and 16 (`h6`). The base, and hence text, is adjusted upwards as the size of the screen increases to enable dynamic, responsive text-sizing.
+In the example above, the scale is set to the "Major Second" rhythm, and with a base font size of 16 -- the minimum font-size recommended for web -- this yields the following sizes for headers: 28.83 (`h1`), 25.63 (`h2`),  22.78 (`h3`), 20.25 (`h4`), 18 (`h5`), and 16 (`h6`). The base font size, and hence text, is adjusted upwards as the size of the screen increases to enable dynamic, responsive text-sizing. This is done through the `breakpoints`-option.
 
-**Note: The base should be the minimum size of text. The higher the number in the scale is, header-elements will be correspondly larger - exponentially so.**
+The modifier, if set, changes the matched breakpoint's base font size by multiplication. So if set to `1.05` it makes it 5% larger than it normally would be at this breakpoint.
 
 #### Using section- or slide-specific styles
 
@@ -229,7 +219,7 @@ If the shortcode is found and applied, it is stripped from the further evaluated
 
 ##### Center content
 
-To center content in the slide, when Reveal.s has `display: 'flex'` set, you need to add `justify-content: center` to the slides. This is as simple as adding the following to a Page's FrontMatter:
+To center content vertically in the slide, when Reveal.js has `display: 'flex'` set, you need to add `justify-content: center` to the slides. This is as simple as adding the following to a Page's FrontMatter:
 
 ```
 style:
@@ -240,7 +230,7 @@ Or the shortcode `[style-justify-content=center]` to an individual slide.
 
 #### Full background image or video with Reveal.js, through data-attributres
 
-Reveal.js supports easy usage of background images or videos for slides, with their [Slide background](https://github.com/hakimel/reveal.js/#slide-backgrounds). As well as inline styles through shortcodes, any property that begins with `data` is passed as a data-attribute to the slide, so you can do things like add a background video, like this:
+Reveal.js supports easy usage of background images or videos for slides, with their [Slide backgrounds](https://github.com/hakimel/reveal.js/#slide-backgrounds). As well as inline styles through shortcodes, any property that begins with `data` is passed as a data-attribute to the slide, so you can do things like add a background video:
 
 ```
 [data-background-video=https://dl3.webmfiles.org/big-buck-bunny_trailer.webm]
@@ -307,7 +297,7 @@ The plugin, like the Reveal.js-library, makes available a Presenter-mode. There 
 
 The synchronization between Presenter-mode and the Presentation happens by sending data from one browser-window to the other, requiring JavaScript. When running remotely, the synchronization happens by polling and checking if the presentation has changed.
 
-**Note:** The polling approach needs a stable server to work, more so than Grav itself. It has been tested extensively with PHP 7.1 and 7.2, running on Caddy Server and with PHP's built-in server, with fairly standard production-setups of PHP. If your server-connection crashes with a 502 error -- usually with the error "No connection could be made because the target machine actively refused it.", it is because PHP is set up to forcibly time out despite being long-polled.
+**Note:** The polling approach needs a stable server to work, more so than Grav itself. It has been tested extensively with PHP 7.1 and 7.2, running on Caddy Server and with PHP's built-in server, with a fairly standard production-setup of PHP. If your server-connection crashes with a 502 error -- usually with the error "No connection could be made because the target machine actively refused it.", it is because PHP is set up to forcibly time out despite being long-polled.
 
 ## Contributing
 
@@ -321,17 +311,12 @@ Use a SCSS-compiler, like [LibSass](https://github.com/sass/libsass), eg. [node-
 
 ### Extending
 
-As demonstrated by the `content`, `parser`, and `styles` options above, you can fairly easily extend the behavior of the plugin. For example, if you install the [Presentation Deckset Plugin](https://github.com/OleVik/grav-plugin-presentation-deckset/), you could set this to `parser: 'DecksetParser'` to use the [Deckset](https://www.deckset.com/)-syntax. Addons written this way must implement the correspond interface, and extend the base class provided by the plugin. Eg., `class DecksetParser extends Parser implements ParserInterface`.
+As demonstrated by the `content`, `parser`, and `transport` options above, you can fairly easily extend the behavior of the plugin. For example, if you install the [Presentation Deckset Plugin](https://github.com/OleVik/grav-plugin-presentation-deckset/), you could set this to `parser: 'DecksetParser'` to use the [Deckset](https://www.deckset.com/)-syntax. Addons written this way must implement the correspond interface, and extend the base class provided by the plugin. Eg., `class DecksetParser extends Parser implements ParserInterface`.
 
 ## TODO
 
-- Shortcode-syntax for nested properties passed to setStyle()
-- Scaling for square, 4:3 ("truncated"), 16:9 (normal widescreen)
-- Calculate all Modular Scales onLoad
-- Reintegrate FlowType as an alternative?
-- Deckset: Image and Media shortcodes
-  - Styles class receiver?
-- Safari: Images are too wide
+- Scaling for square, 4:3 ("truncated"), 16:9 (normal widescreen) - should height be taken into account?
+- Safari: Images are too wide - no obvious reason as to why, other than the obvious
 
 ## Credits
 

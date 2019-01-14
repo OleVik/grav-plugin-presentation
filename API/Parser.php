@@ -32,12 +32,9 @@ class Parser implements ParserInterface
     /**
      * Regular expressions
      */
-    const REGEX_IMG = "/(<img(?:(\s*(class)\s*=\s*\x22([^\x22]+)\x22*)+|[^>]+?)*>)/";
-    const REGEX_IMG_P = '/<p>\s*?((<a .*<img.*<\/a>|<img.*\s*)*)\s*<\/p>/mi';
-    const REGEX_IMG_TITLE = "/<img[^>]*?title[ ]*=[ ]*[\"](.*?)[\"][^>]*?>/";
-    const REGEX_IMG_WRAPPING_LINK = '/\[(?\'image\'\!.*)\]\((?\'url\'https?:\/\/.*)\)/';
     const REGEX_FRAGMENT_SHORTCODE = '~\[fragment=*([a-zA-Z-]*)\](.*)\[\/fragment\]~im';
     const REGEX_SHORTCODES = '~((?:\[\s*(?<name>[a-zA-Z0-9-_]+)\s*(?:\=\s*(?<bbCode>\"(?:[^\"\\\\]*(?:\\\\.[^\"\\\\]*)*)\"|((?:(?!=\s*|\]|\/\])[^\s])+)))?\s*(?<parameters>(?:\s*(?:\w+(?:\s*\=\s*\"(?:[^\"\\\\]*(?:\\\\.[^\"\\\\]*)*)\"|\s*\=\s*((?:(?!=\s*|\]|\/\])[^\s])+)|(?=\s|\]|\/\s*\]|$))))*)\s*(?:\](?<content>.*?)\[\s*(?<markerContent>\/)\s*(\k<name>)\s*\]|\]|(?<marker>\/)\s*\])))~u';
+    const REGEX_MEDIA_P = '/<p>\s*(<a .*>\s*<img.*\s*<\/a>|\s*<img.*|<img.*\s*|<video.*|<audio.*)\s*<\/p>/i';
 
     /**
      * Instantiate Parser API
@@ -121,6 +118,9 @@ class Parser implements ParserInterface
                 $inline .= $property . ': url(' . $route . '/' . $value . ');';
             } elseif (Utils::startsWith($property, 'data')) {
                 $data .= ' ' . $property . '="' . $value . '"';
+                if ($property == 'data-textsize-scale') {
+                    $this->transport->setClass($id, 'textsizing');
+                }
             } elseif ($property == 'header-font-family') {
                 $this->transport->setStyle($id, "{\nfont-family:$value;\n}", 'h1,h2,h3,h4,h5,h6');
             } elseif ($property == 'header-color') {
@@ -144,24 +144,10 @@ class Parser implements ParserInterface
      *
      * @return string Processed content
      */
-    public static function unwrapImage(string $content, boolean $figure = null)
+    public static function unwrapImage(string $content)
     {
-        $unwrap = self::REGEX_IMG_P;
+        $unwrap = self::REGEX_MEDIA_P;
         $content = preg_replace($unwrap, "$1", $content);
-        if ($figure) {
-            $wrap = self::REGEX_IMG;
-            $content = preg_replace(
-                $wrap,
-                '<figure role="group" $2>$1</figure>',
-                $content
-            );
-            $title = self::REGEX_IMG_TITLE;
-            $content = preg_replace(
-                $title,
-                "$0<figcaption>$1</figcaption>",
-                $content
-            );
-        }
         return $content;
     }
 }

@@ -55,7 +55,7 @@
       {% if config.plugins['presentation'].plugin_js %}
         {% do assets.addJs('plugin://presentation/js/presentation.js', {'group': 'presentation'}) %}
       {% endif %}
-      {% if config.plugins['presentation'].textsizing %}
+      {% if config.plugins['presentation'].plugin_js and config.plugins['presentation'].textsizing %}
         {% do assets.addJs('plugin://presentation/js/modular-scale.package.js', {'group': 'presentation'}) %}
         {% do assets.addJs('plugin://presentation/js/modular-scale.js', {'group': 'presentation'}) %}
       {% endif %}

@@ -151,7 +151,7 @@ class PresentationPlugin extends Plugin
                 $options = json_encode($options, JSON_PRETTY_PRINT);
                 $breakpoints = json_encode($config['breakpoints']);
                 $this->grav['twig']->twig_vars['reveal_init'] = $options;
-                $this->grav['twig']->twig_vars['presentation_menu'] = $options;
+                $this->grav['twig']->twig_vars['presentation_menu'] = $menu;
                 $this->grav['twig']->twig_vars['presentation_breakpoints'] = $breakpoints;
                 $grav['assets']->addInlineCss($transport->getStyles(), null, 'presentation');
             }

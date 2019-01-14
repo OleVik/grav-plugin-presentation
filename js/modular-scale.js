@@ -9,22 +9,19 @@ function getFontSize(width) {
 
 /**
  * Set base font size
- * @param {HTMLCollection} elements Applicable slides
- * @param {int} base Base pixel size
+ * @param {HTMLCollection} element Applicable slide
  */
 function applyBaseSize(element) {
-  if (element.dataset.textsizeBase) {
-    var fontSize = parseFloat(element.dataset.textsizeBase);
-  } else {
-    var fontSize = getFontSize(element.offsetWidth);
+  var fontSize = getFontSize(element.offsetWidth);
+  if (element.dataset.textsizeModifier) {
+    var fontSize = fontSize * parseFloat(element.dataset.textsizeModifier);
   }
   element.style.fontSize = fontSize + 'px';
 }
 
 /**
  * Set header font sizes
- * @param {HTMLCollection} elements Applicable slides
- * @param {int} base Base pixel size
+ * @param {HTMLCollection} element Applicable slide
  */
 function applyHeaderSizes(element) {
   var currentSlide = document.querySelector('section section.present');
@@ -58,20 +55,12 @@ function applyHeaderSizes(element) {
 /**
  * Apply modular scale logic
  */
-function applyModularScale(target) {
-  applyBaseSize(target);
-  applyHeaderSizes(target);
-}
-
-/**
- * Apply modular scale logic on current slide changes in width
- */
-function onChange() {
-  var currentSlide = document.querySelector('section section.present');
-  if (currentSlide.classList.contains('textsizing')) {
-    applyBaseSize(currentSlide);
-    applyModularScale(currentSlide);
-  }
+function applyModularScale() {
+  var slides = getSlides('.slides section section.textsizing');
+  Object.entries(slides).forEach(([key, value]) => {
+    applyBaseSize(value);
+    applyHeaderSizes(value);
+  });
 }
 
 /* Debounce and throttle */
@@ -81,41 +70,28 @@ var delay = 200;
 var throttled = false;
 var calls = 0;
 
-/* Run after slide loads */
+/* Run after slides load */
 Reveal.addEventListener('ready', function (event) {
   if (!throttled) {
-    onChange();
+    applyModularScale();
     throttled = true;
     setTimeout(function () {
       throttled = false;
     }, delay);
   }
   clearTimeout(forLastExec);
-  forLastExec = setTimeout(onChange, delay);
-});
-
-/* Run after slide changes */
-Reveal.addEventListener('slidechanged', function (event) {
-  if (!throttled) {
-    onChange();
-    throttled = true;
-    setTimeout(function () {
-      throttled = false;
-    }, delay);
-  }
-  clearTimeout(forLastExec);
-  forLastExec = setTimeout(onChange, delay);
+  forLastExec = setTimeout(applyModularScale, delay);
 });
 
 /* Run after slide changes size */
 window.addEventListener("resize", function () {
   if (!throttled) {
-    onChange();
+    applyModularScale();
     throttled = true;
     setTimeout(function () {
       throttled = false;
     }, delay);
   }
   clearTimeout(forLastExec);
-  forLastExec = setTimeout(onChange, delay);
+  forLastExec = setTimeout(applyModularScale, delay);
 });
