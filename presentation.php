@@ -401,7 +401,26 @@ class PresentationPlugin extends Plugin
      */
     public function onAssetsInitialized()
     {
-        $css = '.presentation-iframe {
+        $config = $this->config();
+        if ($config['textsizing'] == 'true') {
+            $css = '';
+            $element = '.reveal .slides section section, .reveal.center .slides section section';
+            $breakpoints = array_keys($config['breakpoints']);
+            $sizes = array_values($config['breakpoints']);
+            for ($i = 0; $i < count($breakpoints); $i++) {
+                $css .= '@media screen and ';
+                if ($i == 0) {
+                    $css .= '(min-width: 0px) and ';
+                    $css .= '(max-width:' . (intval($breakpoints[$i+1])-1) . 'px) ';
+                } else {
+                    $css .= '(min-width:' . $breakpoints[$i] . 'px) ';
+                }
+                $css .= '{' . $element . '{font-size:' . $sizes[$i] . 'px !important;}}';
+                $css .= "\n";
+            }
+            $this->grav['assets']->addInlineCss($css, null, 'critical');
+        }
+        $iframe = '.presentation-iframe {
             width: 100%;
             width: -moz-available;
             width: -webkit-fill-available;
@@ -411,6 +430,6 @@ class PresentationPlugin extends Plugin
             height: -webkit-fill-available;
             height: fill-available;
           }';
-        $this->grav['assets']->addInlineCss($css);
+        $this->grav['assets']->addInlineCss($iframe);
     }
 }

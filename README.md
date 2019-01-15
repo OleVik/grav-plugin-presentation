@@ -315,8 +315,8 @@ As demonstrated by the `content`, `parser`, and `transport` options above, you c
 
 ## TODO
 
-- Scaling for square, 4:3 ("truncated"), 16:9 (normal widescreen) - should height be taken into account?
-- Safari: Images are too wide - no obvious reason as to why, other than the obvious
+- Scaling for square, 4:3 ("truncated"), 16:9 (normal widescreen) - should height be taken into account? Not applicable with regular breakpoints and Transport application
+- Safari: Images are too wide - no obvious reason as to why, other than Safari
 
 ## Credits
 

@@ -36,7 +36,8 @@
     {% endblock %}
     {% block scripts %}
       {% do assets.addInlineJs('const reveal_init = ' ~ reveal_init ~ ';', {'group': 'presentation'}) %}
-      {% do assets.addInlineJs('const presentationBreakpoints = ' ~ presentation_breakpoints ~ ';', {'group': 'presentation'}) %}
+      {# Deprecated v1.2.1 #}
+      {# {% do assets.addInlineJs('const presentationBreakpoints = ' ~ presentation_breakpoints ~ ';', {'group': 'presentation'}) %} #}
       {% do assets.addInlineJs('const presentationAPIRoute = "/' ~ config.plugins['presentation'].api_route ~ '";', {'group': 'presentation'}) %}
       {% do assets.addInlineJs('const presentationAPITimeout = ' ~ config.plugins['presentation'].poll_timeout ~ ';', {'group': 'presentation'}) %}
       {% do assets.addInlineJs('const presentationAPIRetryLimit = ' ~ config.plugins['presentation'].poll_retry_limit ~ ';', {'group': 'presentation'}) %}
@@ -55,10 +56,11 @@
       {% if config.plugins['presentation'].plugin_js %}
         {% do assets.addJs('plugin://presentation/js/presentation.js', {'group': 'presentation'}) %}
       {% endif %}
-      {% if config.plugins['presentation'].plugin_js and config.plugins['presentation'].textsizing %}
-        {% do assets.addJs('plugin://presentation/js/modular-scale.package.js', {'group': 'presentation'}) %}
-        {% do assets.addJs('plugin://presentation/js/modular-scale.js', {'group': 'presentation'}) %}
-      {% endif %}
+      {# Deprecated v1.2.1 #}
+      {# {% if config.plugins['presentation'].plugin_js and config.plugins['presentation'].textsizing %}
+        {% do assets.addJs('plugin://presentation/js/modular-scale.package.js', {'group': 'critical'}) %}
+        {% do assets.addJs('plugin://presentation/js/modular-scale.js', {'group': 'critical'}) %}
+      {% endif %} #}
     {% endblock %}
     {{ assets.css('critical')|raw }}
     {{ assets.js('critical')|raw }}

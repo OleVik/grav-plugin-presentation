@@ -209,6 +209,10 @@ class Content implements ContentInterface
             }
             if (isset($config['textsizing']) && isset($page['header']->textsize['scale'])) {
                 $config['class'] .= ' textsizing';
+                $this->parser->setModularScale(
+                    $config['id'],
+                    $page['header']->textsize['scale']
+                );
             }
             if (isset($page['header']->class) && !empty($page['header']->class)) {
                 foreach ($page['header']->class as $item) {

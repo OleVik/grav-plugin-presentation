@@ -1,7 +1,9 @@
 # v1.2.1
-## XX-XX-2019
+## 15-01-2019
 
-1. [](#bugfix)
+1. [](#improved)
+    * Apply Modular Scales via PHP and CSS
+2. [](#bugfix)
     * Fix foreach-loop in Transport->setStyle()
     * Fix textsizing-class application
     * Add default 1:1 scale

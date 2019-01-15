@@ -137,6 +137,43 @@ class Parser implements ParserInterface
     }
 
     /**
+     * Set modular scales in CSS
+     *
+     * @param string $id    Slide id-attribute
+     * @param string $scale Modular Scale Ratio
+     *
+     * @return void
+     */
+    public function setModularScale(string $id, string $scale)
+    {
+        $scale = (float) $scale;
+        $steps = array(6, 5, 4, 3, 2, 1, 0);
+        for ($i = 1; $i <= 6; $i++) {
+            $value = self::modularScale($steps[$i], 16, $scale, true);
+            $this->transport->setStyle($id, '{font-size:' . $value . 'em;}', 'h' . $i);
+        }
+    }
+
+    /**
+     * Get font-size in pixels
+     *
+     * @param integer $step     Step in scale
+     * @param integer $base     Base font-size
+     * @param float   $ratio    Rhythm
+     * @param bool    $relative Output relative units
+     *
+     * @return float Modular Scale breakpoint
+     */
+    public static function modularScale(int $step, int $base, float $ratio, bool $relative = null)
+    {
+        if ($relative == true) {
+            return round((pow($ratio, $step) * $base) / $base, 3);
+        } else {
+            return round((pow($ratio, $step) * $base), 2);
+        }
+    }
+
+    /**
      * Remove wrapping paragraph from img-element
      *
      * @param string  $content Markdown content in Page

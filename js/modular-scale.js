@@ -1,5 +1,15 @@
 /**
- * Find fitting font size from given width
+ * Get Reveal-element computed width
+ */
+function getRevealWidth() {
+  var revealElement = document.querySelector('.reveal');
+  var computedStyles = window.getComputedStyle(revealElement);
+  var revealWidth = computedStyles.getPropertyValue('width').replace('px', '');
+  return revealWidth;
+}
+
+/**
+ * Get fitting font size from given width
  * @param {int} width Element width
  */
 function getFontSize(width) {
@@ -13,7 +23,7 @@ function getFontSize(width) {
  * @param {int} width Reveal-element width
  */
 function applyBaseSize(element, width) {
-  var fontSize = getFontSize(parseInt(revealWidth));
+  var fontSize = getFontSize(parseInt(width));
   if (element.dataset.textsizeModifier) {
     var fontSize = fontSize * parseFloat(element.dataset.textsizeModifier);
   }
@@ -23,9 +33,9 @@ function applyBaseSize(element, width) {
 /**
  * Set header font sizes
  * @param {HTMLCollection} element Applicable slide
+ * @param {int} width Reveal-element width
  */
-function applyHeaderSizes(element) {
-  var currentSlide = document.querySelector('section section.present');
+function applyHeaderSizes(element, width) {
   var headers = {
     h1: element.getElementsByTagName('h1'),
     h2: element.getElementsByTagName('h2'),
@@ -36,7 +46,7 @@ function applyHeaderSizes(element) {
   };
   var ms = ModularScale({
     ratio: parseFloat(element.dataset.textsizeScale),
-    base: getFontSize(currentSlide.offsetWidth) + 'px'
+    base: getFontSize(parseInt(width)) + 'px'
   })
   var modularScales = {
     h1: ms(6, true),
@@ -58,21 +68,18 @@ function applyHeaderSizes(element) {
  */
 function applyModularScale() {
   var currentSlide = document.querySelector('.slides section section.present');
-  applyBaseSize(currentSlide);
-  applyHeaderSizes(currentSlide);
+  applyBaseSize(currentSlide, getRevealWidth());
+  applyHeaderSizes(currentSlide, getRevealWidth());
 }
 
-/* Run after slides load */
-Reveal.addEventListener('ready', function (event) {
-  var revealElement = document.querySelector('.reveal');
-  var computedStyles = window.getComputedStyle(revealElement);
-  var revealWidth = computedStyles.getPropertyValue('width').replace('px', '');
+/* Run after DOM loads */
+window.addEventListener("load", function (event) {
   var slides = getSlides('.slides section section.textsizing');
   Object.entries(slides).forEach(([key, value]) => {
-    applyBaseSize(value, revealWidth);
-    applyHeaderSizes(value);
+    applyBaseSize(value, getRevealWidth());
+    applyHeaderSizes(value, getRevealWidth());
   });
-});
+}, false);
 
 /* Debounce and throttle */
 /* @see https://codepen.io/dreit/pen/gedMez?editors=0010 */
