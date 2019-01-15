@@ -228,7 +228,6 @@ class PresentationPlugin extends Plugin
     {
         $uri = $this->grav['uri'];
         $this->grav['twig']->twig_vars['presentation_base_url'] = $uri->rootUrl(true);
-
     }
 
     /**
