@@ -10,9 +10,10 @@ function getFontSize(width) {
 /**
  * Set base font size
  * @param {HTMLCollection} element Applicable slide
+ * @param {int} width Reveal-element width
  */
-function applyBaseSize(element) {
-  var fontSize = getFontSize(element.offsetWidth);
+function applyBaseSize(element, width) {
+  var fontSize = getFontSize(parseInt(revealWidth));
   if (element.dataset.textsizeModifier) {
     var fontSize = fontSize * parseFloat(element.dataset.textsizeModifier);
   }
@@ -63,9 +64,12 @@ function applyModularScale() {
 
 /* Run after slides load */
 Reveal.addEventListener('ready', function (event) {
+  var revealElement = document.querySelector('.reveal');
+  var computedStyles = window.getComputedStyle(revealElement);
+  var revealWidth = computedStyles.getPropertyValue('width').replace('px', '');
   var slides = getSlides('.slides section section.textsizing');
   Object.entries(slides).forEach(([key, value]) => {
-    applyBaseSize(value);
+    applyBaseSize(value, revealWidth);
     applyHeaderSizes(value);
   });
 });
@@ -79,18 +83,6 @@ var calls = 0;
 
 /* Run after slide changes size */
 window.addEventListener("resize", function () {
-  if (!throttled) {
-    throttled = true;
-    setTimeout(function () {
-      throttled = false;
-    }, delay);
-  }
-  clearTimeout(forLastExec);
-  forLastExec = setTimeout(applyModularScale, delay);
-});
-
-/* Run after slide changes */
-Reveal.addEventListener('slidechanged', function (event) {
   if (!throttled) {
     throttled = true;
     setTimeout(function () {

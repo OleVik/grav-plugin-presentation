@@ -5,7 +5,7 @@
     * Fix foreach-loop in Transport->setStyle()
     * Fix textsizing-class application
     * Add default 1:1 scale
-    * Fix modular-scale.js
+    * Fix modular-scale.js calculations and events
 
 # v1.2.0
 ## 14-01-2019
