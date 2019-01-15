@@ -211,7 +211,8 @@ class Content implements ContentInterface
                 $config['class'] .= ' textsizing';
                 $this->parser->setModularScale(
                     $config['id'],
-                    $page['header']->textsize['scale']
+                    $page['header']->textsize['scale'],
+                    isset($page['header']->textsize['modifier']) ? (float) $page['header']->textsize['modifier'] : null
                 );
             }
             if (isset($page['header']->class) && !empty($page['header']->class)) {

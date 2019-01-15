@@ -4,7 +4,7 @@
     {% if field.link is defined %}
         {% set href = field.link %}
     {% else %}
-        {% set href = context.route %}
+        {% set href = presentation_base_url ~ '/' ~ context.route %}
     {% endif %}
     {% if field.mode is defined %}
         {% if field.mode == 'view_notes' %}

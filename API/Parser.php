@@ -139,17 +139,19 @@ class Parser implements ParserInterface
     /**
      * Set modular scales in CSS
      *
-     * @param string $id    Slide id-attribute
-     * @param string $scale Modular Scale Ratio
+     * @param string $id       Slide id-attribute
+     * @param string $scale    Modular Scale Ratio
+     * @param float  $modifier Optional multiplication-parameter
      *
      * @return void
      */
-    public function setModularScale(string $id, string $scale)
+    public function setModularScale(string $id, string $scale, float $modifier = null)
     {
         $scale = (float) $scale;
         $steps = array(6, 5, 4, 3, 2, 1, 0);
         for ($i = 1; $i <= 6; $i++) {
             $value = self::modularScale($steps[$i], 16, $scale, true);
+            $value = $modifier != null ? $value * $modifier : $value;
             $this->transport->setStyle($id, '{font-size:' . $value . 'em;}', 'h' . $i);
         }
     }

@@ -14,8 +14,9 @@
 namespace Grav\Plugin;
 
 use Grav\Common\Grav;
-use Grav\Common\Utils;
 use Grav\Common\Plugin;
+use Grav\Common\Utils;
+use Grav\Common\Uri;
 use Grav\Common\Inflector;
 use Grav\Common\Page\Page;
 use Grav\Common\Page\Pages;
@@ -94,6 +95,7 @@ class PresentationPlugin extends Plugin
                 'onPageContentProcessed' => ['pageIteration', 0],
                 'onTwigExtensions' => ['onTwigExtensions', 0],
                 'onTwigTemplatePaths' => ['templates', 0],
+                'onTwigSiteVariables' => ['onTwigSiteVariables', 0],
                 'onPagesInitialized' => ['onPagesInitialized', 0],
                 'onShortcodeHandlers' => ['onShortcodeHandlers', 0],
                 'onAssetsInitialized' => ['onAssetsInitialized', 0],
@@ -215,6 +217,13 @@ class PresentationPlugin extends Plugin
     public function templates()
     {
         $this->grav['twig']->twig_paths[] = __DIR__ . '/templates';
+    }
+
+    public function onTwigSiteVariables()
+    {
+        $uri = $this->grav['uri'];
+        $this->grav['twig']->twig_vars['presentation_base_url'] = $uri->rootUrl(true);
+
     }
 
     /**

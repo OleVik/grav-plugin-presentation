@@ -315,6 +315,7 @@ As demonstrated by the `content`, `parser`, and `transport` options above, you c
 
 ## TODO
 
+- Reintegrate modifier for MS
 - Scaling for square, 4:3 ("truncated"), 16:9 (normal widescreen) - should height be taken into account? Not applicable with regular breakpoints and Transport application
 - Safari: Images are too wide - no obvious reason as to why, other than Safari
 

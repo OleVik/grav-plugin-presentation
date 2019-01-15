@@ -1,3 +1,9 @@
+# v1.2.2
+## XX-XX-2019
+
+1. [](#bugfix)
+    * Page-linking from Admin
+
 # v1.2.1
 ## 15-01-2019
 
