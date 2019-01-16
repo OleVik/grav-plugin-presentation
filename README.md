@@ -136,6 +136,8 @@ The Page-structure used in the Presentation-plugin is essentially the same as no
 
 You can have as many Pages below the root-page as you want, each of them will be treated as a Slide. When you create thematic breaks within the Page, the Slides are then created _below_ the Page itself -- accommodating Reveal.js' two-dimensional slideshows.
 
+For using Reveal.js itself, see their documentation on [Getting Started with Presenting](http://help.slides.com/knowledgebase/articles/334920) and [Speaker View](http://help.slides.com/knowledgebase/articles/333923-speaker-view).
+
 ### Nomenclature
 
 With Reveal.js the presentation is not entirely linear. Rather, it has a linear, left-to-right set of sections that each make up a slide, and can have additional slides going downwards. Thus you can progress through the presentation linearly starting at each section, moving downwards until the end, and continuing onto the next section, or move between them as you choose.
@@ -315,6 +317,7 @@ As demonstrated by the `content`, `parser`, and `transport` options above, you c
 
 ## TODO
 
+- FA-shortcode
 - Scaling for square, 4:3 ("truncated"), 16:9 (normal widescreen) - should height be taken into account? Not applicable with regular breakpoints and Transport application
 - Safari: Images are too wide - no obvious reason as to why, other than Safari
 

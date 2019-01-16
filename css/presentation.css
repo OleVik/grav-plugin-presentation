@@ -483,6 +483,9 @@ template {
   .reveal.center .slides section section audio {
     min-height: 1em;
     margin: 0 0 1em 0; }
+  .reveal .slides section section .fa,
+  .reveal.center .slides section section .fa {
+    width: auto; }
 
 .reveal .slides section.skinny p,
 .reveal.center .slides section.skinny p {

@@ -237,6 +237,10 @@ $breakpoints: (extrasmall: 320px, small: 576px, medium: 768px, large: 992px, ext
           min-height: 1em;
           margin: 0 0 1em 0;
         }
+
+        .fa {
+          width: auto;
+        }
       }
 
       &.skinny {

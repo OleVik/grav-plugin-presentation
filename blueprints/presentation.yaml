@@ -12,42 +12,46 @@ form:
         content:
           type: tab
           fields:
-            button_group:
-              type: button_group
+            links:
+              type: presentation_button_bar
               ordering@: content
               fields:
                 view:
-                  type: presentation_link
-                  label: PLUGIN_PRESENTATION.ADMIN.BUTTONS.VIEW
-                  mode: view
-                view_notes:
-                  type: presentation_link
-                  label: PLUGIN_PRESENTATION.ADMIN.BUTTONS.VIEW_NOTES
-                  mode: view_notes
-                admin:
-                  type: presentation_link
-                  label: PLUGIN_PRESENTATION.ADMIN.BUTTONS.ADMIN
-                  mode: admin
-                admin_notes:
-                  type: presentation_link
-                  label: PLUGIN_PRESENTATION.ADMIN.BUTTONS.ADMIN_NOTES
-                  mode: admin_notes
+                  type: presentation_dropdown
+                  ordering@: links
+                  fields:
+                    view:
+                      label: PLUGIN_PRESENTATION.ADMIN.LINKS.VIEW
+                      mode: view
+                    view_notes:
+                      label: PLUGIN_PRESENTATION.ADMIN.LINKS.VIEW_NOTES
+                      mode: view_notes
+                speaker:
+                  type: presentation_dropdown
+                  ordering@: view
+                  fields:
+                    speaker:
+                      label: PLUGIN_PRESENTATION.ADMIN.LINKS.SPEAKER
+                      mode: admin
+                    speaker_notes:
+                      label: PLUGIN_PRESENTATION.ADMIN.LINKS.SPEAKER_NOTES
+                      mode: admin_notes
                 print:
-                  type: presentation_link
-                  label: PLUGIN_PRESENTATION.ADMIN.BUTTONS.PRINT
-                  mode: print
-                print_notes:
-                  type: presentation_link
-                  label: PLUGIN_PRESENTATION.ADMIN.BUTTONS.PRINT_NOTES
-                  mode: print_notes
-                print_styled:
-                  type: presentation_link
-                  label: PLUGIN_PRESENTATION.ADMIN.BUTTONS.PRINT_STYLED
-                  mode: print_styled
-                print_styled_notes:
-                  type: presentation_link
-                  label: PLUGIN_PRESENTATION.ADMIN.BUTTONS.PRINT_STYLED_NOTES
-                  mode: print_styled_notes
+                  type: presentation_dropdown
+                  ordering@: speaker
+                  fields:
+                    print:
+                      label: PLUGIN_PRESENTATION.ADMIN.LINKS.PRINT
+                      mode: print
+                    print_notes:
+                      label: PLUGIN_PRESENTATION.ADMIN.LINKS.PRINT_NOTES
+                      mode: print_notes
+                    print_styled:
+                      label: PLUGIN_PRESENTATION.ADMIN.LINKS.PRINT_STYLED
+                      mode: print_styled
+                    print_styled_notes:
+                      label: PLUGIN_PRESENTATION.ADMIN.LINKS.PRINT_STYLED_NOTES
+                      mode: print_styled_notes
             textsize:
               type: section
               title: PLUGIN_PRESENTATION.ADMIN.OPTIONS.TEXTSIZE.TITLE

@@ -25,15 +25,15 @@ en:
               DESC: Descending
       TABS:
         OPTIONS: Options
-      BUTTONS:
-        VIEW: View
-        VIEW_NOTES: View + Notes
-        ADMIN: Admin
-        ADMIN_NOTES: Admin + Notes
+      LINKS:
+        VIEW: Present
+        VIEW_NOTES: Present with Notes
+        SPEAKER: Speaker View
+        SPEAKER_NOTES: Speaker View with Notes
         PRINT: Print
-        PRINT_NOTES: Print + Notes
-        PRINT_STYLED: Print + Theme
-        PRINT_STYLED_NOTES: Print + Theme + Notes
+        PRINT_NOTES: Print with Notes
+        PRINT_STYLED: Print with Theme
+        PRINT_STYLED_NOTES: Print with Theme and Notes
       OPTIONS:
         CLASS:
           LABEL: Class(es)

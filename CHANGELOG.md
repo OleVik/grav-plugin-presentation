@@ -1,3 +1,12 @@
+# v1.2.4
+## 16-01-2019
+
+1. [](#improved)
+    * Revise Page-linking from Admin
+2. [](#bugfix)
+    * Inline FontAwesome icons
+    * Preset theme CSS or paper.css in Print-mode, not both
+
 # v1.2.3
 ## 16-01-2019
 
