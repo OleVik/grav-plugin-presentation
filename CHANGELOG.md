@@ -2,7 +2,7 @@
 ## 16-01-2019
 
 1. [](#improved)
-    * Page-linking from Admin to styled print-page
+    * Page-linking from Admin to styled and annotated print-page
 
 # v1.2.2
 ## 15-01-2019

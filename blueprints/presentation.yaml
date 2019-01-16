@@ -36,10 +36,18 @@ form:
                   type: presentation_link
                   label: PLUGIN_PRESENTATION.ADMIN.BUTTONS.PRINT
                   mode: print
+                print_notes:
+                  type: presentation_link
+                  label: PLUGIN_PRESENTATION.ADMIN.BUTTONS.PRINT_NOTES
+                  mode: print_notes
                 print_styled:
                   type: presentation_link
                   label: PLUGIN_PRESENTATION.ADMIN.BUTTONS.PRINT_STYLED
                   mode: print_styled
+                print_styled_notes:
+                  type: presentation_link
+                  label: PLUGIN_PRESENTATION.ADMIN.BUTTONS.PRINT_STYLED_NOTES
+                  mode: print_styled_notes
             textsize:
               type: section
               title: PLUGIN_PRESENTATION.ADMIN.OPTIONS.TEXTSIZE.TITLE

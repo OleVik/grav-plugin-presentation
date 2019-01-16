@@ -15,8 +15,12 @@
             {% set query = '?admin=true&showNotes=true' %}
         {% elseif field.mode == 'print' %}
             {% set query = '?print-pdf=true' %}
+        {% elseif field.mode == 'print_notes' %}
+            {% set query = '?print-pdf=true&showNotes=true' %}
         {% elseif field.mode == 'print_styled' %}
             {% set query = '?print-pdf=true&theme=basic' %}
+        {% elseif field.mode == 'print_styled_notes' %}
+            {% set query = '?print-pdf=true&theme=basic&showNotes=true' %}
         {% else %}
             {% set query = '' %}
         {% endif %}
