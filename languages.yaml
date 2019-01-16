@@ -31,6 +31,7 @@ en:
         ADMIN: Admin
         ADMIN_NOTES: Admin + Notes
         PRINT: Print
+        PRINT_STYLED: Print + Theme
       OPTIONS:
         CLASS:
           LABEL: Class(es)
