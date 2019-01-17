@@ -527,6 +527,11 @@ template {
     margin: 0;
     padding: 2rem; }
 
+.reveal code,
+.reveal.center code {
+  color: #900900;
+  word-break: break-word; }
+
 .presentation-iframe {
   width: 100%;
   width: -moz-available;

@@ -1,3 +1,10 @@
+# v1.2.5
+## 17-01-2019
+
+1. [](#improved)
+    * Code-tag wrapping and color
+    * README
+
 # v1.2.4
 ## 16-01-2019
 

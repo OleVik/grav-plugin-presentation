@@ -2,7 +2,7 @@
 
 The **Presentation** Plugin is an extension for [Grav CMS](http://github.com/getgrav/grav), and provides a simple way of creating fullscreen slideshows that can be navigated two-dimensionally, using the [Reveal.js](https://github.com/hakimel/reveal.js/)-library.
 
-At its core the plugin facilitates efficient handling of content for use with the library. You can utilize Reveal.js however you want through custom initialization, and still leverage the plugin's content-handling.
+At its core the plugin facilitates efficient handling of content for use with the library. You can utilize Reveal.js however you want through custom initialization, and still leverage the plugin's content-handling. A [demo is available](https://olevik.me/staging/grav-skeleton-presentation/) and a [Skeleton](https://github.com/OleVik/grav-skeleton-presentation/releases), as well as the [demo content](https://github.com/OleVik/grav-skeleton-presentation/tree/master/pages).
 
 ## Features
 
@@ -39,6 +39,10 @@ You should now have all the plugin files under
     /your/site/grav/user/plugins/presentation
 	
 > NOTE: This plugin is a modular component for Grav which requires [Grav](http://github.com/getgrav/grav) and the [Error](https://github.com/getgrav/grav-plugin-error) and [Problems](https://github.com/getgrav/grav-plugin-problems) to operate.
+
+### Requirements
+
+**This plugin will only work with [Grav v1.6](https://github.com/getgrav/grav/tree/1.6) or higher, as it requires [PHP v7.1](http://php.net/manual/en/migration71.new-features.php) or higher.**
 
 ## Configuration
 
@@ -317,7 +321,6 @@ As demonstrated by the `content`, `parser`, and `transport` options above, you c
 
 ## TODO
 
-- FA-shortcode
 - Scaling for square, 4:3 ("truncated"), 16:9 (normal widescreen) - should height be taken into account? Not applicable with regular breakpoints and Transport application
 - Safari: Images are too wide - no obvious reason as to why, other than Safari
 
@@ -326,3 +329,4 @@ As demonstrated by the `content`, `parser`, and `transport` options above, you c
 - Grav [presentation](https://github.com/OleVik/grav-plugin-presentation)-plugin is written by [Ole Vik](https://github.com/OleVik)
 - [Reveal.js](https://github.com/hakimel/reveal.js)-plugin
 - Both are MIT-licensed
+- Thank you to [Paul Hibbitts](https://twitter.com/paulhibbitts) for extensive testing

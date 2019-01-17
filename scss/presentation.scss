@@ -286,6 +286,11 @@ $breakpoints: (extrasmall: 320px, small: 576px, medium: 768px, large: 992px, ext
       }
     }
   }
+
+  code {
+    color: #900900;
+    word-break: break-word;
+  }
 }
 
 .presentation-iframe {
