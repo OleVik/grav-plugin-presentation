@@ -321,6 +321,7 @@ As demonstrated by the `content`, `parser`, and `transport` options above, you c
 
 ## TODO
 
+- Include/exclude per-page option from DirectoryListing
 - Scaling for square, 4:3 ("truncated"), 16:9 (normal widescreen) - should height be taken into account? Not applicable with regular breakpoints and Transport application
 - Safari: Images are too wide - no obvious reason as to why, other than Safari
 
@@ -329,4 +330,4 @@ As demonstrated by the `content`, `parser`, and `transport` options above, you c
 - Grav [presentation](https://github.com/OleVik/grav-plugin-presentation)-plugin is written by [Ole Vik](https://github.com/OleVik)
 - [Reveal.js](https://github.com/hakimel/reveal.js)-plugin
 - Both are MIT-licensed
-- Thank you to [Paul Hibbitts](https://twitter.com/paulhibbitts) for extensive testing
+- Special thanks to [Paul Hibbitts](https://twitter.com/hibbittsdesign) for extensive testing
