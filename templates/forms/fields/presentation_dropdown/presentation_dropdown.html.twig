@@ -20,7 +20,7 @@
             {% set query = '' %}
         {% endif %}
     {% endif %}
-    <a href="{{ href }}{{ query }}" class="button">{{ label|t|e('html_attr') }}</a>
+    <a href="{{ href }}{{ query }}" target="_blank" class="button">{{ label|t|e('html_attr') }}</a>
 {% endmacro %}
 
 {% block field %}

@@ -1,3 +1,9 @@
+# v1.2.6
+## 18-01-2019
+
+1. [](#improved)
+    * Page-linking from Admin to new tab/window
+
 # v1.2.5
 ## 17-01-2019
 
