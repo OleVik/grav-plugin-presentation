@@ -120,6 +120,14 @@ en:
             ROUND: Repeat and stretch
       ADVANCED:
         TITLE: Advanced
+        SAVE:
+          PREFIX: Last Saved
+          ASYNC:
+            LABEL: Save Async
+            DESCRIPTION: "Prevent reloading Page when saving."
+          TYPING:
+            LABEL: Auto-Save Async when typing
+            DESCRIPTION: "Automatically save Page when typing."
         FOOTER:
           LABEL: Inject Twig-footer
           DESCRIPTION: "Render a theme's Twig-template and append it to each section, eg. 'partials/presentation_footer.html.twig'."

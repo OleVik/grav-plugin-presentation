@@ -84,8 +84,10 @@ class PresentationPlugin extends Plugin
         if ($this->isAdmin()) {
             $this->enable(
                 [
+                    'onPagesInitialized' => ['handleAPI', 0],
                     'onGetPageTemplates' => ['onGetPageTemplates', 0],
-                    'onTwigSiteVariables' => ['onTwigAdminVariables', 0]
+                    'onTwigSiteVariables' => ['onTwigAdminVariables', 0],
+                    'onAssetsInitialized' => ['onAdminPagesAssetsInitialized', 0]
                 ]
             );
         }
@@ -96,7 +98,7 @@ class PresentationPlugin extends Plugin
                 'onPageContentProcessed' => ['pageIteration', 0],
                 'onTwigExtensions' => ['onTwigExtensions', 0],
                 'onTwigTemplatePaths' => ['templates', 0],
-                'onPagesInitialized' => ['onPagesInitialized', 0],
+                'onPagesInitialized' => ['handleAPI', 0],
                 'onShortcodeHandlers' => ['onShortcodeHandlers', 0],
                 'onAssetsInitialized' => ['onAssetsInitialized', 0],
                 'onShutdown' => ['onShutdown', 0]
@@ -161,17 +163,63 @@ class PresentationPlugin extends Plugin
     }
 
     /**
+     * Handle API
+     *
+     * @return void
+     */
+    public function handleAPI()
+    {
+        $adminRoute = $this->config->get('plugins')['admin']['route'];
+        $uri = $this->grav['uri'];
+        $page = $this->grav['page'];
+        $config = $this->config();
+        if ($uri->path() == '/' . $config['api_route']) {
+            if ($_GET['action'] == 'poll') {
+                $this->handlePollAPI($uri, $page, $config);
+            }
+        }
+        if ($uri->path() == $adminRoute . '/' . $config['api_route']) {
+            if ($_GET['action'] == 'save') {
+                $this->handleSaveAPI();
+            }
+        }
+    }
+
+    /**
+     * Handle Save API
+     *
+     * @return void
+     */
+    public function handleSaveAPI()
+    {
+        if (!$this->isAdmin() || empty($_POST)) {
+            return;
+        }
+        header('Content-Type: application/json');
+        header("allow-control-access-origin: * ");
+        header('HTTP/1.1 200 OK');
+        try {
+            $post = file_get_contents('php://input') ?? $_POST;
+            $post = json_decode($post, true);
+            $pages = Grav::instance()['pages'];
+            $page = $pages->find('/' . $post['route']);
+            $page->rawMarkdown(base64_decode($post['content']));
+            $page->save();
+            echo '200 OK';
+        } catch (\Exception $e) {
+            echo $e;
+        }
+        exit();
+    }
+
+    /**
      * Handle Poll API
      *
      * @return void
      */
-    public function onPagesInitialized()
+    public function handlePollAPI($uri, $page, $config)
     {
-        $uri = $this->grav['uri'];
-        $page = $this->grav['page'];
-        $url = $page->url(true, true, true);
-        $config = $this->config();
-        if ($config['sync'] == 'poll' && $uri->path() == '/' . $config['api_route']) {
+        if ($config['sync'] == 'poll') {
             set_time_limit(0);
             header('Cache-Control: no-cache, no-store, max-age=0, must-revalidate');
             header('Pragma: no-cache');
@@ -405,6 +453,49 @@ class PresentationPlugin extends Plugin
         if ($this->grav['config']->get('plugins.shortcode-core.enabled') == 'true') {
             $this->grav['shortcode']->registerAllShortcodes(__DIR__ . '/shortcodes');
         }
+    }
+
+    /**
+     * Add admin assets
+     *
+     * @return void
+     */
+    public function onAdminPagesAssetsInitialized()
+    {
+        $uri = $this->grav['uri'];
+        $adminRoute = $this->config->get('plugins')['admin']['route'];
+        if (!Utils::contains($uri->path(), $adminRoute . '/pages')) {
+            return;
+        }
+        $config = $this->config();
+        $page = $this->grav['page'];
+        $res = Grav::instance()['locator'];
+        $path = $res->findResource('plugin://' . $this->name, false);
+        $adminRoute = $this->config->get('plugins')['admin']['route'];
+        $inlineJsConstants = array(
+            'presentationAPIRoute = "' . $adminRoute . '/' . $config['api_route'] . '"',
+            'presentationAPITimeout = ' . $config['poll_timeout'] * 2.5,
+            'presentationAPIRetryLimit = ' . $config['poll_retry_limit'],
+            'presentationAdminAsyncSave = ' . $config['admin_async_save'],
+            'presentationAdminAsyncSaveTyping = ' . $config['admin_async_save_typing']
+        );
+        $inlineJs = '';
+        foreach ($inlineJsConstants as $constant) {
+            $inlineJs .= 'const ' . $constant . ';' . "\n";
+        }
+        $this->grav['assets']->addInlineJs($inlineJs);
+        $this->grav['assets']->addJs(
+            $path . '/js/save.js'
+        );
+        $this->grav['assets']->addJs(
+            $path . '/node_modules/axios/dist/axios.min.js'
+        );
+        $this->grav['assets']->addJs(
+            $path . '/node_modules/js-base64/base64.min.js'
+        );
+        $this->grav['assets']->addJs(
+            $path . '/node_modules/codemirror/lib/codemirror.js'
+        );
     }
 
     /**

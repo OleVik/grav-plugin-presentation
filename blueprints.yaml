@@ -1,5 +1,6 @@
 name: Presentation
-version: 1.2.6
+version: 1.2.7-beta.1
+testing: true
 description: Responsive navigational slideshows with Reveal.js
 icon: arrows-alt
 author:
@@ -12,7 +13,7 @@ bugs: https://github.com/OleVik/grav-plugin-presentation/issues
 docs: https://github.com/OleVik/grav-plugin-presentation/blob/develop/README.md
 license: MIT
 dependencies:
-  - { name: grav, version: '>=1.6' }
+  - { name: grav, version: ">=1.6" }
 
 form:
   validation: strict
@@ -148,6 +149,26 @@ form:
           type: tab
           title: PLUGIN_PRESENTATION.ADMIN.ADVANCED.TITLE
           fields:
+            admin_async_save:
+              type: toggle
+              label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.SAVE.ASYNC.LABEL
+              description: PLUGIN_PRESENTATION.ADMIN.ADVANCED.SAVE.ASYNC.DESCRIPTION
+              default: 1
+              options:
+                1: PLUGIN_ADMIN.ENABLED
+                0: PLUGIN_ADMIN.DISABLED
+              validate:
+                type: bool
+            admin_async_save_typing:
+              type: toggle
+              label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.SAVE.TYPING.LABEL
+              description: PLUGIN_PRESENTATION.ADMIN.ADVANCED.SAVE.TYPING.DESCRIPTION
+              default: 1
+              options:
+                1: PLUGIN_ADMIN.ENABLED
+                0: PLUGIN_ADMIN.DISABLED
+              validate:
+                type: bool
             footer:
               type: text
               label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.FOOTER.LABEL
@@ -186,17 +207,29 @@ form:
               type: select
               label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.CONTENT.LABEL
               description: PLUGIN_PRESENTATION.ADMIN.ADVANCED.CONTENT.DESCRIPTION
-              data-options@: ['\Grav\Plugin\PresentationPlugin::getClassNamesBlueprintOptions', 'Content']
+              data-options@:
+                [
+                  '\Grav\Plugin\PresentationPlugin::getClassNamesBlueprintOptions',
+                  "Content",
+                ]
             parser:
               type: select
               label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.PARSER.LABEL
               description: PLUGIN_PRESENTATION.ADMIN.ADVANCED.PARSER.DESCRIPTION
-              data-options@: ['\Grav\Plugin\PresentationPlugin::getClassNamesBlueprintOptions', 'Parser']
+              data-options@:
+                [
+                  '\Grav\Plugin\PresentationPlugin::getClassNamesBlueprintOptions',
+                  "Parser",
+                ]
             styles:
               type: select
               label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.STYLES.LABEL
               description: PLUGIN_PRESENTATION.ADMIN.ADVANCED.STYLES.DESCRIPTION
-              data-options@: ['\Grav\Plugin\PresentationPlugin::getClassNamesBlueprintOptions', 'Styles']
+              data-options@:
+                [
+                  '\Grav\Plugin\PresentationPlugin::getClassNamesBlueprintOptions',
+                  "Styles",
+                ]
             options:
               type: section
               title: PLUGIN_PRESENTATION.ADMIN.ADVANCED.REVEAL.TITLE

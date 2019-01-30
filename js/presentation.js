@@ -3,16 +3,16 @@
  * @param {string} message Message to prompt user to reload.
  */
 function showError(message) {
-  document.getElementById('snackbar-message').innerHTML = message;
-  document.getElementById('snackbar').classList.add('visible');
+  document.getElementById("snackbar-message").innerHTML = message;
+  document.getElementById("snackbar").classList.add("visible");
 }
 
 /**
  * Hide visual error-indication.
  */
 function hideError() {
-  if (document.getElementById('snackbar').classList.contains("visible")) {
-    document.getElementById('snackbar').classList.remove('visible');
+  if (document.getElementById("snackbar").classList.contains("visible")) {
+    document.getElementById("snackbar").classList.remove("visible");
   }
 }
 
@@ -26,7 +26,7 @@ function findGetParameter(parameterName) {
   location.search
     .substr(1)
     .split("&")
-    .forEach(function (item) {
+    .forEach(function(item) {
       tmp = item.split("=");
       if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
     });
@@ -48,29 +48,29 @@ function initClock() {
     nsec = "0" + nsec;
   }
   var clocktext = "" + nhour + ":" + nmin + ":" + nsec + "";
-  document.getElementById('clockbox').innerHTML = clocktext;
+  document.getElementById("clockbox").innerHTML = clocktext;
 }
 
 /**
  * Format a date in ISO-format
  * @param {Date} d Date-instance
- * 
+ *
  * @see https://stackoverflow.com/a/12550320/603387
  */
 function ISODateString(d) {
   function pad(n) {
-    return n < 10 ? '0' + n : n;
+    return n < 10 ? "0" + n : n;
   }
-  return pad(d.getHours()) + ':' +
-    pad(d.getMinutes()) + ':' +
-    pad(d.getSeconds());
+  return (
+    pad(d.getHours()) + ":" + pad(d.getMinutes()) + ":" + pad(d.getSeconds())
+  );
 }
 
 /**
  * Find closest number
  * @param {float} number Number to search for
  * @param {array} array Numbers to search in
- * 
+ *
  * @see https://jsfiddle.net/jaggedsoftware/g40krr4n/
  */
 function getClosest(number, array) {
@@ -85,7 +85,7 @@ function getClosest(number, array) {
     }
   }
   return current;
-};
+}
 
 /**
  * Get Slides
@@ -95,11 +95,18 @@ function getSlides(target) {
 }
 
 /* If printing, clear color and background*/
-window.addEventListener("load", function (event) {
-  if (findGetParameter('print-pdf')) {
-    Array.prototype.forEach.call(getSlides('.slides section section'), function (element) {
-      element.style.setProperty('color', 'unset', 'important');
-      element.style.setProperty('background', 'unset', 'important');
-    });
-  }
-}, false);
+window.addEventListener(
+  "load",
+  function(event) {
+    if (findGetParameter("print-pdf")) {
+      Array.prototype.forEach.call(
+        getSlides(".slides section section"),
+        function(element) {
+          element.style.setProperty("color", "unset", "important");
+          element.style.setProperty("background", "unset", "important");
+        }
+      );
+    }
+  },
+  false
+);

@@ -4,12 +4,19 @@
     <div class="button-bar" style="margin:0;padding:0;text-align:left;background:0;z-index:2;">
         {%- if field.fields -%}
         {%- for child in field.fields -%}
+            {%- if child.name != 'saved' -%}
             {%-
                 include [
                     "forms/fields/#{child.type}/#{child.type}.html.twig",
                     'forms/fields/text/text.html.twig'
                 ] with { field: child, value: null }
             -%}
+            {%- else -%}
+                <div id="last-saved" style="display:none;float:right;margin-right:3em;">
+                    <span>{{ child.prefix|t|e('html_attr') }}</span>&nbsp;
+                    <span id="last-saved-value"></span>
+                </div>
+            {%- endif -%}
         {%- endfor -%}
         {%- endif -%}
     </div>
