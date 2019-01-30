@@ -463,15 +463,17 @@ class PresentationPlugin extends Plugin
     public function onAdminPagesAssetsInitialized()
     {
         $uri = $this->grav['uri'];
-        $adminRoute = $this->config->get('plugins')['admin']['route'];
-        if (!Utils::contains($uri->path(), $adminRoute . '/pages')) {
-            return;
-        }
         $config = $this->config();
         $page = $this->grav['page'];
         $res = Grav::instance()['locator'];
         $path = $res->findResource('plugin://' . $this->name, false);
         $adminRoute = $this->config->get('plugins')['admin']['route'];
+        if (!Utils::contains($uri->path(), $adminRoute . '/pages')) {
+            return;
+        }
+        if (!$config['admin_async_save']) {
+            return;
+        }
         $inlineJsConstants = array(
             'presentationAPIRoute = "' . $adminRoute . '/' . $config['api_route'] . '"',
             'presentationAPITimeout = ' . $config['poll_timeout'] * 2.5,

@@ -83,27 +83,29 @@ window.addEventListener(
       false
     );
 
-    var markdownContent = document.querySelector(
-      'textarea[name="data[content]"]  + .CodeMirror'
-    );
+    if (presentationAdminAsyncSaveTyping === 1) {
+      var markdownContent = document.querySelector(
+        'textarea[name="data[content]"]  + .CodeMirror'
+      );
 
-    /* Debounce and throttle */
-    /* @see https://codepen.io/dreit/pen/gedMez?editors=0010 */
-    var forLastExec = 100;
-    var delay = 500;
-    var throttled = false;
-    var calls = 0;
+      /* Debounce and throttle */
+      /* @see https://codepen.io/dreit/pen/gedMez?editors=0010 */
+      var forLastExec = 100;
+      var delay = 500;
+      var throttled = false;
+      var calls = 0;
 
-    markdownContent.onkeyup = function() {
-      if (!throttled) {
-        throttled = true;
-        setTimeout(function() {
-          throttled = false;
-        }, delay);
-      }
-      clearTimeout(forLastExec);
-      forLastExec = setTimeout(saveRawMarkdown, delay);
-    };
+      markdownContent.onkeyup = function() {
+        if (!throttled) {
+          throttled = true;
+          setTimeout(function() {
+            throttled = false;
+          }, delay);
+        }
+        clearTimeout(forLastExec);
+        forLastExec = setTimeout(saveRawMarkdown, delay);
+      };
+    }
   },
   false
 );
