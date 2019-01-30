@@ -471,7 +471,7 @@ class PresentationPlugin extends Plugin
         if (!Utils::contains($uri->path(), $adminRoute . '/pages')) {
             return;
         }
-        if (!$config['admin_async_save']) {
+        if ($config['admin_async_save'] !== true) {
             return;
         }
         $inlineJsConstants = array(
