@@ -14,6 +14,8 @@ node_modules/
 !node_modules/reveal.js/js/reveal.js
 !node_modules/reveal.js/lib/js/head.min.js
 !node_modules/axios/dist/**/*.js
+!node_modules/js-base64/base64.min.js
+!node_modules/codemirror/lib/codemirror.js
 
 # Sonarlint plugin
 .idea/sonarlint
