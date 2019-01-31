@@ -208,28 +208,22 @@ form:
               label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.CONTENT.LABEL
               description: PLUGIN_PRESENTATION.ADMIN.ADVANCED.CONTENT.DESCRIPTION
               data-options@:
-                [
-                  '\Grav\Plugin\PresentationPlugin::getClassNamesBlueprintOptions',
-                  "Content",
-                ]
+                - "\\Grav\\Plugin\\PresentationPlugin::getClassNamesBlueprintOptions"
+                - Content
             parser:
               type: select
               label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.PARSER.LABEL
               description: PLUGIN_PRESENTATION.ADMIN.ADVANCED.PARSER.DESCRIPTION
               data-options@:
-                [
-                  '\Grav\Plugin\PresentationPlugin::getClassNamesBlueprintOptions',
-                  "Parser",
-                ]
+                - "\\Grav\\Plugin\\PresentationPlugin::getClassNamesBlueprintOptions"
+                - Parser
             styles:
               type: select
               label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.STYLES.LABEL
               description: PLUGIN_PRESENTATION.ADMIN.ADVANCED.STYLES.DESCRIPTION
               data-options@:
-                [
-                  '\Grav\Plugin\PresentationPlugin::getClassNamesBlueprintOptions',
-                  "Styles",
-                ]
+                - "\\Grav\\Plugin\\PresentationPlugin::getClassNamesBlueprintOptions"
+                - Styles
             options:
               type: section
               title: PLUGIN_PRESENTATION.ADMIN.ADVANCED.REVEAL.TITLE

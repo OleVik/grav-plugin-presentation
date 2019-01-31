@@ -4,15 +4,23 @@
 
 1. [](#improved)
    - Save-functionality
+   - Blueprints.yaml
 
-# v1.2.7-beta.5
+# v1.2.7-beta.3
+
+## 31-01-2019
+
+1. [](#bugfix)
+   - Node Modules
+
+# v1.2.7-beta.2
 
 ## 31-01-2019
 
 1. [](#improved)
-   - Save-functionality UI
+   - Save-functionality
 
-# v1.2.7-beta.4
+# v1.2.7-beta.1
 
 ## 31-01-2019
 
