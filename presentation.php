@@ -474,6 +474,7 @@ class PresentationPlugin extends Plugin
         if ($config['admin_async_save'] !== true) {
             return;
         }
+        $adminRoute = $uri->rootUrl(true) . $adminRoute;
         $inlineJsConstants = array(
             'presentationAPIRoute = "' . $adminRoute . '/' . $config['api_route'] . '"',
             'presentationAPITimeout = ' . $config['poll_timeout'] * 2.5,
