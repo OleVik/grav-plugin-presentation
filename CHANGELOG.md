@@ -1,3 +1,10 @@
+# v1.3.0-beta.1
+
+## 31-01-2019
+
+1. [](#improved)
+   - Save-functionality
+
 # v1.2.7-beta.5
 
 ## 31-01-2019
