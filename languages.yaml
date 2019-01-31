@@ -123,11 +123,11 @@ en:
         SAVE:
           PREFIX: Last Saved
           ASYNC:
-            LABEL: Save Async
-            DESCRIPTION: "Prevent reloading Page when saving."
+            LABEL: Save Content
+            DESCRIPTION: "Enabled Save Content button."
           TYPING:
-            LABEL: Auto-Save Async when typing
-            DESCRIPTION: "Automatically save Page when typing."
+            LABEL: Save Content while typing
+            DESCRIPTION: "Automatically save Content when typing."
         FOOTER:
           LABEL: Inject Twig-footer
           DESCRIPTION: "Render a theme's Twig-template and append it to each section, eg. 'partials/presentation_footer.html.twig'."

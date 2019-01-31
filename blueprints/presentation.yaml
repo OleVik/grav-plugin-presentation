@@ -52,9 +52,10 @@ form:
                     print_styled_notes:
                       label: PLUGIN_PRESENTATION.ADMIN.LINKS.PRINT_STYLED_NOTES
                       mode: print_styled_notes
-                saved:
+                save:
                   type: presentation_dropdown
                   ordering@: print
+                  label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.SAVE.ASYNC.LABEL
                   prefix: PLUGIN_PRESENTATION.ADMIN.ADVANCED.SAVE.PREFIX
             textsize:
               type: section

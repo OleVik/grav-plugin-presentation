@@ -4,6 +4,7 @@
 function saveRawMarkdown() {
   var now = new Date();
   var autoSaveButton = document.querySelector("#presentation-save");
+  var autoSaveButtonContent = autoSaveButton.innerHTML;
   var markdownContent = document.querySelector('textarea[name="data[content]"]')
     .value;
   var lastSaved = document.querySelector("#last-saved");
@@ -14,18 +15,16 @@ function saveRawMarkdown() {
   autoSaveButton.disabled = true;
   axios
     .post(
-      presentationAPIRoute + "?action=save",
-      {
+      presentationAPIRoute + "?action=save", {
         content: Base64.encode(markdownContent),
         route: window.GravAdmin.config.route
-      },
-      {
+      }, {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
         }
       }
     )
-    .then(function(response) {
+    .then(function (response) {
       if (response.status == 200) {
         console.info("Saved at", now, response.status, "OK");
         autoSaveButton.style.background = presentationColors.notice;
@@ -41,16 +40,16 @@ function saveRawMarkdown() {
         });
       }
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.error(error);
       autoSaveButton.style.background = presentationColors.critical;
       autoSaveButton.innerHTML = '<i class="fa fa-close"></i> Failed';
       autoSaveButton.disabled = false;
     })
-    .then(function() {
-      setTimeout(function() {
+    .then(function () {
+      setTimeout(function () {
         autoSaveButton.style.background = presentationColors.button;
-        autoSaveButton.innerHTML = '<i class="fa fa-check"></i> Save';
+        autoSaveButton.innerHTML = autoSaveButtonContent;
         autoSaveButton.disabled = false;
       }, 500);
     });
@@ -65,18 +64,10 @@ var presentationColors = {
 };
 window.addEventListener(
   "load",
-  function(event) {
-    var saveButton = document.querySelector(
-      '#titlebar [name="task"][value="save"]'
-    );
-    saveButton.parentElement.insertAdjacentHTML(
-      "afterend",
-      '<div class="button-group"><button id="presentation-save" class="button"><i class="fa fa-check"></i> Save</button></div>'
-    );
-    saveButton.parentElement.style.display = "none";
+  function (event) {
     document.querySelector("#presentation-save").addEventListener(
       "click",
-      function(event) {
+      function (event) {
         saveRawMarkdown();
         event.preventDefault();
       },
@@ -95,10 +86,10 @@ window.addEventListener(
       var throttled = false;
       var calls = 0;
 
-      markdownContent.onkeyup = function() {
+      markdownContent.onkeyup = function () {
         if (!throttled) {
           throttled = true;
-          setTimeout(function() {
+          setTimeout(function () {
             throttled = false;
           }, delay);
         }

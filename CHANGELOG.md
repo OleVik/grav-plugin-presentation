@@ -1,3 +1,10 @@
+# v1.2.7-beta.5
+
+## 31-01-2019
+
+1. [](#improved)
+   - Save-functionality UI
+
 # v1.2.7-beta.4
 
 ## 31-01-2019
