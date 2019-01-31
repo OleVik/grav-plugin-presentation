@@ -16,7 +16,7 @@ poll_retry_limit: 10
 token_auth: false
 token: Hd4HFdPvbpKzTqz
 admin_async_save: true
-admin_async_save_typing: true
+admin_async_save_typing: false
 footer: ""
 transition: true
 shortcodes: true

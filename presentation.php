@@ -477,10 +477,10 @@ class PresentationPlugin extends Plugin
         $adminRoute = $uri->rootUrl(true) . $adminRoute;
         $inlineJsConstants = array(
             'presentationAPIRoute = "' . $adminRoute . '/' . $config['api_route'] . '"',
-            'presentationAPITimeout = ' . $config['poll_timeout'] * 2.5,
-            'presentationAPIRetryLimit = ' . $config['poll_retry_limit'],
-            'presentationAdminAsyncSave = ' . $config['admin_async_save'],
-            'presentationAdminAsyncSaveTyping = ' . $config['admin_async_save_typing']
+            'presentationAPITimeout = ' . ($config['poll_timeout'] ?: 2000) * 2.5,
+            'presentationAPIRetryLimit = ' . ($config['poll_retry_limit'] ?: 10),
+            'presentationAdminAsyncSave = ' . ($config['admin_async_save'] ?: 0),
+            'presentationAdminAsyncSaveTyping = ' . ($config['admin_async_save_typing'] ?: 0)
         );
         $inlineJs = '';
         foreach ($inlineJsConstants as $constant) {
