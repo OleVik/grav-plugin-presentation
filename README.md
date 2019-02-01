@@ -334,4 +334,5 @@ As demonstrated by the `content`, `parser`, and `transport` options above, you c
 - Grav [presentation](https://github.com/OleVik/grav-plugin-presentation)-plugin is written by [Ole Vik](https://github.com/OleVik)
 - [Reveal.js](https://github.com/hakimel/reveal.js)-plugin
 - Both are MIT-licensed
+- Core development financed by [UiB](https://www.uib.no/), Save Content Functionality sponsored by [Paul Hibbitts](https://twitter.com/hibbittsdesign)
 - Special thanks to [Paul Hibbitts](https://twitter.com/hibbittsdesign) for extensive testing
