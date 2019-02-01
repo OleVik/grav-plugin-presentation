@@ -79,6 +79,10 @@ poll_retry_limit: 10
 token_auth: false
 # Poll-sync token to use for authorization
 token: Hd4HFdPvbpKzTqz
+# Enable Save Content button and CTRL+SHIFT+S combo
+admin_async_save: false
+# Enable Save Content when typing
+admin_async_save_typing: false
 # Twig-template to inject below content
 footer: ''
 # Enable onLoad transition

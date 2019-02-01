@@ -12,6 +12,7 @@
                 ] with { field: child, value: null }
             -%}
             {%- else -%}
+                {% if config.plugins['presentation'].admin_async_save %}
                 <div style="float:right;padding-right:1.5rem;display:flex;align-items:center;justify-content:center;">
                     <div id="last-saved" style="display:none;margin-right:1em;">
                         <span>{{ child.prefix|t|e('html_attr') }}</span>
@@ -21,6 +22,7 @@
                         <button id="presentation-save" class="button" style="padding: 0.3rem 1.25rem 0.3rem 1rem;"><i class="fa fa-bolt"></i> {{ child.label|t|e('html_attr') }}</button>
                     </div>
                 </div>
+                {% endif %}
             {%- endif -%}
         {%- endfor -%}
         {%- endif -%}

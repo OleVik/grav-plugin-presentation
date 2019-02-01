@@ -1,6 +1,5 @@
 name: Presentation
-version: 1.3.0-beta.1
-testing: true
+version: 1.3.0
 description: Responsive navigational slideshows with Reveal.js
 icon: arrows-alt
 author:
