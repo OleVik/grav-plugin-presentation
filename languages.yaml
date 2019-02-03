@@ -123,11 +123,11 @@ en:
         SAVE:
           PREFIX: Last Saved
           ASYNC:
-            LABEL: Save Content
-            DESCRIPTION: "Enabled Save Content button."
+            LABEL: Save Presentation
+            DESCRIPTION: "Enable Save Presentation button."
           TYPING:
             LABEL: Save Content while typing
-            DESCRIPTION: "Automatically save Content when typing."
+            DESCRIPTION: "Automatically save Presentation when typing."
         FOOTER:
           LABEL: Inject Twig-footer
           DESCRIPTION: "Render a theme's Twig-template and append it to each section, eg. 'partials/presentation_footer.html.twig'."
