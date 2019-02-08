@@ -350,3 +350,18 @@ $breakpoints: (extrasmall: 320px, small: 576px, medium: 768px, large: 992px, ext
     text-decoration: underline;
   }
 }
+
+/* YouTube-plugin fix */
+.grav-youtube {
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+}
+
+.grav-youtube iframe {
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  position: absolute !important;
+}
