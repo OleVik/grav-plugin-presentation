@@ -309,6 +309,10 @@ The synchronization between Presenter-mode and the Presentation happens by sendi
 
 **Note:** The polling approach needs a stable server to work, more so than Grav itself. It has been tested extensively with PHP 7.1 and 7.2, running on Caddy Server and with PHP's built-in server, with a fairly standard production-setup of PHP. If your server-connection crashes with a 502 error -- usually with the error "No connection could be made because the target machine actively refused it.", it is because PHP is set up to forcibly time out despite being long-polled.
 
+### Including
+
+A Presentation-shortcode is available for embedding a presentation in another Page; `[presentation="route/to/presentation"]`. This creates an iFrame with the presentation in it.
+
 ## Contributing
 
 ### PHP Code Standards
