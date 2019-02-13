@@ -1,3 +1,10 @@
+# v1.4.0
+
+## 13-02-2019
+
+1. [](#improved)
+   - Add support for Aria-attributes and role
+
 # v1.3.1
 
 ## 03-02-2019

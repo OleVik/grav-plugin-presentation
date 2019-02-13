@@ -287,6 +287,9 @@ class Content implements ContentInterface
                 echo ' data-textsize-modifier="' . (float) $page['header']->textsize['modifier'] . '"';
             }
         }
+        if (!empty($this->transport->getAriaAttributes($config['id']))) {
+            echo $this->transport->getAriaAttributes($config['id']);
+        }
         if (!empty($this->transport->getDataAttributes($config['id']))) {
             echo $this->transport->getDataAttributes($config['id']);
         }

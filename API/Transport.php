@@ -40,11 +40,18 @@ class Transport implements TransportInterface
     public $classes;
 
     /**
-     * Placeholder for slide classes
+     * Placeholder for data attributes
      *
      * @var array
      */
     public $dataAttributes;
+
+    /**
+     * Placeholder for aria attributes
+     *
+     * @var array
+     */
+    public $ariaAttributes;
 
     /**
      * Instantiate Transport API
@@ -54,6 +61,7 @@ class Transport implements TransportInterface
         $this->styles = array();
         $this->classes = array();
         $this->dataAttributes = array();
+        $this->ariaAttributes = array();
     }
 
     /**
@@ -213,6 +221,67 @@ class Transport implements TransportInterface
         $return = '';
         foreach ($this->dataAttributes[$id] as $name => $value) {
             $return .= ' data-' . $name . '="' . $value . '"';
+        }
+        return $return;
+    }
+
+    /**
+     * Add aria attribute
+     *
+     * @param string $id        Slide id-attribute
+     * @param string $attribute Property name
+     * @param string $value     Value
+     *
+     * @return bool State of execution
+     */
+    public function setAriaAttribute(string $id, string $attribute, string $value)
+    {
+        if (!array_key_exists($id, $this->ariaAttributes)) {
+            $this->ariaAttributes[$id] = array();
+        }
+        if (!array_key_exists($value, $this->ariaAttributes[$id])) {
+            $this->ariaAttributes[$id][$attribute] = $value;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Get aria attribute
+     *
+     * @param string $id        Slide id-attribute
+     * @param string $attribute Property name
+     *
+     * @return string Aria attribute for slide
+     */
+    public function getAriaAttribute(string $id, string $attribute)
+    {
+        if (empty($this->ariaAttributes[$id][$attribute])) {
+            return false;
+        }
+        return $this->ariaAttributes[$id][$attribute];
+    }
+
+    /**
+     * Get aria attributes
+     *
+     * @param string $id Slide id-attribute
+     *
+     * @return string Aria attributes for slide
+     */
+    public function getAriaAttributes(string $id)
+    {
+        if (empty($this->ariaAttributes[$id])) {
+            return false;
+        }
+        $return = '';
+        foreach ($this->ariaAttributes[$id] as $name => $value) {
+            if ($name == 'role') {
+                $return .= ' role="' . $value . '"';
+            } else {
+                $return .= ' aria-' . $name . '="' . $value . '"';
+            }
         }
         return $return;
     }
