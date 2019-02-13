@@ -5,6 +5,13 @@
 1. [](#improved)
    - Add support for Aria-attributes and role
 
+# v1.3.2
+
+## 08-02-2019
+
+1. [](#new)
+   - YouTube-plugin CSS fix
+
 # v1.3.1
 
 ## 03-02-2019
