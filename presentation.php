@@ -100,7 +100,6 @@ class PresentationPlugin extends Plugin
                 'onTwigTemplatePaths' => ['templates', 0],
                 'onTwigSiteVariables' => ['twigBaseUrl', 0],
                 'onPagesInitialized' => ['handleAPI', 0],
-                'onShortcodeHandlers' => ['onShortcodeHandlers', 0],
                 'onAssetsInitialized' => ['onAssetsInitialized', 0],
                 'onShutdown' => ['onShutdown', 0]
             ]
@@ -425,34 +424,24 @@ class PresentationPlugin extends Plugin
     public function processPresentationShortcode(Event $event)
     {
         $page = $event['page'];
+        $uri = $this->grav['uri'];
         $twig = $this->grav['twig'];
         $config = $this->mergeConfig($page, true);
         $raw = $page->getRawContent();
-        $function = function ($matches) use ($twig, $config) {
-            $search = $matches[0];
-            if (!isset($matches[1])) {
-                return $search;
+        $regex = '/\[presentation=(?:")(?<src>.*)(?:")\]/im';
+        preg_match_all($regex, $raw, $shortcodes, PREG_SET_ORDER, 0);
+        if (!empty($shortcodes)) {
+            foreach ($shortcodes as $shortcode) {
+                $replace = $twig->processTemplate(
+                    'partials/presentation_iframe.html.twig', 
+                    [
+                        'src' => trim($shortcode['src'], '/'),
+                        'presentation_base_url' => $uri->rootUrl(true)
+                    ]
+                );
+                $raw = str_replace($shortcode[0], $replace, $raw);
             }
-            $replace = $twig->processTemplate(
-                'partials/presentation_iframe.html.twig',
-                array(
-                    'src' => $matches[1]
-                )
-            );
-            return str_replace($search, $replace, $search);
-        };
-        $page->setRawContent($this->parseLinks($raw, $function));
-    }
-
-    /**
-     * Register shortcodes
-     *
-     * @return void
-     */
-    public function onShortcodeHandlers()
-    {
-        if ($this->grav['config']->get('plugins.shortcode-core.enabled') == 'true') {
-            $this->grav['shortcode']->registerAllShortcodes(__DIR__ . '/shortcodes');
+            $page->setRawContent($raw);
         }
     }
 

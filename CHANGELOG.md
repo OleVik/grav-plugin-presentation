@@ -3,7 +3,7 @@
 ## 14-02-2019
 
 1. [](#bugfix)
-   - Shortcode path
+   - Shortcodes
 
 # v1.4.0
 
