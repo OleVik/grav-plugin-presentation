@@ -27,7 +27,7 @@ class PresentationShortcode extends Shortcode
             'presentation',
             function (ShortcodeInterface $sc) {
                 $src = $sc->getParameter('src', $sc->getBbCode());
-                return '<iframe src="./' . $src . '" class="presentation-iframe" frameborder="0" allowfullscreen></iframe>';
+                return '<iframe src="' . $src . '" class="presentation-iframe" frameborder="0" allowfullscreen></iframe>';
             }
         );
     }
