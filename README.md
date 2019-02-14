@@ -37,7 +37,7 @@ To install this plugin, just download the zip version of this repository and unz
 You should now have all the plugin files under
 
     /your/site/grav/user/plugins/presentation
-	
+
 > NOTE: This plugin is a modular component for Grav which requires [Grav](http://github.com/getgrav/grav) and the [Error](https://github.com/getgrav/grav-plugin-error) and [Problems](https://github.com/getgrav/grav-plugin-problems) to operate.
 
 ### Requirements
@@ -68,9 +68,9 @@ builtin_js: true
 # Enable Plugin's dynamic text sizing
 textsizing: true
 # Synchronize Slide-navigation
-sync: 'none'
+sync: "none"
 # URL Route to use for Poll-sync
-api_route: 'presentationapi'
+api_route: "presentationapi"
 # Poll-sync timeout in milliseconds
 poll_timeout: 2000
 # Poll-sync retry limit
@@ -84,7 +84,7 @@ admin_async_save: false
 # Enable Save Content when typing
 admin_async_save_typing: false
 # Twig-template to inject below content
-footer: ''
+footer: ""
 # Enable onLoad transition
 transition: true
 # Enable Plugin's shortcodes
@@ -92,31 +92,31 @@ shortcodes: true
 # Unwrap images from paragraph
 unwrap_images: true
 # Class to use for Content building
-content: 'Content'
+content: "Content"
 # Class to use for Content parsing
-parser: 'Parser'
+parser: "Parser"
 # Class to use for Styles, Classes, and Data management
-transport: 'Transport'
+transport: "Transport"
 # Breakpoints for responsive textsizing
 breakpoints:
-  240: '16'
-  320: '20'
-  576: '24'
-  768: '28'
-  992: '32'
-  1200: '36'
-  1600: '40'
+  240: "16"
+  320: "20"
+  576: "24"
+  768: "28"
+  992: "32"
+  1200: "36"
+  1600: "40"
 # Options to pass to Reveal.js
 options:
   width: "100%"
   height: "100%"
-  margin: '0'
-  minScale: '1'
-  maxScale: '1'
-  transition: 'fade'
-  controlsTutorial: 'false'
-  history: 'true'
-  display: 'flex'
+  margin: "0"
+  minScale: "1"
+  maxScale: "1"
+  transition: "fade"
+  controlsTutorial: "false"
+  history: "true"
+  display: "flex"
   pdfSeparateFragments: false
 ```
 
@@ -134,8 +134,9 @@ presentation:
     by: date
     dir: desc
   options:
-    transition: 'fade'
+    transition: "fade"
 ---
+
 ```
 
 ## Usage
@@ -210,7 +211,7 @@ The plugin makes available a method of dynamically scaling text within a slide, 
 
 If Textsizing is enabled in the plugin's options and on the Page, the relation between block text -- any text not in a header-element -- and header-text (`h1`, `h2`, `h3`, `h4`, `h5`, `h6`) is determined by the `textsize-scale`-property. That is, the size of the header-element's text relative to the base font-size.
 
-In the example above, the scale is set to the "Major Second" rhythm, and with a base font size of 16 -- the minimum font-size recommended for web -- this yields the following sizes for headers: 28.83 (`h1`), 25.63 (`h2`),  22.78 (`h3`), 20.25 (`h4`), 18 (`h5`), and 16 (`h6`). The base font size, and hence text, is adjusted upwards as the size of the screen increases to enable dynamic, responsive text-sizing. This is done through the `breakpoints`-option.
+In the example above, the scale is set to the "Major Second" rhythm, and with a base font size of 16 -- the minimum font-size recommended for web -- this yields the following sizes for headers: 28.83 (`h1`), 25.63 (`h2`), 22.78 (`h3`), 20.25 (`h4`), 18 (`h5`), and 16 (`h6`). The base font size, and hence text, is adjusted upwards as the size of the screen increases to enable dynamic, responsive text-sizing. This is done through the `breakpoints`-option.
 
 The modifier, if set, changes the matched breakpoint's base font size by multiplication. So if set to `1.05` it makes it 5% larger than it normally would be at this breakpoint.
 
@@ -303,7 +304,7 @@ Each slide can have notes associated with it, like a PowerPoint-presentation wou
 
 ### Presenting
 
-The plugin, like the Reveal.js-library, makes available a Presenter-mode. There are two modes available for using this: Locally, with `sync: 'browser'`, or remotely, with `sync: 'poll'`. When running locally, you need to access your presentation with a special URL -- `http://yourgrav.tld/book?admin=yes&showNotes=true` -- **and in a new window from the same browser** open the same URL without these parameters -- `http://yourgrav.tld/book`. 
+The plugin, like the Reveal.js-library, makes available a Presenter-mode. There are two modes available for using this: Locally, with `sync: 'browser'`, or remotely, with `sync: 'poll'`. When running locally, you need to access your presentation with a special URL -- `http://yourgrav.tld/book?admin=yes&showNotes=true` -- **and in a new window from the same browser** open the same URL without these parameters -- `http://yourgrav.tld/book`.
 
 The synchronization between Presenter-mode and the Presentation happens by sending data from one browser-window to the other, requiring JavaScript. When running remotely, the synchronization happens by polling and checking if the presentation has changed.
 
@@ -311,7 +312,7 @@ The synchronization between Presenter-mode and the Presentation happens by sendi
 
 ### Embedding
 
-A Presentation-shortcode is available for embedding a presentation in another Page; `[presentation src="./route/to/presentation"]`. This creates an iFrame with the presentation in it.
+A Presentation-shortcode is available for embedding a presentation in another Page; `[presentation="./route/to/presentation"]`. This creates an iFrame with the presentation in it.
 
 ## Contributing
 

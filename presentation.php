@@ -428,7 +428,7 @@ class PresentationPlugin extends Plugin
         $twig = $this->grav['twig'];
         $config = $this->mergeConfig($page, true);
         $raw = $page->getRawContent();
-        $regex = '/\[presentation=(?:")(?<src>.*)(?:")\]/im';
+        $regex = '/\[presentation(?:=| )(?:")(?<src>.*)(?:")\]/im';
         preg_match_all($regex, $raw, $shortcodes, PREG_SET_ORDER, 0);
         if (!empty($shortcodes)) {
             foreach ($shortcodes as $shortcode) {
