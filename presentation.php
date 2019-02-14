@@ -86,7 +86,7 @@ class PresentationPlugin extends Plugin
                 [
                     'onPagesInitialized' => ['handleAPI', 0],
                     'onGetPageTemplates' => ['onGetPageTemplates', 0],
-                    'onTwigSiteVariables' => ['onTwigAdminVariables', 0],
+                    'onTwigSiteVariables' => ['twigBaseUrl', 0],
                     'onAssetsInitialized' => ['onAdminPagesAssetsInitialized', 0]
                 ]
             );
@@ -98,6 +98,7 @@ class PresentationPlugin extends Plugin
                 'onPageContentProcessed' => ['pageIteration', 0],
                 'onTwigExtensions' => ['onTwigExtensions', 0],
                 'onTwigTemplatePaths' => ['templates', 0],
+                'onTwigSiteVariables' => ['twigBaseUrl', 0],
                 'onPagesInitialized' => ['handleAPI', 0],
                 'onShortcodeHandlers' => ['onShortcodeHandlers', 0],
                 'onAssetsInitialized' => ['onAssetsInitialized', 0],
@@ -272,7 +273,7 @@ class PresentationPlugin extends Plugin
      *
      * @return void
      */
-    public function onTwigAdminVariables()
+    public function twigBaseUrl()
     {
         $uri = $this->grav['uri'];
         $this->grav['twig']->twig_vars['presentation_base_url'] = $uri->rootUrl(true);
