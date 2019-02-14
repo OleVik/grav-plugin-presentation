@@ -311,7 +311,7 @@ The synchronization between Presenter-mode and the Presentation happens by sendi
 
 ### Embedding
 
-A Presentation-shortcode is available for embedding a presentation in another Page; `[presentation="./route/to/presentation"]`. This creates an iFrame with the presentation in it.
+A Presentation-shortcode is available for embedding a presentation in another Page; `[presentation src="./route/to/presentation"]`. This creates an iFrame with the presentation in it.
 
 ## Contributing
 
