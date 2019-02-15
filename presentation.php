@@ -426,9 +426,11 @@ class PresentationPlugin extends Plugin
         $page = $event['page'];
         $uri = $this->grav['uri'];
         $twig = $this->grav['twig'];
+        $config = $this->config();
         $config = $this->mergeConfig($page, true);
         $raw = $page->getRawContent();
-        $regex = '/\[presentation(?:=| )(?:")(?<src>.*)(?:")\]/im';
+        $classes = $config['shortcode_classes'];
+        $regex = '/\[presentation(?:=| )"(?<src>.*)"( class="(?<class>.*)")?\]/imU';
         preg_match_all($regex, $raw, $shortcodes, PREG_SET_ORDER, 0);
         if (!empty($shortcodes)) {
             foreach ($shortcodes as $shortcode) {
@@ -436,7 +438,8 @@ class PresentationPlugin extends Plugin
                     'partials/presentation_iframe.html.twig', 
                     [
                         'src' => trim($shortcode['src'], '/'),
-                        'presentation_base_url' => $uri->rootUrl(true)
+                        'presentation_base_url' => $uri->rootUrl(true),
+                        'class' => isset($shortcode['class']) ? $classes . ' ' . $shortcode['class'] : $classes
                     ]
                 );
                 $raw = str_replace($shortcode[0], $replace, $raw);

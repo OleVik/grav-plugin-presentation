@@ -89,6 +89,8 @@ footer: ""
 transition: true
 # Enable Plugin's shortcodes
 shortcodes: true
+# Default class for Presentation-shortcode
+shortcode_classes: "presentation-iframe"
 # Unwrap images from paragraph
 unwrap_images: true
 # Class to use for Content building
@@ -312,7 +314,7 @@ The synchronization between Presenter-mode and the Presentation happens by sendi
 
 ### Embedding
 
-A Presentation-shortcode is available for embedding a presentation in another Page; `[presentation="./route/to/presentation"]`. This creates an iFrame with the presentation in it.
+A Presentation-shortcode is available for embedding a presentation in another Page; `[presentation="./route/to/presentation"]`. This creates an iFrame with the presentation in it. You can also add your own classes to the iFrame with the `class`-parameter: `[presentation "introduction-to-ux/chromeless:true" class="class-one class-two"]`, or default classes with the `shortcode_classes`-option.
 
 ## Contributing
 

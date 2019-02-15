@@ -143,6 +143,9 @@ en:
         SHORTCODES:
           LABEL: Shortcodes
           DESCRIPTION: Enables internal shortcode-processing.
+        SHORTCODE_CLASSES:
+          LABEL: Shortcode Classes
+          DESCRIPTION: Default Classes to use with Presentation-shortcodes, each separated by a space.
         TRANSITION:
           LABEL: OnLoad Transition
           DESCRIPTION: Fade in from white when page (DOM-structure) is ready.

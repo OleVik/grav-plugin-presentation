@@ -1,3 +1,11 @@
+# v1.4.2
+
+## 15-02-2019
+
+1. [](#improvement)
+   - Option for default Shortcode Class
+   - Class-parameter for Shortcode
+
 # v1.4.1
 
 ## 14-02-2019

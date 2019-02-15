@@ -1,5 +1,5 @@
 name: Presentation
-version: 1.4.1
+version: 1.4.2
 description: Responsive navigational slideshows with Reveal.js
 icon: arrows-alt
 author:
@@ -182,6 +182,12 @@ form:
                 0: PLUGIN_ADMIN.DISABLED
               validate:
                 type: bool
+            shortcode_classes:
+              type: text
+              label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.SHORTCODE_CLASSES.LABEL
+              description: PLUGIN_PRESENTATION.ADMIN.ADVANCED.SHORTCODE_CLASSES.DESCRIPTION
+              validate:
+                type: string
             transition:
               type: toggle
               label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.TRANSITION.LABEL
