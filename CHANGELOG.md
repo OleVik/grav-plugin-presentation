@@ -1,3 +1,10 @@
+# v1.5.0
+
+## 22-02-2019
+
+1. [](#improvement)
+   - Override blueprints from Theme or user-folder
+
 # v1.4.2
 
 ## 15-02-2019

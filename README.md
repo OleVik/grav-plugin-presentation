@@ -330,6 +330,10 @@ Use a SCSS-compiler, like [LibSass](https://github.com/sass/libsass), eg. [node-
 
 As demonstrated by the `content`, `parser`, and `transport` options above, you can fairly easily extend the behavior of the plugin. For example, if you install the [Presentation Deckset Plugin](https://github.com/OleVik/grav-plugin-presentation-deckset/), you could set this to `parser: 'DecksetParser'` to use the [Deckset](https://www.deckset.com/)-syntax. Addons written this way must implement the correspond interface, and extend the base class provided by the plugin. Eg., `class DecksetParser extends Parser implements ParserInterface`.
 
+#### Customizing the blueprints
+
+The plugin searches for `presentation.yaml` and `slide.yaml` in the current theme's blueprints-folder, and then user's blueprints-folder, to override the Plugin's own Page-blueprints. With you can use your Theme or Skeleton to create custom blueprints for this Page Types.
+
 ## TODO
 
 - Include/exclude per-page option from DirectoryListing

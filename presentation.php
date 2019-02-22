@@ -312,8 +312,21 @@ class PresentationPlugin extends Plugin
     {
         $types = $event->types;
         $locator = Grav::instance()['locator'];
-        $path = $locator->findResource('plugin://' . $this->name . '/blueprints');
-        $types->scanBlueprints($path);
+        $locations = [
+            'plugin://' . $this->name . '/blueprints/',
+            'theme://blueprints/',
+            'user://blueprints/'
+        ];
+        foreach ($locations as $location) {
+            $types->register(
+                'presentation',
+                $locator->findResource($location . 'presentation.yaml')
+            );
+            $types->register(
+                'slide',
+                $locator->findResource($location . 'slide.yaml')
+            );
+        }
     }
 
     /**
