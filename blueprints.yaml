@@ -9,7 +9,7 @@ homepage: https://github.com/OleVik/grav-plugin-presentation/
 demo: https://olevik.me/staging/grav-skeleton-presentation/
 keywords: presentation, fullscreen, slides, slideshow, reveal.js
 bugs: https://github.com/OleVik/grav-plugin-presentation/issues
-docs: https://github.com/OleVik/grav-plugin-presentation/blob/develop/README.md
+docs: https://github.com/OleVik/grav-plugin-presentation/blob/master/README.md
 license: MIT
 dependencies:
   - { name: grav, version: ">=1.6" }
