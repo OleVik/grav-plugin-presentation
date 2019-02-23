@@ -1,3 +1,10 @@
+# v1.5.1
+
+## 23-02-2019
+
+1. [](#improvement)
+   - Do not render custom buttons unless Presentation is initially saved
+
 # v1.5.0
 
 ## 22-02-2019

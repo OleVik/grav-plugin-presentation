@@ -12,7 +12,7 @@
                 ] with { field: child, value: null }
             -%}
             {%- else -%}
-                {% if config.plugins['presentation'].admin_async_save %}
+                {% if config.plugins['presentation'].admin_async_save and context.modified != null %}
                 <div style="float:right;padding-right:1.5rem;display:flex;align-items:center;justify-content:center;">
                     <div id="last-saved" style="display:none;margin-right:1em;">
                         <span>{{ child.prefix|t|e('html_attr') }}</span>
