@@ -1,19 +1,22 @@
-# v1.5.1
+# v1.5.2
+## 23-02-2019
 
+1. [](#improvement)
+   - Changelog-formatting
+
+# v1.5.1
 ## 23-02-2019
 
 1. [](#improvement)
    - Do not render custom buttons unless Presentation is initially saved
 
 # v1.5.0
-
 ## 22-02-2019
 
 1. [](#improvement)
    - Override blueprints from Theme or user-folder
 
 # v1.4.2
-
 ## 15-02-2019
 
 1. [](#improvement)
@@ -21,35 +24,30 @@
    - Class-parameter for Shortcode
 
 # v1.4.1
-
 ## 14-02-2019
 
 1. [](#bugfix)
    - Shortcodes
 
 # v1.4.0
-
 ## 13-02-2019
 
 1. [](#improved)
    - Add support for Aria-attributes and role
 
 # v1.3.2
-
 ## 08-02-2019
 
 1. [](#new)
    - YouTube-plugin CSS fix
 
 # v1.3.1
-
 ## 03-02-2019
 
 1. [](#improved)
    - Save-functionality
 
 # v1.3.0
-
 ## 31-01-2019
 
 1. [](#improved)
@@ -57,21 +55,18 @@
    - Blueprints.yaml
 
 # v1.2.7-beta.3
-
 ## 31-01-2019
 
 1. [](#bugfix)
    - Node Modules
 
 # v1.2.7-beta.2
-
 ## 31-01-2019
 
 1. [](#improved)
    - Save-functionality
 
 # v1.2.7-beta.1
-
 ## 31-01-2019
 
 1. [](#new)
@@ -82,14 +77,12 @@
    - Code-formatting
 
 # v1.2.6
-
 ## 18-01-2019
 
 1. [](#improved)
    - Page-linking from Admin to new tab/window
 
 # v1.2.5
-
 ## 17-01-2019
 
 1. [](#improved)
@@ -97,7 +90,6 @@
    - README
 
 # v1.2.4
-
 ## 16-01-2019
 
 1. [](#improved)
@@ -107,21 +99,18 @@
    - Preset theme CSS or paper.css in Print-mode, not both
 
 # v1.2.3
-
 ## 16-01-2019
 
 1. [](#improved)
    - Page-linking from Admin to styled and annotated print-page
 
 # v1.2.2
-
 ## 15-01-2019
 
 1. [](#bugfix)
    - Page-linking from Admin
 
 # v1.2.1
-
 ## 15-01-2019
 
 1. [](#improved)
@@ -133,7 +122,6 @@
    - Fix modular-scale.js calculations and events
 
 # v1.2.0
-
 ## 14-01-2019
 
 1. [](#new)
@@ -149,7 +137,6 @@
    - Various cleanup
 
 # v1.2.0-beta.3
-
 ## 11-01-2019
 
 1. [](#new)
@@ -161,14 +148,12 @@
    - Swap Bootstrap Reboot for Normalize.css
 
 # v1.2.0-beta.2
-
 ## 11-01-2019
 
 1. [](#improved)
    - Breakpoints as array-field
 
 # v1.2.0-beta.1
-
 ## 11-01-2019
 
 1. [](#new)
@@ -178,14 +163,12 @@
    - Purer implementation of Modular Scales
 
 # v1.1.0-beta.7
-
 ## 09-01-2019
 
 1. [](#bugfix)
    - Presentation-shortcode
 
 # v1.1.0-beta.6
-
 ## 09-01-2019
 
 1. [](#new)
@@ -197,7 +180,6 @@
    - Asset groups
 
 # v1.1.0-beta.5
-
 ## 08-01-2019
 
 1. [](#improved)
@@ -211,7 +193,6 @@
    - Cast textsizing-properties as float
 
 # v1.1.0-beta.4
-
 ## 08-01-2019
 
 1. [](#bugfix)
@@ -219,14 +200,12 @@
    - Fix textsizing-application, again
 
 # v1.1.0-beta.3
-
 ## 08-01-2019
 
 1. [](#bugfix)
    - Fix textsizing-application
 
 # v1.1.0-beta.2
-
 ## 08-01-2019
 
 1. [](#bugfix)
@@ -234,7 +213,6 @@
    - Blueprints
 
 # v1.1.0-beta.1
-
 ## 08-01-2019
 
 1. [](#new)
@@ -249,7 +227,6 @@
    - PHP 7 Features
 
 # v1.0.0-beta.2
-
 ## 06-01-2019
 
 1. [](#bugfix)
@@ -257,7 +234,6 @@
    - Content API instantiation
 
 # v1.0.0-beta.1
-
 ## 06-01-2019
 
 1. [](#new)
@@ -270,7 +246,6 @@
    - Token-auth
 
 # v0.0.7
-
 ## 05-01-2019
 
 1. [](#new)
@@ -286,7 +261,6 @@
    - Blueprints and languages
 
 # v0.0.6
-
 ## 29-12-2018
 
 1. [](#new)
@@ -303,7 +277,6 @@
    - Presentation-template
 
 # v0.0.5
-
 ## 27-12-2018
 
 1. [](#new)
@@ -316,7 +289,6 @@
    - Tweaked plugin's CSS
 
 # v0.0.4
-
 ## 27-12-2018
 
 1. [](#new)
@@ -328,7 +300,6 @@
    - Improve template
 
 # v0.0.3
-
 ## 12-12-2018
 
 1. [](#new)
@@ -340,7 +311,6 @@
    - README
 
 # v0.0.2
-
 ## 10-11-2018
 
 1. [](#new)
@@ -356,7 +326,6 @@
    - Started cleaning Utilities class
 
 # v0.0.1
-
 ## 07-11-2018
 
 1. [](#new)
