@@ -157,6 +157,11 @@ class PresentationPlugin extends Plugin
                 $this->grav['twig']->twig_vars['reveal_init'] = $options;
                 $this->grav['twig']->twig_vars['presentation_menu'] = $menu;
                 $this->grav['twig']->twig_vars['presentation_breakpoints'] = $breakpoints;
+                if (isset($config['style']) && !empty($config['style'])) {
+                    $processed = $parser->processStylesData($config['style'], '/', 'presentation');
+                    $style = $processed['style'];
+                    $transport->setStyle('presentation', "{\n$style\n}", 'section');
+                }
                 $grav['assets']->addInlineCss($transport->getStyles(), null, 'presentation');
             }
         }

@@ -266,11 +266,12 @@ class Content implements ContentInterface
             }
         }
         if (!empty($config['styles'])) {
-            $inline = $this->parser->processStylesData(
+            $processed = $this->parser->processStylesData(
                 $config['styles'],
                 $config['route'],
                 $config['id']
             );
+            $inline = ' style="' . $processed['style'] . '"' . $processed['data'];
         }
         if ($this->transport->getClasses($config['id'])) {
             $config['class'] .= ' ' . $this->transport->getClasses($config['id']);

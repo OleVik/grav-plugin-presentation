@@ -108,6 +108,8 @@ breakpoints:
   992: "32"
   1200: "36"
   1600: "40"
+# Styles to use as defaults for Presentations
+style:
 # Options to pass to Reveal.js
 options:
   width: "100%"
@@ -187,7 +189,7 @@ style:
 
 That is, mapping each property to a value, not as a list. The same could be set for any single slide using `[style-color=green]`, as described below. Styles are given precedence by where they appear, so the plugins looks for them in this order:
 
-1. Plugin-settings
+1. Plugin-options
 2. Page FrontMatter
 3. Child page FrontMatter
 4. Page Content (Markdown) as shortcodes

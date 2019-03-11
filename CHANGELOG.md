@@ -1,3 +1,9 @@
+# v1.5.3
+## 11-03-2019
+
+1. [](#improvement)
+   - Allow default styles from plugin options
+
 # v1.5.2
 ## 23-02-2019
 

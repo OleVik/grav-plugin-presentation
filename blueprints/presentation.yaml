@@ -179,7 +179,7 @@ form:
           fields:
             advanced:
               type: section
-              title: PLUGIN_PRESENTATION.ADMIN.ADVANCED.TITLE
+              title: PLUGIN_PRESENTATION.ADMIN.ADVANCED.TAB_TITLE
               underline: true
               fields:
                 header.presentation.content:
@@ -207,5 +207,5 @@ form:
                   data-options@:
                     [
                       '\Grav\Plugin\PresentationPlugin::getClassNamesBlueprintOptions',
-                      "Styles",
+                      "Transport",
                     ]

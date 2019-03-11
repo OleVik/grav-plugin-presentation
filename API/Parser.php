@@ -133,7 +133,10 @@ class Parser implements ParserInterface
                 $inline .= $property . ': ' . $value . ';';
             }
         }
-        return ' style="' . $inline . '"' . $data;
+        return array(
+            'style' => $inline,
+            'data' => $data
+        );
     }
 
     /**

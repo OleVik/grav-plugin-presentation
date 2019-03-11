@@ -1,5 +1,5 @@
 name: Presentation
-version: 1.5.2
+version: 1.5.3
 description: Responsive navigational slideshows with Reveal.js
 icon: arrows-alt
 author:
@@ -93,6 +93,62 @@ form:
               placeholder_key: PLUGIN_PRESENTATION.ADMIN.ADVANCED.BREAKPOINTS.WIDTH.LABEL
               placeholder_value: PLUGIN_PRESENTATION.ADMIN.ADVANCED.BREAKPOINTS.FONT_SIZE.LABEL
               required: true
+        defaults:
+          type: tab
+          title: PLUGIN_PRESENTATION.ADMIN.DEFAULTS.TITLE
+          fields:
+            style.header-font-family:
+              type: text
+              label: PLUGIN_PRESENTATION.ADMIN.STYLE.FONT.HEADER.LABEL
+              description: PLUGIN_PRESENTATION.ADMIN.STYLE.FONT.HEADER.DESCRIPTION
+            style.header-color:
+              type: colorpicker
+              label: PLUGIN_PRESENTATION.ADMIN.STYLE.FONT.HEADER_COLOR.LABEL
+              description: PLUGIN_PRESENTATION.ADMIN.STYLE.FONT.HEADER_COLOR.DESCRIPTION
+            style.block-font-family:
+              type: text
+              label: PLUGIN_PRESENTATION.ADMIN.STYLE.FONT.BLOCK.LABEL
+              description: PLUGIN_PRESENTATION.ADMIN.STYLE.FONT.BLOCK.DESCRIPTION
+            style.block-color:
+              type: colorpicker
+              label: PLUGIN_PRESENTATION.ADMIN.STYLE.FONT.BLOCK_COLOR.LABEL
+              description: PLUGIN_PRESENTATION.ADMIN.STYLE.FONT.BLOCK_COLOR.DESCRIPTION
+            style.background-color:
+              type: colorpicker
+              label: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-COLOR.LABEL
+            style.background-image:
+              type: filepicker
+              folder: 'user@:/pages/images'
+              preview_images: true
+              label: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-IMAGE.LABEL
+              accept:
+                - .png
+                - .jpg
+                - .gif
+                - "image/*"
+            style.background-size:
+              type: select
+              label: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-SIZE.LABEL
+              options:
+                "": PLUGIN_PRESENTATION.ADMIN.COMMON.NONE
+                auto: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-SIZE.OPTIONS.AUTO
+                cover: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-SIZE.OPTIONS.COVER
+                contain: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-SIZE.OPTIONS.CONTAIN
+                initial: PLUGIN_PRESENTATION.ADMIN.COMMON.INITIAL
+                inherit: PLUGIN_PRESENTATION.ADMIN.COMMON.INHERIT
+            style.background-repeat:
+              type: select
+              label: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-REPEAT.LABEL
+              options:
+                "": PLUGIN_PRESENTATION.ADMIN.COMMON.NONE
+                no-repeat: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-REPEAT.OPTIONS.NO-REPEAT
+                repeat: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-REPEAT.OPTIONS.REPEAT
+                repeat-x: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-REPEAT.OPTIONS.REPEAT-X
+                repeat-y: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-REPEAT.OPTIONS.REPEAT-Y
+                space: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-REPEAT.OPTIONS.SPACE
+                round: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-REPEAT.OPTIONS.ROUND
+                initial: PLUGIN_PRESENTATION.ADMIN.COMMON.INITIAL
+                inherit: PLUGIN_PRESENTATION.ADMIN.COMMON.INHERIT
         sync:
           type: tab
           title: PLUGIN_PRESENTATION.ADMIN.SYNC.TITLE

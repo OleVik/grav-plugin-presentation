@@ -60,6 +60,8 @@ en:
           MODIFIER:
             LABEL: Font size modifier
             DESCRIPTION: Multiplies the calculated font size by this amount, lower numbers yield smaller base font sizes, and vice versa.
+      DEFAULTS:
+        TITLE: Defaults
       SYNC:
         TITLE: Synchronization
         SYNC:
@@ -120,6 +122,7 @@ en:
             ROUND: Repeat and stretch
       ADVANCED:
         TITLE: Advanced
+        TAB_TITLE: Presentation Plugin API Options
         SAVE:
           PREFIX: Last Saved
           ASYNC:
@@ -159,8 +162,8 @@ en:
           LABEL: Custom Parser
           DESCRIPTION: Use a custom parser for content.
         STYLES:
-          LABEL: Custom Styles
-          DESCRIPTION: Use a custom styles getter/setter.
+          LABEL: Custom Transport
+          DESCRIPTION: Use a custom getter/setter for transporting data.
         REVEAL:
           TITLE: Reveal.js Options
           LABEL: Settings to pass to Reveal.js.
