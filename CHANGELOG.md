@@ -1,31 +1,35 @@
-# v1.5.3
-## 11-03-2019
+# v1.6.0
+## XX-03-2019
 
-1. [](#improvement)
+1. [](#improved)
    - Allow default styles from plugin options
+   - Blueprints structure, language-strings
+2. [](#bugfix)
+   - Horizontal- and textsizing-option logic
+   - Changelog-formatting
 
 # v1.5.2
 ## 23-02-2019
 
-1. [](#improvement)
+1. [](#improved)
    - Changelog-formatting
 
 # v1.5.1
 ## 23-02-2019
 
-1. [](#improvement)
+1. [](#improved)
    - Do not render custom buttons unless Presentation is initially saved
 
 # v1.5.0
 ## 22-02-2019
 
-1. [](#improvement)
+1. [](#improved)
    - Override blueprints from Theme or user-folder
 
 # v1.4.2
 ## 15-02-2019
 
-1. [](#improvement)
+1. [](#improved)
    - Option for default Shortcode Class
    - Class-parameter for Shortcode
 

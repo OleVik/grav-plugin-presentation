@@ -146,6 +146,11 @@ class PresentationPlugin extends Plugin
                 $transport = $this->getAPIInstance($config['transport']);
                 $parser = $this->getAPIInstance($config['parser'], $transport);
                 $content = $this->getAPIInstance($config['content'], $grav, $config, $parser, $transport);
+                if (isset($config['style']) && !empty($config['style'])) {
+                    $processed = $parser->processStylesData($config['style'], '/', 'presentation');
+                    $style = $processed['style'];
+                    $transport->setStyle('presentation', "{\n$style\n}", 'section');
+                }
                 $tree = $content->buildTree($grav['page']->route());
                 $slides = $content->buildContent($tree);
                 $grav['page']->setRawContent($slides);
@@ -157,11 +162,6 @@ class PresentationPlugin extends Plugin
                 $this->grav['twig']->twig_vars['reveal_init'] = $options;
                 $this->grav['twig']->twig_vars['presentation_menu'] = $menu;
                 $this->grav['twig']->twig_vars['presentation_breakpoints'] = $breakpoints;
-                if (isset($config['style']) && !empty($config['style'])) {
-                    $processed = $parser->processStylesData($config['style'], '/', 'presentation');
-                    $style = $processed['style'];
-                    $transport->setStyle('presentation', "{\n$style\n}", 'section');
-                }
                 $grav['assets']->addInlineCss($transport->getStyles(), null, 'presentation');
             }
         }

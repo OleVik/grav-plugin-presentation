@@ -188,7 +188,14 @@ class Content implements ContentInterface
     public function breakContent(array $page, array $config, array $breaks)
     {
         $header = (array) $page['header'];
-        if (!isset($header['horizontal'])) {
+        $horizontal = false;
+        if (isset($config['horizontal'])) {
+            $horizontal = $config['horizontal'];
+        }
+        if (isset($header['horizontal'])) {
+            $horizontal = $header['horizontal'];
+        }
+        if ($horizontal != true) {
             echo '<section id="' . $page['slug'] . '" ';
             echo 'data-title="' . $page['title'] . '">';
         }
@@ -207,12 +214,25 @@ class Content implements ContentInterface
                     $page['header']->style
                 );
             }
-            if (isset($config['textsizing']) && isset($page['header']->textsize['scale'])) {
-                $config['class'] .= ' textsizing';
+            if (isset($config['textsizing'])) {
+                if (isset($config['textsize']['scale'])) {
+                    $config['class'] .= ' textsizing';
+                    $scale = $config['textsize']['scale'];
+                }
+                if (isset($page['header']->textsize['scale'])) {
+                    $config['class'] .= ' textsizing';
+                    $scale = $page['header']->textsize['scale'];
+                }
+                if (isset($config['textsize']['modifier'])) {
+                    $modifier = (float) $config['textsize']['modifier'];
+                }
+                if (isset($page['header']->textsize['modifier'])) {
+                    $modifier = (float) $page['header']->textsize['modifier'];
+                }
                 $this->parser->setModularScale(
                     $config['id'],
-                    $page['header']->textsize['scale'],
-                    isset($page['header']->textsize['modifier']) ? (float) $page['header']->textsize['modifier'] : null
+                    $scale ?? 1,
+                    $modifier ?? 1
                 );
             }
             if (isset($page['header']->class) && !empty($page['header']->class)) {
@@ -221,17 +241,17 @@ class Content implements ContentInterface
                 }
             }
             if ($hide !== true) {
-                if (isset($header['horizontal']) && $header['horizontal'] == true) {
+                if ($horizontal == true) {
                     echo '<section>';
                 }
                 $this->buildSlide($page, $config, $break);
-                if (isset($header['horizontal']) && $header['horizontal'] == true) {
+                if ($horizontal == true) {
                     echo '</section>';
                 }
             }
             $index++;
         }
-        if (!isset($header['horizontal'])) {
+        if ($horizontal != true) {
             echo '</section>';
         }
     }

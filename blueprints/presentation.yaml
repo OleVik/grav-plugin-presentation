@@ -134,6 +134,18 @@ form:
                     round: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-REPEAT.OPTIONS.ROUND
                     initial: PLUGIN_PRESENTATION.ADMIN.COMMON.INITIAL
                     inherit: PLUGIN_PRESENTATION.ADMIN.COMMON.INHERIT
+                header.horizontal:
+                  type: toggle
+                  label: PLUGIN_PRESENTATION.ADMIN.OPTIONS.HORIZONTAL.LABEL
+                  help: PLUGIN_PRESENTATION.ADMIN.OPTIONS.HORIZONTAL.HELP
+                  description: PLUGIN_PRESENTATION.ADMIN.OPTIONS.HORIZONTAL.DESCRIPTION
+                  highlight: 0
+                  default: 0
+                  options:
+                    1: PLUGIN_PRESENTATION.ADMIN.OPTIONS.HORIZONTAL.OPTIONS.HORIZONTAL
+                    0: PLUGIN_PRESENTATION.ADMIN.OPTIONS.HORIZONTAL.OPTIONS.VERTICAL
+                  validate:
+                    type: bool
         options:
           type: tab
           fields:
@@ -141,6 +153,7 @@ form:
               type: section
               title: PLUGIN_PRESENTATION.ADMIN.COMMON.TITLE
               underline: true
+              ordering@: -1
               fields:
                 header.class:
                   type: selectize
@@ -148,17 +161,6 @@ form:
                   help: PLUGIN_PRESENTATION.ADMIN.OPTIONS.CLASS.HELP
                   validate:
                     type: commalist
-                header.horizontal:
-                  type: toggle
-                  label: PLUGIN_PRESENTATION.ADMIN.OPTIONS.HORIZONTAL.LABEL
-                  help: PLUGIN_PRESENTATION.ADMIN.OPTIONS.HORIZONTAL.HELP
-                  highlight: 0
-                  default: 0
-                  options:
-                    1: PLUGIN_ADMIN.ENABLED
-                    0: PLUGIN_ADMIN.DISABLED
-                  validate:
-                    type: bool
                 header.footer:
                   type: text
                   label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.FOOTER.LABEL

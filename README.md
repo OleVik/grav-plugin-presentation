@@ -110,6 +110,13 @@ breakpoints:
   1600: "40"
 # Styles to use as defaults for Presentations
 style:
+  ...
+# Dynamic text scaling to use as defaults for Presentations
+textsize:
+  scale: string
+  modifier: float
+# Stack slides horizontally or vertically (default), on thematic breaks
+horizontal: false
 # Options to pass to Reveal.js
 options:
   width: "100%"
