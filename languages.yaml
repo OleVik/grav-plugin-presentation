@@ -126,8 +126,8 @@ en:
             SPACE: Repeat without clipping
             ROUND: Repeat and stretch
         JUSTIFY-CONTENT:
-          LABEL: Justify Content
-          HELP: Vertical alignment of elements in slide
+          LABEL: Vertical Alignment
+          HELP: Vertical alignment of elements in slide (using justify-content)
           OPTIONS:
             CENTER: Center
             START: Start
@@ -142,8 +142,8 @@ en:
             SPACE-EVENLY: Space-evenly
             STRETCH: Stretch
         ALIGN-ITEMS:
-          LABEL: Align Items
-          HELP: Horizontal alignment of elements in slide
+          LABEL: Horizontal Alignment
+          HELP: Horizontal alignment of elements in slide (using align-items)
           OPTIONS:
             CENTER: Center
             START: Start

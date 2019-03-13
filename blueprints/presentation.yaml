@@ -190,7 +190,6 @@ form:
               type: section
               title: PLUGIN_PRESENTATION.ADMIN.COMMON.TITLE
               underline: true
-              ordering@: -1
               fields:
                 header.class:
                   type: selectize
