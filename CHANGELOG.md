@@ -1,12 +1,15 @@
 # v1.6.0
 ## XX-03-2019
 
-1. [](#improved)
+1. [](#new)
+   - Alignment-options
+2. [](#improved)
    - Allow default styles from plugin options
    - Blueprints structure, language-strings
-2. [](#bugfix)
+3. [](#bugfix)
    - Horizontal- and textsizing-option logic
    - Changelog-formatting
+   - Remove defaults from blueprints
 
 # v1.5.2
 ## 23-02-2019

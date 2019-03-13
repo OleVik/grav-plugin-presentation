@@ -125,6 +125,37 @@ en:
             REPEAT-Y: Repeat vertically
             SPACE: Repeat without clipping
             ROUND: Repeat and stretch
+        JUSTIFY-CONTENT:
+          LABEL: Justify Content
+          HELP: Vertical alignment of elements in slide
+          OPTIONS:
+            CENTER: Center
+            START: Start
+            END: End
+            FLEX-START: Flex-start
+            FLEX-END: Flex-end
+            LEFT: Left
+            RIGHT: Right
+            NORMAL: Normal
+            SPACE-BETWEEN: Space-between
+            SPACE-AROUND: Space-around
+            SPACE-EVENLY: Space-evenly
+            STRETCH: Stretch
+        ALIGN-ITEMS:
+          LABEL: Align Items
+          HELP: Horizontal alignment of elements in slide
+          OPTIONS:
+            CENTER: Center
+            START: Start
+            END: End
+            FLEX-START: Flex-start
+            FLEX-END: Flex-end
+            SELF-START: Self-start
+            SELF-END: Self-end
+            NORMAL: Normal
+            BASELINE: Baseline
+            FIRST-BASELINE: First Baseline
+            LAST-BASELINE: Last Baseline
       ADVANCED:
         TITLE: Advanced
         TAB_TITLE: Presentation Plugin API Options

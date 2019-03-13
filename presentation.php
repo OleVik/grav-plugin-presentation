@@ -404,7 +404,7 @@ class PresentationPlugin extends Plugin
         $regex = '/Grav\\\\Plugin\\\\PresentationPlugin\\\\API\\\\(?<api>.*)/i';
         $classes = preg_grep($regex, get_declared_classes());
         $matches = preg_grep('/' . $key . '/i', $classes);
-        $options = array();
+        $options = ['' => 'None'];
         foreach ($matches as $match) {
             $match = str_replace('Grav\Plugin\PresentationPlugin\API\\', '', $match);
             $options[$match] = $match;
