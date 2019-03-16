@@ -9,15 +9,29 @@
 @import "./normalize";
 
 /* Responsive breakpoints */
-$breakpoints: (extrasmall: 320px, small: 576px, medium: 768px, large: 992px, extralarge: 1200px, massive: 1600px);
+$breakpoints: (
+  extrasmall: 320px,
+  small: 576px,
+  medium: 768px,
+  large: 992px,
+  extralarge: 1200px,
+  massive: 1600px
+);
 
-@mixin maximizeSize($width: true, $height: true, $widthModifier: '0px', $heightModifier: '0px', $viewportWidth: false, $viewportHeight: false) {
+@mixin maximizeSize(
+  $width: true,
+  $height: true,
+  $widthModifier: "0px",
+  $heightModifier: "0px",
+  $viewportWidth: false,
+  $viewportHeight: false
+) {
   @if ($width) {
     width: calc(100% - #{$widthModifier}) !important;
     min-width: calc(100% - #{$widthModifier}) !important;
     max-width: calc(100% - #{$widthModifier}) !important;
 
-    @if ($viewportWidth=='true') {
+    @if ($viewportWidth== "true") {
       width: calc(100vw - #{$widthModifier}) !important;
       min-width: calc(100vw - #{$widthModifier}) !important;
       max-width: calc(100vw - #{$widthModifier}) !important;
@@ -29,7 +43,7 @@ $breakpoints: (extrasmall: 320px, small: 576px, medium: 768px, large: 992px, ext
     min-height: calc(100% - #{$heightModifier}) !important;
     max-height: calc(100% - #{$heightModifier}) !important;
 
-    @if ($viewportHeight=='true') {
+    @if ($viewportHeight== "true") {
       width: calc(100vh - #{$heightModifier}) !important;
       min-width: calc(100vh - #{$heightModifier}) !important;
       max-width: calc(100vh - #{$heightModifier}) !important;
@@ -40,6 +54,7 @@ $breakpoints: (extrasmall: 320px, small: 576px, medium: 768px, large: 992px, ext
 /* Structure */
 .reveal.overview {
   .slides {
+    z-index: -1;
     section {
       @include maximizeSize(true, true);
 
@@ -81,46 +96,46 @@ $breakpoints: (extrasmall: 320px, small: 576px, medium: 768px, large: 992px, ext
 
   .slides {
     section {
-      @include maximizeSize(true, true, '0px', '0px', true, true);
+      @include maximizeSize(true, true, "0px", "0px", true, true);
 
       section {
         $base: 1.75;
         @include maximizeSize(true, true);
-        padding: #{$base*4}rem #{$base}rem #{$base*2}rem #{$base}rem !important;
+        padding: #{$base * 4}rem #{$base}rem #{$base * 2}rem #{$base}rem !important;
 
         @include media("<extrasmall") {
           $base: 0.5;
-          padding: #{$base*2}rem #{$base}rem #{$base}rem #{$base}rem !important;
+          padding: #{$base * 2}rem #{$base}rem #{$base}rem #{$base}rem !important;
         }
 
         @include media(">=extrasmall") {
           $base: 1;
-          padding: #{$base*2}rem #{$base}rem #{$base}rem #{$base}rem !important;
+          padding: #{$base * 2}rem #{$base}rem #{$base}rem #{$base}rem !important;
         }
 
         @include media(">=small") {
           $base: 1.5;
-          padding: #{$base*3}rem #{$base}rem #{$base*2}rem #{$base}rem !important;
+          padding: #{$base * 3}rem #{$base}rem #{$base * 2}rem #{$base}rem !important;
         }
 
         @include media(">=medium") {
           $base: 1.75;
-          padding: #{$base*4}rem #{$base}rem #{$base*2}rem #{$base}rem !important;
+          padding: #{$base * 4}rem #{$base}rem #{$base * 2}rem #{$base}rem !important;
         }
 
         @include media(">=large") {
           $base: 2;
-          padding: #{$base*4}rem #{$base}rem #{$base*2}rem #{$base}rem !important;
+          padding: #{$base * 4}rem #{$base}rem #{$base * 2}rem #{$base}rem !important;
         }
 
         @include media(">=extralarge") {
           $base: 2.25;
-          padding: #{$base*4}rem #{$base}rem #{$base*2}rem #{$base}rem !important;
+          padding: #{$base * 4}rem #{$base}rem #{$base * 2}rem #{$base}rem !important;
         }
 
         @include media(">=massive") {
           $base: 2.5;
-          padding: #{$base*4}rem #{$base}rem #{$base*2}rem #{$base}rem !important;
+          padding: #{$base * 4}rem #{$base}rem #{$base * 2}rem #{$base}rem !important;
         }
 
         &.start {
@@ -129,12 +144,12 @@ $breakpoints: (extrasmall: 320px, small: 576px, medium: 768px, large: 992px, ext
         }
 
         &.skinny {
-          @include maximizeSize(true, true, '0px', '0px', true, true);
+          @include maximizeSize(true, true, "0px", "0px", true, true);
           padding: 1rem !important;
         }
 
         &.end {
-          @include maximizeSize(true, true, '0px', '0px', true, true);
+          @include maximizeSize(true, true, "0px", "0px", true, true);
           padding: 2rem 2rem !important;
         }
 
@@ -255,21 +270,21 @@ $breakpoints: (extrasmall: 320px, small: 576px, medium: 768px, large: 992px, ext
         h2 {
           $base: 2;
           margin: 0;
-          height: calc(50% - #{$base*3}rem) !important;
-          height: calc(50% - #{$base*3}rem) !important;
-          min-height: calc(50% - #{$base*3}rem) !important;
-          max-height: calc(50% - #{$base*3}rem) !important;
-          @include maximizeSize(true, false, #{$base*2}rem);
-          padding: #{$base*3}rem #{$base}rem 0rem #{$base}rem;
+          height: calc(50% - #{$base * 3}rem) !important;
+          height: calc(50% - #{$base * 3}rem) !important;
+          min-height: calc(50% - #{$base * 3}rem) !important;
+          max-height: calc(50% - #{$base * 3}rem) !important;
+          @include maximizeSize(true, false, #{$base * 2}rem);
+          padding: #{$base * 3}rem #{$base}rem 0rem #{$base}rem;
 
           @include media(">=massive") {
             $base: 5;
-            height: calc(50% - #{$base*3}rem) !important;
-            height: calc(50% - #{$base*3}rem) !important;
-            min-height: calc(50% - #{$base*3}rem) !important;
-            max-height: calc(50% - #{$base*3}rem) !important;
+            height: calc(50% - #{$base * 3}rem) !important;
+            height: calc(50% - #{$base * 3}rem) !important;
+            min-height: calc(50% - #{$base * 3}rem) !important;
+            max-height: calc(50% - #{$base * 3}rem) !important;
             @include maximizeSize(true, false, #{$base}rem);
-            padding: #{$base*3}rem #{$base}rem 0rem #{$base}rem;
+            padding: #{$base * 3}rem #{$base}rem 0rem #{$base}rem;
           }
         }
 
@@ -278,7 +293,7 @@ $breakpoints: (extrasmall: 320px, small: 576px, medium: 768px, large: 992px, ext
             height: calc(50% - 4rem) !important;
             min-height: calc(50% - 4rem) !important;
             max-height: calc(50% - 4rem) !important;
-            @include maximizeSize(true, false, '4rem');
+            @include maximizeSize(true, false, "4rem");
             margin: 0;
             padding: 2rem;
           }
@@ -310,7 +325,7 @@ $breakpoints: (extrasmall: 320px, small: 576px, medium: 768px, large: 992px, ext
   font-size: 4rem;
   font-family: Helvetica, sans-serif;
   background: white;
-  border: 1px solid #9E9E9C;
+  border: 1px solid #9e9e9c;
   position: absolute;
   right: 0.25rem;
   bottom: 0.25rem;

@@ -333,7 +333,7 @@ This plugin follows PSR-1, PSR-2, and PEAR coding standards (use CodeSniffer), a
 
 ### Style-compilation
 
-Use a SCSS-compiler, like [LibSass](https://github.com/sass/libsass), eg. [node-sass](https://github.com/sass/node-sass) and compiled `scss/presentation.scss` to `css/presentation.css` in the theme-folder. For example: `node-sass --watch --source-map true scss/presentation.scss css/presentation.css`. Requires Node-modules to be installed first.
+Use a SCSS-compiler, like [LibSass](https://github.com/sass/libsass), eg. [node-sass](https://github.com/sass/node-sass) and compiled `scss/presentation.scss` to `css/presentation.css` in the theme-folder. For example: `node-sass --watch --source-map true --output-style compressed scss/presentation.scss css/presentation.css`. Requires Node-modules to be installed first.
 
 ### Extending
 

@@ -1,3 +1,10 @@
+# v1.6.1
+## 16-03-2019
+
+1. [](#bugfix)
+   - Compress CSS
+   - Slides ordering with z-index
+
 # v1.6.0
 ## 13-03-2019
 

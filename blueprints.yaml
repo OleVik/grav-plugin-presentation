@@ -1,5 +1,5 @@
 name: Presentation
-version: 1.6.0
+version: 1.6.1
 description: Responsive navigational slideshows with Reveal.js
 icon: arrows-alt
 author:
@@ -220,7 +220,6 @@ form:
                   help: PLUGIN_PRESENTATION.ADMIN.OPTIONS.HORIZONTAL.HELP
                   description: PLUGIN_PRESENTATION.ADMIN.OPTIONS.HORIZONTAL.DESCRIPTION
                   highlight: 0
-                  default: 0
                   options:
                     1: PLUGIN_PRESENTATION.ADMIN.OPTIONS.HORIZONTAL.OPTIONS.HORIZONTAL
                     0: PLUGIN_PRESENTATION.ADMIN.OPTIONS.HORIZONTAL.OPTIONS.VERTICAL
