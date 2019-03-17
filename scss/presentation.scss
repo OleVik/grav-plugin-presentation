@@ -54,7 +54,6 @@ $breakpoints: (
 /* Structure */
 .reveal.overview {
   .slides {
-    z-index: -1;
     section {
       @include maximizeSize(true, true);
 
@@ -66,6 +65,7 @@ $breakpoints: (
 }
 
 .reveal:not(.overview) {
+  z-index: -1;
   @include media("<extrasmall") {
     font-size: 16px;
   }
