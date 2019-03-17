@@ -1,3 +1,9 @@
+# v1.6.3
+## 17-03-2019
+
+1. [](#bugfix)
+   - Correct ordering-query in CSS
+
 # v1.6.2
 ## 17-03-2019
 
