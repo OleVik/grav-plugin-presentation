@@ -149,7 +149,7 @@ class PresentationPlugin extends Plugin
                 if (isset($config['style']) && !empty($config['style'])) {
                     $processed = $parser->processStylesData($config['style'], '/', 'presentation');
                     $style = $processed['style'];
-                    $transport->setStyle('presentation', "{\n$style\n}", 'section');
+                    $transport->setStyle('presentation', "{\n$style\n}");
                 }
                 $tree = $content->buildTree($grav['page']->route());
                 $slides = $content->buildContent($tree);

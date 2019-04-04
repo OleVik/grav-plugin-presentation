@@ -94,7 +94,6 @@ $breakpoints: (
   }
 
   .slides {
-    z-index: -1;
     section {
       @include maximizeSize(true, true, "0px", "0px", true, true);
 

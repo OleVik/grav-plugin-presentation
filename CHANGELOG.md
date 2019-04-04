@@ -1,3 +1,10 @@
+# v1.6.4
+## 04-04-2019
+
+1. [](#bugfix)
+   - Move plugin default-styles to top-level element
+   - Revert ordering-query in CSS
+
 # v1.6.3
 ## 17-03-2019
 
