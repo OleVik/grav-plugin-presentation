@@ -26,7 +26,7 @@
           {% if uri.query('theme') == 'preset' %}
             {% do assets.addCss('user://plugins/presentation/node_modules/reveal.js/css/theme/' ~ config.plugins['presentation'].theme ~ '.css', {'group': 'presentation'}) %}
           {% else %}
-            {% do assets.addCss('plugin://presentation/node_modules/reveal.js/css/print/paper.css', {'group': 'presentation'}) %}
+            {% do assets.addCss('plugin://presentation/css/paper.css', {'group': 'presentation'}) %}
           {% endif %}
           <style type="text/css">
           .reveal.print {
