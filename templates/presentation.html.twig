@@ -29,20 +29,18 @@
             {% do assets.addCss('plugin://presentation/node_modules/reveal.js/css/print/paper.css', {'group': 'presentation'}) %}
           {% endif %}
           <style type="text/css">
-          @media print {
-            .reveal.print {
-              background: unset !important;
-            }
-            .reveal.print .slides section {
-              color: black !important;
-            }
-            .reveal.print embed, iframe, video, .pause-overlay, #snackbar {
-              display: none;
-            }
-            .reveal.print pre code {
-              padding: 0 !important;
-              border: 0 !important;
-            }
+          .reveal.print {
+            background: unset !important;
+          }
+          .reveal.print .slides section {
+            color: black !important;
+          }
+          .reveal.print embed, iframe, video, .pause-overlay, #snackbar {
+            display: none;
+          }
+          .reveal.print pre code {
+            padding: 0 !important;
+            border: 0 !important;
           }
           </style>
         {% endif %}
