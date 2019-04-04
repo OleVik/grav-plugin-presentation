@@ -28,7 +28,7 @@
           {% else %}
             {% do assets.addCss('plugin://presentation/node_modules/reveal.js/css/print/paper.css', {'group': 'presentation'}) %}
           {% endif %}
-          {% do assets.addInlineCss('#presentation {background: unset;}embed, iframe, video, .pause-overlay, #snackbar {display: none;}.reveal pre code {padding: 0 !important;border: 0 !important;}', {'media': 'print'}) %}
+          {% do assets.addInlineCss('#presentation {background: unset !important;}#presentation .slides section {color: black !important;}embed, iframe, video, .pause-overlay, #snackbar {display: none;}.reveal pre code {padding: 0 !important;border: 0 !important;}', {'media': 'print'}) %}
         {% endif %}
       {% endif %}
       {% if config.plugins['presentation'].plugin_css and uri.query('print-pdf') != 'true' %}
