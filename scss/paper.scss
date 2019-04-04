@@ -1,13 +1,14 @@
 .reveal.print {
   html {
-    background: #fff;
+    background: #ffffff;
     width: auto;
     height: auto;
     overflow: visible;
   }
   body {
-    background: #fff;
+    background: #ffffff;
     font-size: 20pt;
+    font-family: Georgia, "Times New Roman", Times, serif !important;
     width: auto;
     height: auto;
     border: 0;
@@ -32,8 +33,7 @@
   li,
   div {
     font-size: 20pt !important;
-    font-family: Georgia, "Times New Roman", Times, serif !important;
-    color: #000;
+    color: #000000;
   }
   h1,
   h2,
@@ -41,12 +41,11 @@
   h4,
   h5,
   h6 {
-    color: #000 !important;
+    color: #000000 !important;
     height: auto;
     line-height: normal;
     font-family: Georgia, "Times New Roman", Times, serif !important;
-    text-shadow: 0 0 0 #000 !important;
-    text-align: left;
+    text-shadow: 0 0 0 #000000 !important;
     letter-spacing: normal;
   }
   h1 {
@@ -71,7 +70,7 @@
   }
   a:link,
   a:visited {
-    color: #000 !important;
+    color: #000000 !important;
     font-weight: bold;
     text-decoration: underline;
   }
@@ -86,7 +85,6 @@
     display: block;
     overflow: visible;
     margin: 0;
-    text-align: left !important;
   }
   .reveal pre,
   .reveal table {
@@ -97,7 +95,7 @@
     pre {
       code {
         padding: 20px;
-        border: 1px solid #ddd;
+        border: 1px solid #dddddd;
       }
     }
     blockquote {
@@ -115,7 +113,6 @@
       zoom: 1 !important;
       overflow: visible !important;
       display: block !important;
-      text-align: left !important;
       -webkit-perspective: none;
       -moz-perspective: none;
       -ms-perspective: none;
