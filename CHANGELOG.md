@@ -4,6 +4,7 @@
 1. [](#bugfix)
    - Move plugin default-styles to top-level element
    - Revert ordering-query in CSS
+   - Print CSS
 
 # v1.6.3
 ## 17-03-2019
