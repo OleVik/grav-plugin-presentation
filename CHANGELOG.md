@@ -1,5 +1,5 @@
 # v1.6.4
-## 05-04-2019
+## 06-04-2019
 
 1. [](#improved)
    - Plugin default style specificity

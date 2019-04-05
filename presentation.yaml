@@ -44,10 +44,3 @@ options:
   history: "true"
   display: "flex"
   pdfSeparateFragments: false
-style:
-  header-font-family: "GillSans,'Gill Sans MT',Arial"
-  header-color: "#ffffff"
-  block-font-family: "GillSans,'Gill Sans MT',Arial"
-  block-color: "#ffffff"
-  background-color: "#16161d"
-  justify-content: center
