@@ -1,7 +1,9 @@
 # v1.6.4
 ## 05-04-2019
 
-1. [](#bugfix)
+1. [](#improved)
+   - Plugin default style specificity
+2. [](#bugfix)
    - Move plugin default-styles to top-level element
    - Revert ordering-query in CSS
    - Print: CSS, reinitialize background images

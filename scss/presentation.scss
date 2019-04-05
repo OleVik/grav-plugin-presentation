@@ -187,13 +187,13 @@ $breakpoints: (
 /* Style */
 .reveal,
 .reveal.center {
+  align-items: center;
+  justify-content: flex-start;
   .slides {
     section {
       section {
         display: flex;
         box-sizing: border-box;
-        align-items: center;
-        justify-content: flex-start;
         flex-direction: column;
         font-size: 2rem;
 
