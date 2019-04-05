@@ -118,6 +118,28 @@
             setInterval(initClock, 1000);
           });
         }
+        if (findGetParameter('print-pdf') == 'true') {
+          Reveal.addEventListener('ready', function(event) {
+            var slides = document.querySelectorAll('.reveal.print .slides > section');
+            for (var i = 0; i < slides.length; i++) {
+              if (slides[i].querySelector('section')) {
+                slides[i].style.background = "initial";
+                slides[i].style.backgroundPosition = "50% 50%";
+                slides[i].style.backgroundRepeat = "no-repeat";
+                if (slides[i].querySelector('section').dataset.backgroundImage) {
+                  slides[i].style.backgroundImage = "url(" + slides[i].querySelector('section').dataset.backgroundImage + ")";
+                }
+                if (slides[i].querySelector('section').dataset.backgroundSize) {
+                  slides[i].style.backgroundSize = slides[i].querySelector('section').dataset.backgroundSize;
+                }
+                if (slides[i].querySelector('section').dataset.backgroundColor) {
+                  slides[i].style.backgroundColor = slides[i].querySelector('section').dataset.backgroundColor;
+                }
+              }
+                
+            }
+          });
+        }
       }, false);
       </script>
         {% if config.plugins['presentation'].transition %}
