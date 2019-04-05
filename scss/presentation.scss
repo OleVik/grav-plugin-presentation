@@ -190,9 +190,12 @@ $breakpoints: (
   align-items: center;
   justify-content: flex-start;
   .slides {
+    justify-content: inherit;
     section {
+      justify-content: inherit;
       section {
         display: flex;
+        justify-content: inherit;
         box-sizing: border-box;
         flex-direction: column;
         font-size: 2rem;
