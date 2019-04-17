@@ -1,6 +1,4 @@
 # Presentation Plugin
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FOleVik%2Fgrav-plugin-presentation.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FOleVik%2Fgrav-plugin-presentation?ref=badge_shield)
-
 
 The **Presentation** Plugin is an extension for [Grav CMS](http://github.com/getgrav/grav), and provides a simple way of creating fullscreen slideshows that can be navigated two-dimensionally, using the [Reveal.js](https://github.com/hakimel/reveal.js/)-library.
 
