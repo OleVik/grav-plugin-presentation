@@ -15,8 +15,6 @@
 namespace Grav\Plugin\PresentationPlugin\API;
 
 use Grav\Common\Utils;
-use Grav\Plugin\PresentationPlugin\API\Parser;
-use Grav\Plugin\PresentationPlugin\API\Transport;
 use Michelf\SmartyPants;
 
 /**

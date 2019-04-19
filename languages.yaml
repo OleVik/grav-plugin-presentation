@@ -46,6 +46,9 @@ en:
             HORIZONTAL: Horizontally
             VERTICAL: Vertically
         ASSETS:
+          ALL:
+            LABEL: Load all assets
+            DESCRIPTION: "Load all registered CSS and JS from Grav into presentation.html.twig's assets"
           THEME:
             LABEL: Theme
             DESCRIPTION: "Reveal.js theme to use."

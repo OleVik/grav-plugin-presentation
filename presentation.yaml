@@ -3,6 +3,7 @@ theme: moon
 order:
   by: folder
   dir: asc
+all_assets: false
 theme_css: true
 builtin_css: true
 builtin_js: true

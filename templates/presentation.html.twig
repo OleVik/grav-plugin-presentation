@@ -159,7 +159,7 @@
       {% do assets.addJs('plugin://presentation/node_modules/axios/dist/axios.min.js', {'group': 'presentation'}) %}
       {% do assets.addJs('plugin://presentation/js/poll.js', {'group': 'bottom'}) %}
     {% endif %}
-    {% if config.system.debugger.enabled %}
+    {% if config.plugins['presentation'].all_assets or config.system.debugger.enabled %}
       {{ assets.css() }}
       {{ assets.js() }}
     {% endif %}

@@ -14,7 +14,9 @@
 
 namespace Grav\Plugin\PresentationPlugin\API;
 
+use Grav\Common\Uri;
 use Grav\Common\Utils;
+use Grav\Plugin\PresentationPlugin\Utilities;
 
 /**
  * Parser API
@@ -39,10 +41,12 @@ class Parser implements ParserInterface
     /**
      * Instantiate Parser API
      *
+     * @param array     $config    Plugin configuration
      * @param Transport $transport Transport API
      */
-    public function __construct($transport)
+    public function __construct($config, $transport)
     {
+        $this->config = $config;
         $this->transport = $transport;
     }
 
@@ -115,11 +119,25 @@ class Parser implements ParserInterface
         $inline = $data = '';
         foreach ($styles as $property => $value) {
             if ($property == 'background-image') {
-                $inline .= $property . ': url(' . $route . '/' . $value . ');';
+                if (!Uri::isValidUrl($value)) {
+                    $locations = array(
+                        '',
+                        'user/pages',
+                        'user/pages/images',
+                    );
+                    $locations = Utilities::explodeFileLocations($locations, GRAV_ROOT, '/', '/');
+                    $file = Utilities::fileFinder($value, $locations);
+                    $file = str_ireplace(GRAV_ROOT, '', $file);
+                    $value = $this->config['base_url'] . $file;
+                }
+                $inline .= $property . ': url(' . $value . ');';
             } elseif (Utils::startsWith($property, 'data')) {
                 $data .= ' ' . $property . '="' . $value . '"';
                 if ($property == 'data-textsize-scale') {
                     $this->transport->setClass($id, 'textsizing');
+                }
+                if ($property == 'data-background-iframe') {
+                    $data .= ' data-background-interactive';
                 }
             } elseif ($property == 'header-font-family') {
                 $this->transport->setStyle($id, "{\nfont-family:$value;\n}", 'h1,h2,h3,h4,h5,h6');

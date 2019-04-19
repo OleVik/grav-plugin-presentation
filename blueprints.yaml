@@ -52,6 +52,15 @@ form:
               options:
                 asc: PLUGIN_PRESENTATION.ADMIN.COMMON.ORDER.DIR.OPTIONS.ASC
                 desc: PLUGIN_PRESENTATION.ADMIN.COMMON.ORDER.DIR.OPTIONS.DESC
+            all_assets:
+              type: toggle
+              label: PLUGIN_PRESENTATION.ADMIN.OPTIONS.ASSETS.ALL.LABEL
+              description: PLUGIN_PRESENTATION.ADMIN.OPTIONS.ASSETS.ALL.DESCRIPTION
+              options:
+                1: PLUGIN_ADMIN.ENABLED
+                0: PLUGIN_ADMIN.DISABLED
+              validate:
+                type: bool
             theme_css:
               type: toggle
               label: PLUGIN_PRESENTATION.ADMIN.OPTIONS.ASSETS.THEME_CSS.LABEL

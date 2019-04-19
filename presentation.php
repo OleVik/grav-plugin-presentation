@@ -136,6 +136,7 @@ class PresentationPlugin extends Plugin
         $config = $this->config();
         if ($config['enabled'] && $grav['page']->template() == 'presentation') {
             if (!isset($this->grav['twig']->twig_vars['reveal_init'])) {
+                $config['base_url'] = $this->grav['uri']->rootUrl(true);
                 $header = (array) $grav['page']->header();
                 if (isset($header['presentation'])) {
                     $config = Utils::arrayMergeRecursiveUnique(
@@ -144,7 +145,7 @@ class PresentationPlugin extends Plugin
                     );
                 }
                 $transport = $this->getAPIInstance($config['transport']);
-                $parser = $this->getAPIInstance($config['parser'], $transport);
+                $parser = $this->getAPIInstance($config['parser'], $config, $transport);
                 $content = $this->getAPIInstance($config['content'], $grav, $config, $parser, $transport);
                 if (isset($config['style']) && !empty($config['style'])) {
                     $processed = $parser->processStylesData($config['style'], '/', 'presentation');
@@ -220,6 +221,10 @@ class PresentationPlugin extends Plugin
     /**
      * Handle Poll API
      *
+     * @param [type] $uri
+     * @param [type] $page
+     * @param [type] $config
+     *
      * @return void
      */
     public function handlePollAPI($uri, $page, $config)
@@ -279,8 +284,8 @@ class PresentationPlugin extends Plugin
      */
     public function twigBaseUrl()
     {
-        $uri = $this->grav['uri'];
-        $this->grav['twig']->twig_vars['presentation_base_url'] = $uri->rootUrl(true);
+        $uri = $this->grav['uri']->rootUrl(true);
+        $this->grav['twig']->twig_vars['presentation_base_url'] = $uri;
     }
 
     /**
@@ -453,7 +458,7 @@ class PresentationPlugin extends Plugin
         if (!empty($shortcodes)) {
             foreach ($shortcodes as $shortcode) {
                 $replace = $twig->processTemplate(
-                    'partials/presentation_iframe.html.twig', 
+                    'partials/presentation_iframe.html.twig',
                     [
                         'src' => trim($shortcode['src'], '/'),
                         'presentation_base_url' => $uri->rootUrl(true),

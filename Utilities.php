@@ -33,18 +33,17 @@ class Utilities
     /**
      * Search for a file in multiple locations
      *
-     * @param string $file         Filename.
-     * @param string $ext          File extension.
-     * @param array  ...$locations List of paths.
+     * @param string $file      Filename.
+     * @param array  $locations List of folders.
      *
      * @return string
      */
-    public static function fileFinder(string $file, string $ext, array ...$locations)
+    public static function fileFinder(string $file, array $locations)
     {
         $return = false;
         foreach ($locations as $location) {
-            if (file_exists($location . '/' . $file . $ext)) {
-                $return = $location . '/' . $file . $ext;
+            if (file_exists($location . '/' . $file)) {
+                $return = $location . '/' . $file;
                 break;
             }
         }
@@ -77,6 +76,29 @@ class Utilities
         } else {
             return false;
         }
+    }
+
+    /**
+     * Join variations of strings to test locations
+     *
+     * @param array  $array  Items to iterate through.
+     * @param string $base   Root path.
+     * @param string $prefix Base prefix.
+     * @param string $affix  Base affix.
+     *
+     * @return array
+     */
+    public static function explodeFileLocations(array $array, string $base, string $prefix, string $affix)
+    {
+        $return = array();
+        foreach ($array as $entry) {
+            $return[] = $entry;
+            $return[] = $base . $entry;
+            $return[] = $prefix . $base . $entry;
+            $return[] = $base . $affix . $entry;
+            $return[] = $prefix . $base . $affix . $entry;
+        }
+        return $return;
     }
 
     /**
@@ -182,7 +204,7 @@ class Utilities
     }
 
     /**
-     * Authorize access with a token
+     * Authorize access with a token in GET-parameter
      *
      * @param string $token Token to validate against.
      *
