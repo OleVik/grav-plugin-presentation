@@ -1,8 +1,14 @@
-# v1.6.6
+# v1.6.7
 ## XX-05-2019
 
 1. [](#improved)
    - Box-sixing, margins for blockquote
+
+# v1.6.6
+## 20-04-2019
+
+2. [](#new)
+   - Version
 
 # v1.6.5
 ## 19-04-2019
