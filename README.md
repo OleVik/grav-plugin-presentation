@@ -343,12 +343,6 @@ As demonstrated by the `content`, `parser`, and `transport` options above, you c
 
 The plugin searches for `presentation.yaml` and `slide.yaml` in the current theme's blueprints-folder, and then user's blueprints-folder, to override the Plugin's own Page-blueprints. With you can use your Theme or Skeleton to create custom blueprints for this Page Types.
 
-## TODO
-
-- Include/exclude per-page option from DirectoryListing
-- Scaling for square, 4:3 ("truncated"), 16:9 (normal widescreen) - should height be taken into account? Not applicable with regular breakpoints and Transport application
-- Safari: Images are too wide - no obvious reason as to why, other than Safari
-
 ## Credits
 
 - Grav [presentation](https://github.com/OleVik/grav-plugin-presentation)-plugin is written by [Ole Vik](https://github.com/OleVik)
@@ -356,7 +350,6 @@ The plugin searches for `presentation.yaml` and `slide.yaml` in the current them
 - Both are MIT-licensed
 - Core development financed by [UiB](https://www.uib.no/), Save Content Functionality sponsored by [Paul Hibbitts](https://twitter.com/hibbittsdesign)
 - Special thanks to [Paul Hibbitts](https://twitter.com/hibbittsdesign) for extensive testing
-
 
 ## License
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FOleVik%2Fgrav-plugin-presentation.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FOleVik%2Fgrav-plugin-presentation?ref=badge_large)

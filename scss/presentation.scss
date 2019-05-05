@@ -51,6 +51,10 @@ $breakpoints: (
   }
 }
 
+* {
+  box-sizing: border-box;
+}
+
 /* Structure */
 .reveal.overview {
   .slides {
@@ -177,7 +181,7 @@ $breakpoints: (
         }
 
         blockquote {
-          margin: 0.75rem;
+          margin: 0.75rem auto;
         }
       }
     }
