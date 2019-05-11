@@ -81,7 +81,7 @@ class PresentationPlugin extends Plugin
         include_once __DIR__ . '/API/TransportInterface.php';
         include_once __DIR__ . '/API/Transport.php';
         include_once __DIR__ . '/Utilities.php';
-        if ($this->isAdmin() && isset($this->config->get('plugins')['admin'])) {
+        if ($this->isAdmin() && $this->config->get('plugins.admin')) {
             $this->enable(
                 [
                     'onPagesInitialized' => ['handleAPI', 0],

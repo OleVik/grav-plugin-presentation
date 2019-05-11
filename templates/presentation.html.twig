@@ -110,6 +110,12 @@
       <script type="text/javascript">
       window.addEventListener('load', function(event) {
         Reveal.initialize(reveal_init);
+        Reveal.addEventListener('ready', function( event ) {
+          elevateIframe(event)
+        });
+        Reveal.addEventListener('slidechanged', function( event ) {
+          elevateIframe(event)
+        });
         if (findGetParameter('admin') == 'true') {
           Reveal.addEventListener('ready', function(event) {
             var body = document.getElementById('top');

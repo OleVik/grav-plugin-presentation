@@ -1,3 +1,13 @@
+# v1.7.0-beta.1
+## 11-05-2019
+
+1. [](#bugfix)
+   - Shortcode-parameters
+2. [](#improved)
+   - Handle iFrame-interaction
+   - README: Backgrounds
+   - README: Shortcode-parameters
+
 # v1.6.8
 ## 11-05-2019
 

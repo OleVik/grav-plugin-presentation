@@ -71,7 +71,7 @@ class Parser implements ParserInterface
         if (!empty($matches)) {
             foreach ($matches as $match) {
                 $name = $match['name'];
-                $value = $match['bbCode'];
+                $value = trim($match['bbCode'], '"');
                 $content = str_replace($match[0], '', $content);
                 if (Utils::startsWith($name, 'class')) {
                     $return['class'] = $value;
@@ -135,9 +135,6 @@ class Parser implements ParserInterface
                 $data .= ' ' . $property . '="' . $value . '"';
                 if ($property == 'data-textsize-scale') {
                     $this->transport->setClass($id, 'textsizing');
-                }
-                if ($property == 'data-background-iframe') {
-                    $data .= ' data-background-interactive';
                 }
             } elseif ($property == 'header-font-family') {
                 $this->transport->setStyle($id, "{\nfont-family:$value;\n}", 'h1,h2,h3,h4,h5,h6');

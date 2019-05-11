@@ -237,7 +237,7 @@ If configured with `shortcodes: true` any section or slide can use shortcodes to
 
 If the shortcode is found and applied, it is stripped from the further evaluated content. This method uses regular expressions for speed, and takes precedence over plugin- or page-defined `styles`.
 
-**Note**: The syntax is restricted to `[style-property=value]`. Quotes or other unexpected characters not conforming to alphanumerics or dashes will make the expression fail to pick up the shortcode. The `style-property` or `value` must basically conform to the [a-zA-Z0-9-]+ regular expression, separated by an equal-character (`=`) and wrapped in square brackets (`[]`). For testing, use [Regex101](https://regex101.com/r/GlH65o/3).
+**Note**: The syntax is restricted to `[style-property=value]`. Unexpected characters not conforming to alphanumerics or dashes can make the expression fail to pick up the shortcode. The `style-property` or `value` must basically conform to the [a-zA-Z0-9-]+ regular expression, separated by an equal-character (`=`) and wrapped in square brackets (`[]`). For testing, use [Regex101](https://regex101.com/r/GlH65o/3). **However, you may find it necessary to wrap the value in double quotes for the parser to understand it.**
 
 ##### Center content
 
@@ -250,9 +250,16 @@ style:
 
 Or the shortcode `[style-justify-content=center]` to an individual slide.
 
-#### Full background image or video with Reveal.js, through data-attributres
+#### Full background image, video, or website with Reveal.js, through data-attributres
 
-Reveal.js supports easy usage of background images or videos for slides, with their [Slide backgrounds](https://github.com/hakimel/reveal.js/#slide-backgrounds). As well as inline styles through shortcodes, any property that begins with `data` is passed as a data-attribute to the slide, so you can do things like add a background video:
+Reveal.js supports easy usage of background images, videos, or websites for slides, with their [Slide backgrounds](https://github.com/hakimel/reveal.js/#slide-backgrounds). As well as inline styles through shortcodes, any property that begins with `data` is passed as a data-attribute to the slide, so you can do things like add a background image:
+
+```
+[data-background-image=https://upload.wikimedia.org/wikipedia/commons/5/50/Sylvilagus_bachmani_01035t.JPG]
+[data-background-size=contain]
+```
+
+Background video:
 
 ```
 [data-background-video=https://dl3.webmfiles.org/big-buck-bunny_trailer.webm]
@@ -260,6 +267,23 @@ Reveal.js supports easy usage of background images or videos for slides, with th
 [data-background-video-muted=true]
 [data-background-size=contain]
 ```
+
+Background website:
+
+```
+[data-background-iframe=https://en.wikipedia.org/wiki/Rabbit]
+```
+
+Foreground (interactive) website:
+
+```
+[data-background-iframe=https://en.wikipedia.org/wiki/Rabbit]
+[data-background-interactive]
+```
+
+When using `data-background-interactive`, the iFrame can be interacted with. Therefore you must manually click the control arrows of the presentation to navigate away from this slide. Slides with background iFrames always use the full width and height of the browser window.
+
+**Note**: It may be necessary to wrap the value/parameter of the shortcode in double quotes, like `[data-background-iframe="https://en.wikipedia.org/wiki/Rabbit"]`, for it to work properly.
 
 ### Injecting Twig
 

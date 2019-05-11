@@ -90,8 +90,28 @@ function getClosest(number, array) {
 /**
  * Get Slides
  */
-function getSlides(target) {
+function getSlides(target = ".slides section section") {
   return document.querySelectorAll(target);
+}
+
+function elevateIframe(event) {
+  if (
+    "backgroundIframe" in event.currentSlide.dataset &&
+    "backgroundInteractive" in event.currentSlide.dataset &&
+    event.currentSlide.dataset.backgroundIframe.length > 0
+  ) {
+    document
+      .querySelector(".reveal .backgrounds")
+      .style.setProperty("z-index", "2");
+    document
+      .querySelector(".reveal .controls")
+      .style.setProperty("z-index", "3");
+  } else {
+    document
+      .querySelector(".reveal .backgrounds")
+      .style.removeProperty("z-index");
+    document.querySelector(".reveal .controls").style.removeProperty("z-index");
+  }
 }
 
 /* If printing, clear color and background*/
@@ -99,13 +119,10 @@ window.addEventListener(
   "load",
   function(event) {
     if (findGetParameter("print-pdf")) {
-      Array.prototype.forEach.call(
-        getSlides(".slides section section"),
-        function(element) {
-          element.style.setProperty("color", "unset", "important");
-          element.style.setProperty("background", "unset", "important");
-        }
-      );
+      Array.prototype.forEach.call(getSlides(), function(element) {
+        element.style.setProperty("color", "unset", "important");
+        element.style.setProperty("background", "unset", "important");
+      });
     }
   },
   false
