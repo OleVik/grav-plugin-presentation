@@ -81,7 +81,7 @@ class PresentationPlugin extends Plugin
         include_once __DIR__ . '/API/TransportInterface.php';
         include_once __DIR__ . '/API/Transport.php';
         include_once __DIR__ . '/Utilities.php';
-        if ($this->isAdmin()) {
+        if ($this->isAdmin() && isset($this->config->get('plugins')['admin'])) {
             $this->enable(
                 [
                     'onPagesInitialized' => ['handleAPI', 0],
@@ -134,7 +134,10 @@ class PresentationPlugin extends Plugin
     {
         $grav = $this->grav;
         $config = $this->config();
-        if ($config['enabled'] && $grav['page']->template() == 'presentation') {
+        if (!$config['enabled']) {
+            return;
+        }
+        if ($grav['page']->template() == 'presentation' || $grav['page']->template() == 'slide') {
             if (!isset($this->grav['twig']->twig_vars['reveal_init'])) {
                 $config['base_url'] = $this->grav['uri']->rootUrl(true);
                 $header = (array) $grav['page']->header();
@@ -175,18 +178,21 @@ class PresentationPlugin extends Plugin
      */
     public function handleAPI()
     {
-        $adminRoute = $this->config->get('plugins')['admin']['route'];
         $uri = $this->grav['uri'];
         $page = $this->grav['page'];
         $config = $this->config();
+        $plugins = $this->config->get('plugins');
         if ($uri->path() == '/' . $config['api_route']) {
             if ($_GET['action'] == 'poll') {
                 $this->handlePollAPI($uri, $page, $config);
             }
         }
-        if ($uri->path() == $adminRoute . '/' . $config['api_route']) {
-            if ($_GET['action'] == 'save') {
-                $this->handleSaveAPI();
+        if (isset($plugins['admin']) && $plugins['admin']['enabled'] == true) {
+            $adminRoute = $this->config->get('plugins')['admin']['route'];
+            if ($uri->path() == $adminRoute . '/' . $config['api_route']) {
+                if ($_GET['action'] == 'save') {
+                    $this->handleSaveAPI();
+                }
             }
         }
     }

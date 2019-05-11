@@ -12,6 +12,51 @@ form:
         content:
           type: tab
           fields:
+            links:
+              type: presentation_button_bar
+              ordering@: content
+              fields:
+                view:
+                  type: presentation_dropdown
+                  ordering@: links
+                  fields:
+                    view:
+                      label: PLUGIN_PRESENTATION.ADMIN.LINKS.VIEW
+                      mode: view
+                    view_notes:
+                      label: PLUGIN_PRESENTATION.ADMIN.LINKS.VIEW_NOTES
+                      mode: view_notes
+                speaker:
+                  type: presentation_dropdown
+                  ordering@: view
+                  fields:
+                    speaker:
+                      label: PLUGIN_PRESENTATION.ADMIN.LINKS.SPEAKER
+                      mode: admin
+                    speaker_notes:
+                      label: PLUGIN_PRESENTATION.ADMIN.LINKS.SPEAKER_NOTES
+                      mode: admin_notes
+                print:
+                  type: presentation_dropdown
+                  ordering@: speaker
+                  fields:
+                    print:
+                      label: PLUGIN_PRESENTATION.ADMIN.LINKS.PRINT
+                      mode: print
+                    print_notes:
+                      label: PLUGIN_PRESENTATION.ADMIN.LINKS.PRINT_NOTES
+                      mode: print_notes
+                    print_styled:
+                      label: PLUGIN_PRESENTATION.ADMIN.LINKS.PRINT_STYLED
+                      mode: print_styled
+                    print_styled_notes:
+                      label: PLUGIN_PRESENTATION.ADMIN.LINKS.PRINT_STYLED_NOTES
+                      mode: print_styled_notes
+                save:
+                  type: presentation_dropdown
+                  ordering@: print
+                  label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.SAVE.ASYNC.LABEL
+                  prefix: PLUGIN_PRESENTATION.ADMIN.ADVANCED.SAVE.PREFIX
             textsize:
               type: section
               title: PLUGIN_PRESENTATION.ADMIN.OPTIONS.TEXTSIZE.TITLE

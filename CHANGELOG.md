@@ -1,3 +1,12 @@
+# v1.6.8
+## 11-05-2019
+
+1. [](#bugfix)
+   - Admin-detection (#8)
+   - Slide-rendering (#9)
+2. [](#improved)
+   - Controls in slide-blueprint
+
 # v1.6.7
 ## 05-05-2019
 
