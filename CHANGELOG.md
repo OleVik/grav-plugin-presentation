@@ -1,3 +1,9 @@
+# v1.7.1-beta.2
+## 13-05-2019
+
+1. [](#bugfix)
+   - Shortcode Core backfill for Packagist
+
 # v1.7.1-beta.1
 ## 12-05-2019
 

@@ -28,9 +28,9 @@
   "require": {
     "php": ">=7.1.3",
     "getgrav/grav": ">=1.6",
-    "getgrav/grav-plugin-shortcode-core": ">=4.1.1",
-    "composer/installers": "~1.0",
-    "michelf/php-smartypants": "^1.8"
+    "getgrav/grav-plugin-shortcode-core": "dev-master#9cb368c17037718406eb636fd042c0b601a7f1fd",
+    "michelf/php-smartypants": "^1.8",
+    "composer/installers": "~1.0"
   },
   "autoload": {
     "psr-4": {
@@ -40,8 +40,21 @@
   },
   "repositories": [
     {
-      "type": "vcs",
-      "url": "https://github.com/getgrav/grav-plugin-shortcode-core.git"
+      "type": "package",
+      "package": {
+        "name": "getgrav/grav-plugin-shortcode-core",
+        "version": "dev-master",
+        "type": "grav-plugin",
+        "require": {
+          "thunderer/shortcode": "~0.7",
+          "composer/installers": "~1.0"
+        },
+        "source": {
+          "url": "https://github.com/getgrav/grav-plugin-shortcode-core.git",
+          "type": "git",
+          "reference": "origin/master"
+        }
+      }
     }
   ]
 }
