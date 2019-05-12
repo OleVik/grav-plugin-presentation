@@ -1,3 +1,14 @@
+# v1.7.1-beta.1
+## 12-05-2019
+
+1. [](#new)
+   - Packagist-release
+   - Require Shortcode Core as a dependency
+   - Link Overlay shortcode
+   - Presentation shortcode: `presentation_base_url` replaced by `base_url`
+2. [](#improved)
+   - PSR-4 handling through Composer
+
 # v1.7.0-beta.1
 ## 11-05-2019
 

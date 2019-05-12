@@ -1,5 +1,5 @@
 name: Presentation
-version: 1.7.0-beta.1
+version: 1.7.1-beta.1
 testing: true
 description: Responsive navigational slideshows with Reveal.js
 icon: arrows-alt
@@ -14,6 +14,7 @@ docs: https://github.com/OleVik/grav-plugin-presentation/blob/master/README.md
 license: MIT
 dependencies:
   - { name: grav, version: ">=1.6" }
+  - { name: shortcode-core, version: ">=4.1" }
 
 form:
   validation: strict

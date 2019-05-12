@@ -6,4 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Grav\\Plugin\\PresentationPlugin\\API\\' => array($baseDir . '/classes'),
+    'Grav\\Plugin\\PresentationPlugin\\' => array($baseDir . '/classes'),
 );

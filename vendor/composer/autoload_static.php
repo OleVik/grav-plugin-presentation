@@ -6,6 +6,25 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit66f1f2f6fd8575bd594634317b2b715f
 {
+    public static $prefixLengthsPsr4 = array (
+        'G' => 
+        array (
+            'Grav\\Plugin\\PresentationPlugin\\API\\' => 35,
+            'Grav\\Plugin\\PresentationPlugin\\' => 31,
+        ),
+    );
+
+    public static $prefixDirsPsr4 = array (
+        'Grav\\Plugin\\PresentationPlugin\\API\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/classes',
+        ),
+        'Grav\\Plugin\\PresentationPlugin\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/classes',
+        ),
+    );
+
     public static $prefixesPsr0 = array (
         'M' => 
         array (
@@ -19,6 +38,8 @@ class ComposerStaticInit66f1f2f6fd8575bd594634317b2b715f
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
+            $loader->prefixLengthsPsr4 = ComposerStaticInit66f1f2f6fd8575bd594634317b2b715f::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit66f1f2f6fd8575bd594634317b2b715f::$prefixDirsPsr4;
             $loader->prefixesPsr0 = ComposerStaticInit66f1f2f6fd8575bd594634317b2b715f::$prefixesPsr0;
 
         }, null, ClassLoader::class);

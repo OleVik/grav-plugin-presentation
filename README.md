@@ -285,6 +285,10 @@ When using `data-background-interactive`, the iFrame can be interacted with. The
 
 **Note**: It may be necessary to wrap the value/parameter of the shortcode in double quotes, like `[data-background-iframe="https://en.wikipedia.org/wiki/Rabbit"]`, for it to work properly.
 
+##### A big anchor overlaying the slide
+
+A `link-overlay`-shortcode is available for creating a link that overlays the slide, apt for use with backgrounds. For example: `[link-overlay="https://google.com/"]`.
+
 ### Injecting Twig
 
 Using the `footer`-setting you can append a Twig-template to each section globally, or a specific page's section. For example, `footer: "partials/presentation_footer.html.twig"` will render the theme's `partials/presentation_footer.html.twig`-template and append it to the section(s). If the element was constructed like this: `<div class="footer">My footer</div>`, you could style it like this:
@@ -347,7 +351,7 @@ The synchronization between Presenter-mode and the Presentation happens by sendi
 
 ### Embedding
 
-A Presentation-shortcode is available for embedding a presentation in another Page; `[presentation="./route/to/presentation"]`. This creates an iFrame with the presentation in it. You can also add your own classes to the iFrame with the `class`-parameter: `[presentation "introduction-to-ux/chromeless:true" class="class-one class-two"]`, or default classes with the `shortcode_classes`-option.
+A Presentation-shortcode is available for embedding a presentation in another Page; `[presentation="route/to/presentation"]`. This creates an iFrame with the presentation in it. You can also add your own classes to the iFrame with the `class`-parameter: `[presentation src="introduction-to-ux/chromeless:true" class="class-one class-two"]`, or default classes with the `shortcode_classes`-option.
 
 ## Contributing
 

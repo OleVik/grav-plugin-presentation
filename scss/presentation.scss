@@ -237,6 +237,17 @@ $breakpoints: (
           height: 100%;
         }
 
+        iframe {
+          width: 100%;
+          width: -moz-available;
+          width: -webkit-fill-available;
+          width: fill-available;
+          height: 100%;
+          height: -moz-available;
+          height: -webkit-fill-available;
+          height: fill-available;
+        }
+
         p {
           margin: 0 0 1em 0;
         }
@@ -261,6 +272,16 @@ $breakpoints: (
 
         .fa {
           width: auto;
+        }
+
+        .link-overlay {
+          display: block;
+          height: 100%;
+          width: 100%;
+          &:focus,
+          &:hover {
+            outline: solid;
+          }
         }
       }
 

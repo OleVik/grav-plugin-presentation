@@ -59,10 +59,22 @@ class PresentationPlugin extends Plugin
     public static function getSubscribedEvents()
     {
         return [
-            'onPluginsInitialized' => ['onPluginsInitialized', 0]
+            'onPluginsInitialized' => [
+                ['autoload', 100000],
+                ['onPluginsInitialized', 0]
+            ],
         ];
     }
 
+    /**
+     * [onPluginsInitialized:100000] Composer autoload.
+     *
+     * @return ClassLoader
+     */
+    public function autoload()
+    {
+        return include __DIR__ . '/vendor/autoload.php';
+    }
 
     /**
      * Initialize the plugin and events
@@ -74,13 +86,6 @@ class PresentationPlugin extends Plugin
         if ($this->config->get('system')['debugger']['enabled']) {
             $this->grav['debugger']->startTimer('presentation', 'Presentation');
         }
-        include_once __DIR__ . '/API/ContentInterface.php';
-        include_once __DIR__ . '/API/Content.php';
-        include_once __DIR__ . '/API/ParserInterface.php';
-        include_once __DIR__ . '/API/Parser.php';
-        include_once __DIR__ . '/API/TransportInterface.php';
-        include_once __DIR__ . '/API/Transport.php';
-        include_once __DIR__ . '/Utilities.php';
         if ($this->isAdmin() && $this->config->get('plugins.admin')) {
             $this->enable(
                 [
@@ -94,7 +99,7 @@ class PresentationPlugin extends Plugin
         $this->grav['config']->set('system.cache.enabled', false);
         $this->enable(
             [
-                'onPageContentRaw' => ['processPresentationShortcode', 0],
+                'onShortcodeHandlers' => ['onShortcodeHandlers', 0],
                 'onPageContentProcessed' => ['pageIteration', 0],
                 'onTwigExtensions' => ['onTwigExtensions', 0],
                 'onTwigTemplatePaths' => ['templates', 0],
@@ -411,7 +416,6 @@ class PresentationPlugin extends Plugin
      */
     public static function getClassNamesBlueprintOptions(string $key)
     {
-        $inflector = new Inflector();
         $regex = '/Grav\\\\Plugin\\\\PresentationPlugin\\\\API\\\\(?<api>.*)/i';
         $classes = preg_grep($regex, get_declared_classes());
         $matches = preg_grep('/' . $key . '/i', $classes);
@@ -444,37 +448,13 @@ class PresentationPlugin extends Plugin
     }
 
     /**
-     * Process Presentation Shortcode
-     *
-     * @param Event $event RocketTheme\Toolbox\Event\Event
+     * Initialize shortcodes
      *
      * @return void
      */
-    public function processPresentationShortcode(Event $event)
+    public function onShortcodeHandlers()
     {
-        $page = $event['page'];
-        $uri = $this->grav['uri'];
-        $twig = $this->grav['twig'];
-        $config = $this->config();
-        $config = $this->mergeConfig($page, true);
-        $raw = $page->getRawContent();
-        $classes = $config['shortcode_classes'];
-        $regex = '/\[presentation(?:=| )"(?<src>.*)"( class="(?<class>.*)")?\]/imU';
-        preg_match_all($regex, $raw, $shortcodes, PREG_SET_ORDER, 0);
-        if (!empty($shortcodes)) {
-            foreach ($shortcodes as $shortcode) {
-                $replace = $twig->processTemplate(
-                    'partials/presentation_iframe.html.twig',
-                    [
-                        'src' => trim($shortcode['src'], '/'),
-                        'presentation_base_url' => $uri->rootUrl(true),
-                        'class' => isset($shortcode['class']) ? $classes . ' ' . $shortcode['class'] : $classes
-                    ]
-                );
-                $raw = str_replace($shortcode[0], $replace, $raw);
-            }
-            $page->setRawContent($raw);
-        }
+        $this->grav['shortcode']->registerAllShortcodes(__DIR__ . '/shortcodes');
     }
 
     /**
