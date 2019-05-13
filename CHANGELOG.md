@@ -1,3 +1,9 @@
+# v1.7.1-beta.3
+## 13-05-2019
+
+1. [](#bugfix)
+   - Maximize image width
+
 # v1.7.1-beta.2
 ## 13-05-2019
 
