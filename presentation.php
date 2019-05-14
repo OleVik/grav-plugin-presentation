@@ -52,28 +52,16 @@ class PresentationPlugin extends Plugin
     protected $cache;
 
     /**
-     * Register intial event
+     * Register intial event and libraries
      *
      * @return array
      */
     public static function getSubscribedEvents()
     {
+        include __DIR__ . '/vendor/autoload.php';
         return [
-            'onPluginsInitialized' => [
-                ['autoload', 100000],
-                ['onPluginsInitialized', 0]
-            ],
+            'onPluginsInitialized' => ['onPluginsInitialized', 0],
         ];
-    }
-
-    /**
-     * [onPluginsInitialized:100000] Composer autoload.
-     *
-     * @return ClassLoader
-     */
-    public function autoload()
-    {
-        return include __DIR__ . '/vendor/autoload.php';
     }
 
     /**
@@ -434,9 +422,9 @@ class PresentationPlugin extends Plugin
      */
     public static function getRevealThemes()
     {
+        include __DIR__ . '/vendor/autoload.php';
         $inflector = new Inflector();
         $themes = array('none' => 'None');
-        include_once 'Utilities.php';
         $path = 'user://plugins/presentation/node_modules/reveal.js/css/theme';
         $location = Grav::instance()['locator']->findResource($path, true);
         $files = Utilities::filesFinder($location, ['css']);

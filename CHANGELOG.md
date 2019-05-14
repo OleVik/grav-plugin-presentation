@@ -10,6 +10,7 @@
    - Link Overlay method
 3. [](#bugfix)
    - Image-scaling
+   - Autoloading
 
 # v1.7.1-beta.3
 ## 13-05-2019
