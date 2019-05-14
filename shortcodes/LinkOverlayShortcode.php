@@ -41,20 +41,32 @@ class LinkOverlayShortcode extends Shortcode
         $this->shortcode->getHandlers()->add(
             'link-overlay',
             function (ShortcodeInterface $sc) {
-                $url = $sc->getParameter('url', $this->getBbCode($sc));
-                $classes = 'link-overlay';
-                if ($sc->getParameter('class') !== null) {
-                    $classes = $classes . ' ' . $sc->getParameter('class');
-                }
-                $output = $this->twig->processTemplate(
-                    'partials/presentation_link_overlay.html.twig',
-                    [
-                        'url' => $url,
-                        'class' => $classes
-                    ]
-                );
-                return $output;
+                return $this->linkOverlayRenderer($sc);
             }
         );
+    }
+
+    /**
+     * Render a link overlay in HTML
+     *
+     * @param ShortcodeInterface $sc Accessor to Thunder\Shortcode
+     *
+     * @return string
+     */
+    public function linkOverlayRenderer(ShortcodeInterface $sc)
+    {
+        $url = $sc->getParameter('url', $this->getBbCode($sc));
+        $classes = 'link-overlay';
+        if ($sc->getParameter('class') !== null) {
+            $classes = $classes . ' ' . $sc->getParameter('class');
+        }
+        $output = $this->twig->processTemplate(
+            'partials/presentation_link_overlay.html.twig',
+            [
+                'url' => $url,
+                'class' => $classes
+            ]
+        );
+        return $output;
     }
 }

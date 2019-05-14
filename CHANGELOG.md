@@ -1,3 +1,16 @@
+# v1.7.1-beta.4
+## XX-05-2019
+
+1. [](#new)
+   - README: Creating a shortcode or shortcode-alias
+   - README: Twig
+   - README: Contributing
+2. [](#improved)
+   - Split docs into parts
+   - Link Overlay method
+3. [](#bugfix)
+   - Image-scaling
+
 # v1.7.1-beta.3
 ## 13-05-2019
 

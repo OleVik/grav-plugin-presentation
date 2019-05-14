@@ -222,8 +222,10 @@ $breakpoints: (
           width: 100%;
           height: auto;
           max-width: 100%;
+          max-width: 100vh;
           max-height: 100%;
-          margin: auto 0;
+          max-height: 100vw;
+          margin: auto;
         }
 
         blockquote {
