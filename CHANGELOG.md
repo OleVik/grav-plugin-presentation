@@ -1,5 +1,11 @@
+# v1.7.1-beta.5
+## 15-05-2019
+
+1. [](#improved)
+   - Pass Page to Presentation-shortcode template
+
 # v1.7.1-beta.4
-## XX-05-2019
+## 14-05-2019
 
 1. [](#new)
    - README: Creating a shortcode or shortcode-alias

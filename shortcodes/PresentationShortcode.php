@@ -13,6 +13,7 @@
  */
 namespace Grav\Plugin\Shortcodes;
 
+use Grav\Common\Grav;
 use Thunder\Shortcode\Shortcode\ShortcodeInterface;
 
 /**
@@ -38,6 +39,7 @@ class PresentationShortcode extends Shortcode
         $this->shortcode->getHandlers()->add(
             'presentation',
             function (ShortcodeInterface $sc) {
+                $pages = Grav::instance()['pages'];
                 $uri = $this->grav['uri']->rootUrl(true);
                 $src = $sc->getParameter('src', $this->getBbCode($sc));
                 $id = 'presentation-' . str_replace(['/', '\\'], '-', $src);
@@ -45,13 +47,15 @@ class PresentationShortcode extends Shortcode
                 if ($sc->getParameter('class') !== null) {
                     $classes = $classes . ' ' . $sc->getParameter('class');
                 }
+                $page = $pages->find($src);
                 $output = $this->twig->processTemplate(
                     'partials/presentation_iframe.html.twig',
                     [
                         'id' => $id,
                         'src' => trim($src, '/'),
                         'base_url' => $uri,
-                        'class' => $classes
+                        'class' => $classes,
+                        'page' => $page ?? null
                     ]
                 );
                 return $output;
