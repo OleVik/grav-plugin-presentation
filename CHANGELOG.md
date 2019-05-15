@@ -1,3 +1,9 @@
+# v1.7.1-beta.6
+## 15-05-2019
+
+1. [](#bugfix)
+   - Page.find for Presentation-shortcode
+
 # v1.7.1-beta.5
 ## 15-05-2019
 

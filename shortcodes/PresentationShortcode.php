@@ -41,18 +41,18 @@ class PresentationShortcode extends Shortcode
             function (ShortcodeInterface $sc) {
                 $pages = Grav::instance()['pages'];
                 $uri = $this->grav['uri']->rootUrl(true);
-                $src = $sc->getParameter('src', $this->getBbCode($sc));
+                $src = trim($sc->getParameter('src', $this->getBbCode($sc)), '/');
                 $id = 'presentation-' . str_replace(['/', '\\'], '-', $src);
                 $classes = $this->config->get('plugins.presentation.shortcode_classes');
                 if ($sc->getParameter('class') !== null) {
                     $classes = $classes . ' ' . $sc->getParameter('class');
                 }
-                $page = $pages->find($src);
+                $page = $pages->find('/' . $src);
                 $output = $this->twig->processTemplate(
                     'partials/presentation_iframe.html.twig',
                     [
                         'id' => $id,
-                        'src' => trim($src, '/'),
+                        'src' => $src,
                         'base_url' => $uri,
                         'class' => $classes,
                         'page' => $page ?? null
