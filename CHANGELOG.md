@@ -1,3 +1,9 @@
+# v1.7.1-beta.7
+## 19-05-2019
+
+1. [](#bugfix)
+   - Test composer backport of Shortcode Code
+
 # v1.7.1-beta.6
 ## 15-05-2019
 
