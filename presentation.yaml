@@ -22,6 +22,7 @@ footer: ""
 transition: true
 shortcodes: true
 shortcode_classes: "presentation-iframe"
+shortcode_parser: RegularParser
 unwrap_images: true
 content: "Content"
 parser: "Parser"

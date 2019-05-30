@@ -188,6 +188,13 @@ en:
         SHORTCODE_CLASSES:
           LABEL: Shortcode Classes
           DESCRIPTION: Default Classes to use with Presentation-shortcodes, each separated by a space.
+        SHORTCODE_PARSER:
+          LABEL: Shortcode Parser
+          DESCRIPTION: "Processor to use for Shortcode parsing: RegularParser, RegexParser, or WordpressParser"
+          OPTIONS:
+            REGULAR: RegularParser
+            REGEX: RegexParser
+            WORDPRESS: WordpressParser
         TRANSITION:
           LABEL: OnLoad Transition
           DESCRIPTION: Fade in from white when page (DOM-structure) is ready.

@@ -6,6 +6,8 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Thunder\\Shortcode\\' => array($vendorDir . '/thunderer/shortcode/src'),
     'Grav\\Plugin\\PresentationPlugin\\API\\' => array($baseDir . '/classes'),
     'Grav\\Plugin\\PresentationPlugin\\' => array($baseDir . '/classes'),
+    'Composer\\Installers\\' => array($vendorDir . '/composer/installers/src/Composer/Installers'),
 );

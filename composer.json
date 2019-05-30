@@ -27,37 +27,14 @@
   },
   "require": {
     "php": ">=7.1.3",
-    "getgrav/grav": ">=1.6",
-    "getgrav/grav-plugin-shortcode-core": "4.1.*",
     "michelf/php-smartypants": "^1.8",
-    "composer/installers": "~1.0"
-  },
-  "suggest": {
-    "getgrav/grav-plugin-shortcode-core": "Enables Shortcodes"
+    "composer/installers": "~1.0",
+    "thunderer/shortcode": "^0.7.2"
   },
   "autoload": {
     "psr-4": {
       "Grav\\Plugin\\PresentationPlugin\\": "classes/",
       "Grav\\Plugin\\PresentationPlugin\\API\\": "classes/"
     }
-  },
-  "repositories": [
-    {
-      "type": "package",
-      "package": {
-        "name": "getgrav/grav-plugin-shortcode-core",
-        "version": "dev-master",
-        "type": "grav-plugin",
-        "require": {
-          "thunderer/shortcode": "~0.7",
-          "composer/installers": "~1.0"
-        },
-        "source": {
-          "url": "https://github.com/getgrav/grav-plugin-shortcode-core.git",
-          "type": "git",
-          "reference": "4.1.0"
-        }
-      }
-    }
-  ]
+  }
 }

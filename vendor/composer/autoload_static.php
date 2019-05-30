@@ -4,17 +4,29 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit66f1f2f6fd8575bd594634317b2b715f
+class ComposerStaticInit39119e623172f8b589e72b58ce87ed79
 {
     public static $prefixLengthsPsr4 = array (
+        'T' => 
+        array (
+            'Thunder\\Shortcode\\' => 18,
+        ),
         'G' => 
         array (
             'Grav\\Plugin\\PresentationPlugin\\API\\' => 35,
             'Grav\\Plugin\\PresentationPlugin\\' => 31,
         ),
+        'C' => 
+        array (
+            'Composer\\Installers\\' => 20,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
+        'Thunder\\Shortcode\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/thunderer/shortcode/src',
+        ),
         'Grav\\Plugin\\PresentationPlugin\\API\\' => 
         array (
             0 => __DIR__ . '/../..' . '/classes',
@@ -22,6 +34,10 @@ class ComposerStaticInit66f1f2f6fd8575bd594634317b2b715f
         'Grav\\Plugin\\PresentationPlugin\\' => 
         array (
             0 => __DIR__ . '/../..' . '/classes',
+        ),
+        'Composer\\Installers\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers',
         ),
     );
 
@@ -38,9 +54,9 @@ class ComposerStaticInit66f1f2f6fd8575bd594634317b2b715f
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit66f1f2f6fd8575bd594634317b2b715f::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit66f1f2f6fd8575bd594634317b2b715f::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit66f1f2f6fd8575bd594634317b2b715f::$prefixesPsr0;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit39119e623172f8b589e72b58ce87ed79::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit39119e623172f8b589e72b58ce87ed79::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit39119e623172f8b589e72b58ce87ed79::$prefixesPsr0;
 
         }, null, ClassLoader::class);
     }

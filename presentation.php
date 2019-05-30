@@ -45,11 +45,17 @@ class PresentationPlugin extends Plugin
 {
 
     /**
-     * Grav cache setting
+     * Protected variables
      *
-     * @var bool
+     * @var bool      $cache     Grav cache setting
+     * @var Transport $transport Transport API
+     * @var Parser    $parser    Parser API
+     * @var Content   $content   Content API
      */
     protected $cache;
+    protected $transport;
+    protected $parser;
+    protected $content;
 
     /**
      * Register intial event and libraries
@@ -71,9 +77,28 @@ class PresentationPlugin extends Plugin
      */
     public function onPluginsInitialized()
     {
+        if ($this->config->get('plugins')['presentation']['enabled'] != true) {
+            return;
+        }
+        $config = $this->config->get('plugins')['presentation'];
         if ($this->config->get('system')['debugger']['enabled']) {
             $this->grav['debugger']->startTimer('presentation', 'Presentation');
         }
+        $this->transport = $this->getAPIInstance(
+            $config['transport']
+        );
+        $this->parser = $this->getAPIInstance(
+            $config['parser'],
+            $config,
+            $this->transport
+        );
+        $this->content = $this->getAPIInstance(
+            $config['content'],
+            $this->grav,
+            $config,
+            $this->parser,
+            $this->transport
+        );
         if ($this->isAdmin() && $this->config->get('plugins.admin')) {
             $this->enable(
                 [
@@ -109,13 +134,11 @@ class PresentationPlugin extends Plugin
      */
     public function config()
     {
-        $pluginsobject = (array) $this->config->get('plugins');
-        if (isset($pluginsobject) && $pluginsobject['presentation']['enabled']) {
-            $config = $pluginsobject['presentation'];
-        } else {
-            return;
+        $plugins = (array) $this->config->get('plugins');
+        if (isset($plugins) && $plugins['presentation']['enabled']) {
+            return $plugins['presentation'];
         }
-        return $config;
+        return false;
     }
 
     /**
@@ -132,7 +155,7 @@ class PresentationPlugin extends Plugin
         }
         if ($grav['page']->template() == 'presentation' || $grav['page']->template() == 'slide') {
             if (!isset($this->grav['twig']->twig_vars['reveal_init'])) {
-                $config['base_url'] = $this->grav['uri']->rootUrl(true);
+                $baseUrl = $this->grav['uri']->rootUrl(true);
                 $header = (array) $grav['page']->header();
                 if (isset($header['presentation'])) {
                     $config = Utils::arrayMergeRecursiveUnique(
@@ -140,18 +163,15 @@ class PresentationPlugin extends Plugin
                         $header['presentation']
                     );
                 }
-                $transport = $this->getAPIInstance($config['transport']);
-                $parser = $this->getAPIInstance($config['parser'], $config, $transport);
-                $content = $this->getAPIInstance($config['content'], $grav, $config, $parser, $transport);
                 if (isset($config['style']) && !empty($config['style'])) {
-                    $processed = $parser->processStylesData($config['style'], '/', 'presentation');
+                    $processed = $this->parser->processStylesData($config['style'], '/', 'presentation', $baseUrl);
                     $style = $processed['style'];
-                    $transport->setStyle('presentation', "{\n$style\n}");
+                    $this->transport->setStyle('presentation', "{\n$style\n}");
                 }
-                $tree = $content->buildTree($grav['page']->route());
-                $slides = $content->buildContent($tree);
+                $tree = $this->content->buildTree($grav['page']->route());
+                $slides = $this->content->buildContent($tree);
                 $grav['page']->setRawContent($slides);
-                $menu = $content->buildMenu($tree);
+                $menu = $this->content->buildMenu($tree);
                 $menu = Utilities::flattenArray($menu, 1);
                 $options = Utilities::parseAmbiguousArrayValues($config['options']);
                 $options = json_encode($options, JSON_PRETTY_PRINT);
@@ -159,7 +179,7 @@ class PresentationPlugin extends Plugin
                 $this->grav['twig']->twig_vars['reveal_init'] = $options;
                 $this->grav['twig']->twig_vars['presentation_menu'] = $menu;
                 $this->grav['twig']->twig_vars['presentation_breakpoints'] = $breakpoints;
-                $grav['assets']->addInlineCss($transport->getStyles(), null, 'presentation');
+                $grav['assets']->addInlineCss($this->transport->getStyles(), null, 'presentation');
             }
         }
     }

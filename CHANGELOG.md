@@ -1,3 +1,13 @@
+# v1.7.1-beta.8
+## XX-05-2019
+
+1. [](#improved)
+   - Initialize API earlier
+   - Refactor Parser->interpretShortcodes()
+   - Parse Shortcodes with Thunderer/Shortcode
+2. [](#new)
+   - Option for Shortcode Parser
+
 # v1.7.1-beta.7
 ## 19-05-2019
 

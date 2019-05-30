@@ -17,6 +17,12 @@ namespace Grav\Plugin\PresentationPlugin\API;
 use Grav\Common\Uri;
 use Grav\Common\Utils;
 use Grav\Plugin\PresentationPlugin\Utilities;
+use Thunder\Shortcode\Parser\RegularParser;
+use Thunder\Shortcode\Parser\RegexParser;
+use Thunder\Shortcode\Parser\WordpressParser;
+use Thunder\Shortcode\Processor\Processor;
+use Thunder\Shortcode\Shortcode\ShortcodeInterface;
+use Thunder\Shortcode\HandlerContainer\HandlerContainer;
 
 /**
  * Parser API
@@ -35,7 +41,6 @@ class Parser implements ParserInterface
      * Regular expressions
      */
     const REGEX_FRAGMENT_SHORTCODE = '~\[fragment=*([a-zA-Z-]*)\](.*)\[\/fragment\]~im';
-    const REGEX_SHORTCODES = '~((?:\[\s*(?<name>[a-zA-Z0-9-_]+)\s*(?:\=\s*(?<bbCode>\"(?:[^\"\\\\]*(?:\\\\.[^\"\\\\]*)*)\"|((?:(?!=\s*|\]|\/\])[^\s])+)))?\s*(?<parameters>(?:\s*(?:\w+(?:\s*\=\s*\"(?:[^\"\\\\]*(?:\\\\.[^\"\\\\]*)*)\"|\s*\=\s*((?:(?!=\s*|\]|\/\])[^\s])+)|(?=\s|\]|\/\s*\]|$))))*)\s*(?:\](?<content>.*?)\[\s*(?<markerContent>\/)\s*(\k<name>)\s*\]|\]|(?<marker>\/)\s*\])))~u';
     const REGEX_MEDIA_P = '/<p>\s*(<a .*>\s*<img.*\s*<\/a>|\s*<img.*|<img.*\s*|<video.*|<audio.*)\s*<\/p>/i';
 
     /**
@@ -48,6 +53,7 @@ class Parser implements ParserInterface
     {
         $this->config = $config;
         $this->transport = $transport;
+        $this->props = [];
     }
 
     /**
@@ -60,32 +66,28 @@ class Parser implements ParserInterface
      */
     public function interpretShortcodes(string $content, string $id)
     {
-        $return = array();
-        preg_match_all(
-            self::REGEX_SHORTCODES,
-            $content,
-            $matches,
-            PREG_SET_ORDER,
-            0
-        );
-        if (!empty($matches)) {
-            foreach ($matches as $match) {
-                $name = $match['name'];
-                $value = trim($match['bbCode'], '"');
-                $content = str_replace($match[0], '', $content);
+        $handlers = new HandlerContainer();
+        $handlers->setDefault(
+            function (ShortcodeInterface $sc) {
+                $return = array();
+                $name = $sc->getName();
+                $value = $sc->getParameter($name, $sc->getBbCode());
                 if (Utils::startsWith($name, 'class')) {
-                    $return['class'] = $value;
-                } elseif (Utils::startsWith($name, 'hide')) {
-                    $return['hide'] = true;
+                    $this->props['class'] = $value;
                 } elseif (Utils::startsWith($name, 'style')) {
                     $name = str_replace('style-', '', $name);
-                    $return['styles'][$name] = $value;
+                    $this->props['styles'][$name] = $value;
                 } elseif (Utils::startsWith($name, 'data')) {
-                    $return['styles'][$name] = $value;
+                    $this->props['styles'][$name] = $value;
+                } elseif (Utils::startsWith($name, 'hide')) {
+                    $this->props['hide'] = [true];
                 }
+                return;
             }
-        }
-        return ['content' => $content, 'props' => $return];
+        );
+        $parser = "Thunder\Shortcode\Parser\\" . $this->config['shortcode_parser'];
+        $processor = new Processor(new $parser(), $handlers);
+        return ['content' => $processor->process($content), 'props' => $this->props];
     }
 
     /**
@@ -111,10 +113,11 @@ class Parser implements ParserInterface
      * @param array  $styles List of key-value pairs
      * @param string $route  Route to Page for relative assets
      * @param string $id     Slide id-attribute
+     * @param string $base   Base path to prepend to file
      *
      * @return string Processed styles, in inline string
      */
-    public function processStylesData(array $styles, string $route, string $id)
+    public function processStylesData(array $styles, string $route, string $id, string $base = "")
     {
         $inline = $data = '';
         foreach ($styles as $property => $value) {
@@ -128,7 +131,7 @@ class Parser implements ParserInterface
                     $locations = Utilities::explodeFileLocations($locations, GRAV_ROOT, '/', '/');
                     $file = Utilities::fileFinder($value, $locations);
                     $file = str_ireplace(GRAV_ROOT, '', $file);
-                    $value = $this->config['base_url'] . $file;
+                    $value = $base . $file;
                 }
                 $inline .= $property . ': url(' . $value . ');';
             } elseif (Utils::startsWith($property, 'data')) {

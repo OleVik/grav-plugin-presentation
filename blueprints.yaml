@@ -14,7 +14,6 @@ docs: https://github.com/OleVik/grav-plugin-presentation/blob/master/README.md
 license: MIT
 dependencies:
   - { name: grav, version: ">=1.6" }
-  - { name: shortcode-core, version: ">=4.1" }
 
 form:
   validation: strict
@@ -280,6 +279,14 @@ form:
               description: PLUGIN_PRESENTATION.ADMIN.ADVANCED.SHORTCODE_CLASSES.DESCRIPTION
               validate:
                 type: string
+            shortcode_parser:
+              type: select
+              label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.SHORTCODE_PARSER.LABEL
+              description: PLUGIN_PRESENTATION.ADMIN.ADVANCED.SHORTCODE_PARSER.LABEL
+              options:
+                  RegularParser: PLUGIN_PRESENTATION.ADMIN.ADVANCED.SHORTCODE_PARSER.OPTIONS.REGULAR
+                  RegexParser: PLUGIN_PRESENTATION.ADMIN.ADVANCED.SHORTCODE_PARSER.OPTIONS.REGEX
+                  WordpressParser: PLUGIN_PRESENTATION.ADMIN.ADVANCED.SHORTCODE_PARSER.OPTIONS.WORDPRESS
             transition:
               type: toggle
               label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.TRANSITION.LABEL
