@@ -1,8 +1,15 @@
+# v1.7.1-beta.10
+## 31-05-2019
+
+1. [](#improved)
+   - Revert 'Initialize API earlier', do it indirectly
+
 # v1.7.1-beta.9
 ## 31-05-2019
 
 1. [](#improved)
    - Versions
+   - Deprecate 'v' from tags
 
 # v1.7.1-beta.8
 ## 31-05-2019

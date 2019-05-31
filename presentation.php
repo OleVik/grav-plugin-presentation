@@ -84,21 +84,6 @@ class PresentationPlugin extends Plugin
         if ($this->config->get('system')['debugger']['enabled']) {
             $this->grav['debugger']->startTimer('presentation', 'Presentation');
         }
-        $this->transport = $this->getAPIInstance(
-            $config['transport']
-        );
-        $this->parser = $this->getAPIInstance(
-            $config['parser'],
-            $config,
-            $this->transport
-        );
-        $this->content = $this->getAPIInstance(
-            $config['content'],
-            $this->grav,
-            $config,
-            $this->parser,
-            $this->transport
-        );
         if ($this->isAdmin() && $this->config->get('plugins.admin')) {
             $this->enable(
                 [
@@ -163,6 +148,21 @@ class PresentationPlugin extends Plugin
                         $header['presentation']
                     );
                 }
+                $this->transport = $this->getAPIInstance(
+                    $config['transport']
+                );
+                $this->parser = $this->getAPIInstance(
+                    $config['parser'],
+                    $config,
+                    $this->transport
+                );
+                $this->content = $this->getAPIInstance(
+                    $config['content'],
+                    $this->grav,
+                    $config,
+                    $this->parser,
+                    $this->transport
+                );
                 if (isset($config['style']) && !empty($config['style'])) {
                     $processed = $this->parser->processStylesData($config['style'], '/', 'presentation', $baseUrl);
                     $style = $processed['style'];
