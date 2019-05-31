@@ -1,5 +1,11 @@
+# v1.7.1-beta.9
+## 31-05-2019
+
+1. [](#improved)
+   - Versions
+
 # v1.7.1-beta.8
-## XX-05-2019
+## 31-05-2019
 
 1. [](#improved)
    - Initialize API earlier
