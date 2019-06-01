@@ -1,3 +1,9 @@
+# v1.7.1
+## 01-06-2019
+
+1. [](#new)
+   - Stable release of refactor
+
 # v1.7.1-beta.10
 ## 31-05-2019
 
