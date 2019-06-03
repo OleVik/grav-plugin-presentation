@@ -1,3 +1,9 @@
+# v1.7.4
+## 03-06-2019
+
+1. [](#new)
+   - Trim quotes in iframe-shortcode
+
 # v1.7.3
 ## 03-06-2019
 

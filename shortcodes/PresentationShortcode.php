@@ -41,7 +41,7 @@ class PresentationShortcode extends Shortcode
             function (ShortcodeInterface $sc) {
                 $pages = Grav::instance()['pages'];
                 $uri = $this->grav['uri']->rootUrl(true);
-                $src = trim($sc->getParameter('src', $this->getBbCode($sc)), '/');
+                $src = trim($sc->getParameter('src', $this->getBbCode($sc)), '/"');
                 $id = 'presentation-' . str_replace(['/', '\\'], '-', $src);
                 $classes = $this->config->get('plugins.presentation.shortcode_classes');
                 if ($sc->getParameter('class') !== null) {
