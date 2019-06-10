@@ -268,7 +268,7 @@ class Content implements ContentInterface
     {
         if ($config['shortcodes']) {
             $break = self::pushNotes($break);
-            $shortcodes = $this->parser->interpretShortcodes($break, $config['id'], $page);
+            $shortcodes = $this->parser->processShortcodes($break, $config['id'], $page);
             $break = $shortcodes['content'];
             $break = SmartyPants::defaultTransform($break);
             if ($this->transport->getDataAttribute($config['id'], 'data-hide')) {

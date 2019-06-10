@@ -36,7 +36,7 @@ interface ParserInterface
      *
      * @return array Processed content and shortcodes
      */
-    public function interpretShortcodes(string $content, string $id, array $page);
+    public function processShortcodes(string $content, string $id, array $page);
     
     /**
      * Process key-value pairs of options
@@ -69,4 +69,40 @@ interface ParserInterface
      * @return string Processed content
      */
     public static function unwrapImage(string $content);
+
+    /**
+     * Create HTML for fragments
+     *
+     * @param string $content Markdown content in Page
+     *
+     * @deprecated 2.0.0
+     *
+     * @return string Processed contents
+     */
+    public function processFragments(string $content);
+
+    /**
+     * Parse shortcodes
+     *
+     * @param string $content Markdown content in Page
+     * @param string $id      Slide id-attribute
+     *
+     * @deprecated 2.0.0
+     *
+     * @return array Processed contents and properties
+     */
+    public function interpretShortcodes(string $content, string $id);
+
+    /**
+     * Process styles and data-attributes
+     *
+     * @param array  $styles List of key-value pairs
+     * @param string $route  Route to Page for relative assets
+     * @param string $id     Slide id-attribute
+     *
+     * @deprecated 2.0.0
+     *
+     * @return string Processed styles, in inline string
+     */
+    public function processStylesData(array $styles, string $route, string $id);
 }
