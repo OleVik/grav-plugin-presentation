@@ -168,9 +168,7 @@ class PresentationPlugin extends Plugin
                     $this->transport
                 );
                 if (isset($config['style']) && !empty($config['style'])) {
-                    $processed = $this->parser->processStylesData($config['style'], '/', 'presentation', $baseUrl);
-                    $style = $processed['style'];
-                    $this->transport->setStyle('presentation', "{\n$style\n}");
+                    $this->parser->processor($config['style'], 'presentation', (array) $grav['page'], 'style');
                 }
                 $tree = $this->content->buildTree($grav['page']->route());
                 $slides = $this->content->buildContent($tree);

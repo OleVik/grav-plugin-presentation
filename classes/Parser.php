@@ -75,7 +75,7 @@ class Parser implements ParserInterface
                     $this->transport->setClass($id, $value);
                 } elseif (Utils::startsWith($name, 'style')) {
                     $property = str_replace('style-', '', $name);
-                    $this->stylesProcessor($id, $property, $value, [$path]);
+                    $this->styleProcessor($id, $property, $value, [$path]);
                 } elseif (Utils::startsWith($name, 'data')) {
                     $property = str_replace('data-', '', $name);
                     $this->transport->setDataAttribute($id, $property, $value);
@@ -95,16 +95,51 @@ class Parser implements ParserInterface
     }
 
     /**
+     * Process key-value pairs of options
+     *
+     * @param array  $data  Key-value pairs of options
+     * @param string $id    Target id-attribute
+     * @param array  $paths Paths to use for file-finding
+     * @param string $mode  Which Transport to perform
+     *
+     * @return boolean
+     */
+    public function processor(array $data, string $id, array $paths = [], string $mode = 'style')
+    {
+        if (empty($data)) {
+            return false;
+        }
+        foreach ($data as $key => $value) {
+            if (Utils::startsWith('style-', $key)) {
+                $mode = 'style';
+            } elseif (Utils::startsWith('data-', $key)) {
+                $mode = 'data';
+            } elseif (Utils::startsWith('aria-', $key)) {
+                $mode = 'aria';
+            }
+            $key = str_replace($mode . '-', '', $key);
+            if ($mode == 'style') {
+                $this->styleProcessor($id, $key, $value, $paths);
+            } elseif ($mode == 'data') {
+                $this->transport->setDataAttribute($id, $key, $value);
+            } elseif ($mode == 'aria') {
+                $this->transport->setAriaAttribute($id, $key, $value);
+            }
+        }
+        return true;
+    }
+
+    /**
      * Process style
      *
-     * @param string $id       Slide id-attribute
+     * @param string $id       Target id-attribute
      * @param string $property CSS property name
      * @param string $value    CSS property value
      * @param array  $paths    Locations to search for asset in
      *
      * @return void
      */
-    public function stylesProcessor(string $id, string $property, string $value, array $paths = [])
+    public function styleProcessor(string $id, string $property, string $value, array $paths = [])
     {
         if ($property == 'background-image') {
             if (!Uri::isValidUrl($value)) {

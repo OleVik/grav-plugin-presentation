@@ -8,7 +8,8 @@
    - Prevent Twig-caching
    - Fragment-parsing
    - Shortcode-handling through Transport
-   - API-selection
+   - Styles-handling through Parser
+   - API-selection in blueprints
    - Default textsizing-scale and breakpoint-check
 3. [](#bugfix)
    - Data-shortcode handling

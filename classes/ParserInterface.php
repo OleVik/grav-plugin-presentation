@@ -39,16 +39,27 @@ interface ParserInterface
     public function interpretShortcodes(string $content, string $id, array $page);
     
     /**
+     * Process key-value pairs of options
+     *
+     * @param array $data  Key-value pairs of options
+     * @param string $id   Target id-attribute
+     * @param array $paths Paths to use for file-finding
+     *
+     * @return void
+     */
+    public function processor(array $data, string $id, array $paths = []);
+
+    /**
      * Process style
      *
-     * @param string $id       Slide id-attribute
+     * @param string $id       Target id-attribute
      * @param string $property CSS property name
      * @param string $value    CSS property value
      * @param array  $paths    Locations to search for asset in
      *
      * @return void
      */
-    public function stylesProcessor(string $id, string $property, string $value, array $paths = []);
+    public function styleProcessor(string $id, string $property, string $value, array $paths = []);
 
     /**
      * Remove wrapping paragraph from img-element
