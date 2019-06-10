@@ -31,31 +31,24 @@ interface ParserInterface
      * Parse shortcodes
      *
      * @param string $content Markdown content in Page
-     * @param string $id      Slide id-attribute
+     * @param string $id      Slide ID
+     * @param array  $page    Page instance
      *
-     * @return array Processed contents and properties
+     * @return array Processed content and shortcodes
      */
-    public function interpretShortcodes(string $content, string $id);
-
-    /**
-     * Create HTML for fragments
-     *
-     * @param string $content Markdown content in Page
-     *
-     * @return string Processed contents
-     */
-    public function processFragments(string $content);
+    public function interpretShortcodes(string $content, string $id, array $page);
     
     /**
-     * Process styles and data-attributes
+     * Process style
      *
-     * @param array  $styles List of key-value pairs
-     * @param string $route  Route to Page for relative assets
-     * @param string $id     Slide id-attribute
+     * @param string $id       Slide id-attribute
+     * @param string $property CSS property name
+     * @param string $value    CSS property value
+     * @param array  $paths    Locations to search for asset in
      *
-     * @return string Processed styles, in inline string
+     * @return void
      */
-    public function processStylesData(array $styles, string $route, string $id);
+    public function stylesProcessor(string $id, string $property, string $value, array $paths = []);
 
     /**
      * Remove wrapping paragraph from img-element

@@ -53,6 +53,7 @@ class PresentationPlugin extends Plugin
      * @var Content   $content   Content API
      */
     protected $cache;
+    protected $cacheTwig;
     protected $transport;
     protected $parser;
     protected $content;
@@ -94,7 +95,10 @@ class PresentationPlugin extends Plugin
                 ]
             );
         }
+        $this->cache = $this->grav['config']->get('system.cache.enabled');
         $this->grav['config']->set('system.cache.enabled', false);
+        $this->cacheTwig = $this->grav['config']->get('system.pages.never_cache_twig');
+        $this->grav['config']->set('system.pages.never_cache_twig', true);
         $this->enable(
             [
                 'onShortcodeHandlers' => ['onShortcodeHandlers', 0],
@@ -240,13 +244,11 @@ class PresentationPlugin extends Plugin
     /**
      * Handle Poll API
      *
-     * @param [type] $uri
-     * @param [type] $page
-     * @param [type] $config
+     * @param array $config Plugin configuration
      *
      * @return void
      */
-    public function handlePollAPI($uri, $page, $config)
+    public function handlePollAPI($config)
     {
         if ($config['sync'] == 'poll') {
             set_time_limit(0);
@@ -315,6 +317,7 @@ class PresentationPlugin extends Plugin
     public function onShutdown()
     {
         $this->grav['config']->set('system.cache.enabled', $this->cache);
+        $this->grav['config']->set('system.pages.never_cache_twig', $this->cacheTwig);
     }
 
     /**
@@ -427,7 +430,10 @@ class PresentationPlugin extends Plugin
         $regex = '/Grav\\\\Plugin\\\\PresentationPlugin\\\\API\\\\(?<api>.*)/i';
         $classes = preg_grep($regex, get_declared_classes());
         $matches = preg_grep('/' . $key . '/i', $classes);
-        $options = ['' => 'None'];
+        $options = [
+            '' => 'None',
+            $key => $key
+        ];
         foreach ($matches as $match) {
             $match = str_replace('Grav\Plugin\PresentationPlugin\API\\', '', $match);
             $options[$match] = $match;

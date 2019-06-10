@@ -33,7 +33,7 @@ class Content implements ContentInterface
     /**
      * Regular expressions
      */
-    const REGEX_FRAGMENT_SHORTCODE = '~\[fragment=*([a-zA-Z-]*)\](.*)\[\/fragment\]~im';
+    const REGEX_FRAGMENT_SHORTCODE = '~\[fragment=*"*([a-zA-Z-]*)"*\](.*)"*\[\/fragment\]~im';
     const REGEX_P_EMPTY = '/<p[^>]*>\n* *<\/p[^>]*>/im';
 
     /**
@@ -91,6 +91,7 @@ class Content implements ContentInterface
             );
             $paths[$route]['route'] = $route;
             $paths[$route]['slug'] = $page->slug();
+            $paths[$route]['path'] = $page->path();
             $paths[$route]['header'] = $page->header();
             if (isset($page->header()->type)) {
                 $paths[$route]['type'] = $page->header()->type;
@@ -267,39 +268,18 @@ class Content implements ContentInterface
     {
         if ($config['shortcodes']) {
             $break = self::pushNotes($break);
-            $shortcodes = $this->parser->interpretShortcodes($break, $config['id']);
+            $shortcodes = $this->parser->interpretShortcodes($break, $config['id'], $page);
             $break = $shortcodes['content'];
             $break = SmartyPants::defaultTransform($break);
-            if (isset($shortcodes['props']['class'])) {
-                $config['class'] = $shortcodes['props']['class'];
-            }
-            if (isset($shortcodes['hide'])) {
+            if ($this->transport->getDataAttribute($config['id'], 'data-hide')) {
                 $hide = true;
             }
-            if (isset($shortcodes['props']['styles'])) {
-                $config['styles'] = array_merge(
-                    $config['styles'],
-                    $shortcodes['props']['styles']
-                );
-            }
-        }
-        if (!empty($config['styles'])) {
-            $processed = $this->parser->processStylesData(
-                $config['styles'],
-                $config['route'],
-                $config['id']
-            );
-            $inline = ' style="' . $processed['style'] . '"' . $processed['data'];
-        }
-        if ($this->transport->getClasses($config['id'])) {
-            $config['class'] .= ' ' . $this->transport->getClasses($config['id']);
         }
         echo '<section id="' . $config['id'] . '" ';
-        echo 'class="' . $config['class'] . '" ';
-        echo 'data-title="' . $page['title'] . '"';
-        if (!empty($inline)) {
-            echo $inline;
+        if ($this->transport->getClasses($config['id'])) {
+            echo 'class="' . $this->transport->getClasses($config['id']) . '" ';
         }
+        echo 'data-title="' . $page['title'] . '"';
         if (isset($page['header']->textsize['scale'])) {
             echo ' data-textsize-scale="' . (float) $page['header']->textsize['scale'] . '"';
             if (isset($page['header']->textsize['modifier'])) {

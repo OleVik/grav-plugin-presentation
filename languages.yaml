@@ -202,13 +202,13 @@ en:
           LABEL: Unwrap Images
           DESCRIPTION: Unwrap images from paragraphs.
         CONTENT:
-          LABEL: Custom Content
+          LABEL: Content
           DESCRIPTION: Use a custom aggregator for content.
         PARSER:
-          LABEL: Custom Parser
+          LABEL: Parser
           DESCRIPTION: Use a custom parser for content.
         STYLES:
-          LABEL: Custom Transport
+          LABEL: Transport
           DESCRIPTION: Use a custom getter/setter for transporting data.
         REVEAL:
           TITLE: Reveal.js Options

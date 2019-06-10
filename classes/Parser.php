@@ -40,7 +40,6 @@ class Parser implements ParserInterface
     /**
      * Regular expressions
      */
-    const REGEX_FRAGMENT_SHORTCODE = '~\[fragment=*([a-zA-Z-]*)\](.*)\[\/fragment\]~im';
     const REGEX_MEDIA_P = '/<p>\s*(<a .*>\s*<img.*\s*<\/a>|\s*<img.*|<img.*\s*|<video.*|<audio.*)\s*<\/p>/i';
 
     /**
@@ -53,108 +52,87 @@ class Parser implements ParserInterface
     {
         $this->config = $config;
         $this->transport = $transport;
-        $this->props = [];
     }
 
     /**
      * Parse shortcodes
      *
      * @param string $content Markdown content in Page
-     * @param string $id      Slide id-attribute
+     * @param string $id      Slide ID
+     * @param array  $page    Page configuration
      *
-     * @return array Processed contents and properties
+     * @return array Processed content and shortcodes
      */
-    public function interpretShortcodes(string $content, string $id)
+    public function interpretShortcodes(string $content, string $id, array $page)
     {
         $handlers = new HandlerContainer();
+        $path = $page['path'];
         $handlers->setDefault(
-            function (ShortcodeInterface $sc) {
-                $return = array();
+            function (ShortcodeInterface $sc) use ($id, $path) {
                 $name = $sc->getName();
                 $value = $sc->getParameter($name, $sc->getBbCode());
                 if (Utils::startsWith($name, 'class')) {
-                    $this->props['class'] = $value;
+                    $this->transport->setClass($id, $value);
                 } elseif (Utils::startsWith($name, 'style')) {
-                    $name = str_replace('style-', '', $name);
-                    $this->props['styles'][$name] = $value;
+                    $property = str_replace('style-', '', $name);
+                    $this->stylesProcessor($id, $property, $value, [$path]);
                 } elseif (Utils::startsWith($name, 'data')) {
-                    $this->props['styles'][$name] = $value;
+                    $property = str_replace('data-', '', $name);
+                    $this->transport->setDataAttribute($id, $property, $value);
                 } elseif (Utils::startsWith($name, 'hide')) {
-                    $this->props['hide'] = [true];
+                    $this->transport->setDataAttribute($id, 'hide', "true");
                 }
                 return;
             }
         );
         $parser = "Thunder\Shortcode\Parser\\" . $this->config['shortcode_parser'];
-        $processor = new Processor(new $parser(), $handlers);
-        return ['content' => $processor->process($content), 'props' => $this->props];
+        $parser = new $parser();
+        $processor = new Processor($parser, $handlers);
+        return [
+            'content' => $processor->process($content),
+            'shortcodes' => $parser->parse($content)
+        ];
     }
 
     /**
-     * Create HTML for fragments
+     * Process style
      *
-     * @param string $content Markdown content in Page
+     * @param string $id       Slide id-attribute
+     * @param string $property CSS property name
+     * @param string $value    CSS property value
+     * @param array  $paths    Locations to search for asset in
      *
-     * @return string Processed contents
+     * @return void
      */
-    public function processFragments(string $content)
+    public function stylesProcessor(string $id, string $property, string $value, array $paths = [])
     {
-        $content = preg_replace(
-            self::REGEX_FRAGMENT_SHORTCODE,
-            '<span class="fragment \\1">\\2</span>',
-            $content
-        );
-        return $content;
-    }
-
-    /**
-     * Process styles and data-attributes
-     *
-     * @param array  $styles List of key-value pairs
-     * @param string $route  Route to Page for relative assets
-     * @param string $id     Slide id-attribute
-     * @param string $base   Base path to prepend to file
-     *
-     * @return string Processed styles, in inline string
-     */
-    public function processStylesData(array $styles, string $route, string $id, string $base = "")
-    {
-        $inline = $data = '';
-        foreach ($styles as $property => $value) {
-            if ($property == 'background-image') {
-                if (!Uri::isValidUrl($value)) {
-                    $locations = array(
+        if ($property == 'background-image') {
+            if (!Uri::isValidUrl($value)) {
+                $locations = array_merge(
+                    $paths,
+                    [
                         '',
                         'user/pages',
                         'user/pages/images',
-                    );
-                    $locations = Utilities::explodeFileLocations($locations, GRAV_ROOT, '/', '/');
-                    $file = Utilities::fileFinder($value, $locations);
-                    $file = str_ireplace(GRAV_ROOT, '', $file);
-                    $value = $base . $file;
-                }
-                $inline .= $property . ': url(' . $value . ');';
-            } elseif (Utils::startsWith($property, 'data')) {
-                $data .= ' ' . $property . '="' . $value . '"';
-                if ($property == 'data-textsize-scale') {
-                    $this->transport->setClass($id, 'textsizing');
-                }
-            } elseif ($property == 'header-font-family') {
-                $this->transport->setStyle($id, "{\nfont-family:$value;\n}", 'h1,h2,h3,h4,h5,h6');
-            } elseif ($property == 'header-color') {
-                $this->transport->setStyle($id, "{\ncolor:$value;\n}", 'h1,h2,h3,h4,h5,h6');
-            } elseif ($property == 'block-font-family') {
-                $this->transport->setStyle($id, "{\nfont-family:$value;\n}");
-            } elseif ($property == 'block-color') {
-                $this->transport->setStyle($id, "{\ncolor:$value;\n}");
-            } else {
-                $inline .= $property . ': ' . $value . ';';
+                    ]
+                );
+                $locations = Utilities::explodeFileLocations($locations, GRAV_ROOT, '/', '/');
+                $file = Utilities::fileFinder($value, $locations);
+                $file = str_ireplace(GRAV_ROOT, '', $file);
+                $value = $file;
             }
+            $this->transport->setStyle($id, "{\n$property: url($value);\n}");
+        } elseif ($property == 'header-font-family') {
+            $this->transport->setStyle($id, "{\nfont-family:$value;\n}", 'h1,h2,h3,h4,h5,h6');
+        } elseif ($property == 'header-color') {
+            $this->transport->setStyle($id, "{\ncolor:$value;\n}", 'h1,h2,h3,h4,h5,h6');
+        } elseif ($property == 'block-font-family') {
+            $this->transport->setStyle($id, "{\nfont-family:$value;\n}");
+        } elseif ($property == 'block-color') {
+            $this->transport->setStyle($id, "{\ncolor:$value;\n}");
+        } else {
+            $this->transport->setStyle($id, "{\n$property:$value;\n}");
         }
-        return array(
-            'style' => $inline,
-            'data' => $data
-        );
     }
 
     /**
@@ -199,8 +177,7 @@ class Parser implements ParserInterface
     /**
      * Remove wrapping paragraph from img-element
      *
-     * @param string  $content Markdown content in Page
-     * @param boolean $figure  Optional wrapping in figure-element
+     * @param string $content Markdown content in Page
      *
      * @return string Processed content
      */
