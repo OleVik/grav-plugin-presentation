@@ -9,6 +9,7 @@
    - Fragment-parsing
    - Shortcode-handling through Transport
    - API-selection
+   - Default textsizing-scale and breakpoint-check
 3. [](#bugfix)
    - Data-shortcode handling
 

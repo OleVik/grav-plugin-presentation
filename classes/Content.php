@@ -230,7 +230,7 @@ class Content implements ContentInterface
                 }
                 $this->parser->setModularScale(
                     $config['id'],
-                    $scale ?? 1,
+                    $scale ?? 1.25,
                     $modifier ?? 1
                 );
             }

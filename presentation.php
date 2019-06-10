@@ -525,7 +525,7 @@ class PresentationPlugin extends Plugin
     public function onAssetsInitialized()
     {
         $config = $this->config();
-        if ($config['textsizing'] == 'true') {
+        if ($config['textsizing'] == 'true' && !empty($config['breakpoints'])) {
             $css = '';
             $element = '.reveal .slides section section, .reveal.center .slides section section';
             $breakpoints = array_keys($config['breakpoints']);
