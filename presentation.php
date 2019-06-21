@@ -78,11 +78,10 @@ class PresentationPlugin extends Plugin
      */
     public function onPluginsInitialized()
     {
-        if ($this->config->get('plugins')['presentation']['enabled'] != true) {
+        if ($this->config->get('plugins.presentation.enabled') != true) {
             return;
         }
-        $config = $this->config->get('plugins')['presentation'];
-        if ($this->config->get('system')['debugger']['enabled']) {
+        if ($this->config->get('system.debugger.enabled')) {
             $this->grav['debugger']->startTimer('presentation', 'Presentation');
         }
         if ($this->isAdmin() && $this->config->get('plugins.admin')) {
@@ -96,12 +95,11 @@ class PresentationPlugin extends Plugin
             );
         }
         $this->cache = $this->grav['config']->get('system.cache.enabled');
-        $this->grav['config']->set('system.cache.enabled', false);
         $this->cacheTwig = $this->grav['config']->get('system.pages.never_cache_twig');
-        $this->grav['config']->set('system.pages.never_cache_twig', true);
         $this->enable(
             [
                 'onShortcodeHandlers' => ['onShortcodeHandlers', 0],
+                'onPageInitialized' => ['pagePreCache', 0],
                 'onPageContentProcessed' => ['pageIteration', 0],
                 'onTwigExtensions' => ['onTwigExtensions', 0],
                 'onTwigTemplatePaths' => ['templates', 0],
@@ -111,7 +109,7 @@ class PresentationPlugin extends Plugin
                 'onShutdown' => ['onShutdown', 0]
             ]
         );
-        if ($this->config->get('system')['debugger']['enabled']) {
+        if ($this->config->get('system.debugger.enabled')) {
             $this->grav['debugger']->stopTimer('presentation');
         }
     }
@@ -123,12 +121,25 @@ class PresentationPlugin extends Plugin
      */
     public function config()
     {
-        $plugins = (array) $this->config->get('plugins');
-        if (isset($plugins) && $plugins['presentation']['enabled']) {
-            return $plugins['presentation'];
+        if ($this->config->get('plugins.presentation')) {
+            return (array) $this->config->get('plugins.presentation');
         }
         return false;
     }
+
+    /**
+     * Disable caching for related templates
+     *
+     * @return void
+     */
+    public function pagePreCache()
+    {
+        if ($this->grav['page']->template() == 'presentation' || $this->grav['page']->template() == 'slide') {
+            $this->grav['config']->set('system.cache.enabled', false);
+            $this->grav['config']->set('system.pages.never_cache_twig', true);
+        }
+    }
+
 
     /**
      * Construct the page
@@ -139,9 +150,6 @@ class PresentationPlugin extends Plugin
     {
         $grav = $this->grav;
         $config = $this->config();
-        if (!$config['enabled']) {
-            return;
-        }
         if ($grav['page']->template() == 'presentation' || $grav['page']->template() == 'slide') {
             if (!isset($this->grav['twig']->twig_vars['reveal_init'])) {
                 $baseUrl = $this->grav['uri']->rootUrl(true);

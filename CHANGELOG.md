@@ -1,3 +1,10 @@
+# v2.0.2
+## XX-06-2019
+
+1. [](#improved)
+   - Cache-manipulation
+   - Config-retrieval
+
 # v2.0.1
 ## 10-06-2019
 
