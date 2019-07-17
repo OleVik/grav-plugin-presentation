@@ -1,3 +1,9 @@
+# v2.0.3
+## 17-07-2019
+
+1. [](#bugfix)
+   - Blank value fallback in shortcode-processing
+
 # v2.0.2
 ## 22-06-2019
 

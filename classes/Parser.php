@@ -72,7 +72,7 @@ class Parser implements ParserInterface
         $handlers->setDefault(
             function (ShortcodeInterface $sc) use ($id, $path) {
                 $name = $sc->getName();
-                $value = $sc->getParameter($name, $sc->getBbCode());
+                $value = $sc->getParameter($name, $sc->getBbCode()) ?? '';
                 if (Utils::startsWith($name, 'class')) {
                     $this->transport->setClass($id, $value);
                 } elseif (Utils::startsWith($name, 'style')) {
