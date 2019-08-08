@@ -83,6 +83,11 @@
     {{ assets.css('critical')|raw }}
     {{ assets.js('critical')|raw }}
     {{ assets.css('presentation')|raw }}
+
+    {% block assets deferred %}
+      {{ assets.css()|raw }}
+      {{ assets.js()|raw }}
+    {% endblock %}
   </head>
   {% endblock head %}
   <body id="top" class="{{ page.header.body_classes }}">
