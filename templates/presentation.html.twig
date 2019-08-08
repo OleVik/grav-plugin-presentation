@@ -80,11 +80,11 @@
         {% do assets.addJs('plugin://presentation/js/modular-scale.js', {'group': 'critical'}) %}
       {% endif %} #}
     {% endblock %}
-    {{ assets.css('critical')|raw }}
-    {{ assets.js('critical')|raw }}
-    {{ assets.css('presentation')|raw }}
-
     {% block assets deferred %}
+      {{ assets.css('critical')|raw }}
+      {{ assets.js('critical')|raw }}
+      {{ assets.css('presentation')|raw }}
+      
       {{ assets.css()|raw }}
       {{ assets.js()|raw }}
     {% endblock %}
