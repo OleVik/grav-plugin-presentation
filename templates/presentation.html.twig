@@ -84,9 +84,9 @@
       {{ assets.css('critical')|raw }}
       {{ assets.js('critical')|raw }}
       {{ assets.css('presentation')|raw }}
-      
-      {{ assets.css()|raw }}
-      {{ assets.js()|raw }}
+      {% if config.plugins['presentation'].all_assets or config.system.debugger.enabled %}
+        {{ assets.css()|raw }}
+      {% endif %}
     {% endblock %}
   </head>
   {% endblock head %}
@@ -170,11 +170,12 @@
       {% do assets.addJs('plugin://presentation/node_modules/axios/dist/axios.min.js', {'group': 'presentation'}) %}
       {% do assets.addJs('plugin://presentation/js/poll.js', {'group': 'bottom'}) %}
     {% endif %}
-    {% if config.plugins['presentation'].all_assets or config.system.debugger.enabled %}
-      {{ assets.css() }}
-      {{ assets.js() }}
-    {% endif %}
-    {{ assets.js('bottom')|raw }}
+    {% block assets_bottom deferred %}
+      {{ assets.js('bottom')|raw }}
+      {% if config.plugins['presentation'].all_assets or config.system.debugger.enabled %}
+        {{ assets.js()|raw }}
+      {% endif %}
+    {% endblock %}
     <div id="snackbar">
       <span id="snackbar-message"></span>
       <a href="javascript:window.location.reload(true)">Reload?</a>

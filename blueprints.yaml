@@ -1,5 +1,5 @@
 name: Presentation
-version: 2.0.3
+version: 2.1.0
 description: Responsive navigational slideshows with Reveal.js
 icon: arrows-alt
 author:
@@ -81,6 +81,22 @@ form:
             builtin_js:
               type: toggle
               label: PLUGIN_PRESENTATION.ADMIN.OPTIONS.ASSETS.BUILTIN_JS.LABEL
+              options:
+                1: PLUGIN_ADMIN.ENABLED
+                0: PLUGIN_ADMIN.DISABLED
+              validate:
+                type: bool
+            plugin_css:
+              type: toggle
+              label: PLUGIN_PRESENTATION.ADMIN.OPTIONS.ASSETS.PLUGIN_CSS.LABEL
+              options:
+                1: PLUGIN_ADMIN.ENABLED
+                0: PLUGIN_ADMIN.DISABLED
+              validate:
+                type: bool
+            plugin_js:
+              type: toggle
+              label: PLUGIN_PRESENTATION.ADMIN.OPTIONS.ASSETS.PLUGIN_JS.LABEL
               options:
                 1: PLUGIN_ADMIN.ENABLED
                 0: PLUGIN_ADMIN.DISABLED

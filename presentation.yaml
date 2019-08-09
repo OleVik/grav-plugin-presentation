@@ -22,11 +22,11 @@ footer: ""
 transition: true
 shortcodes: true
 shortcode_classes: "presentation-iframe"
-shortcode_parser: RegularParser
 unwrap_images: true
 content: "Content"
 parser: "Parser"
 transport: "Transport"
+shortcode_parser: RegularParser
 breakpoints:
   240: "16"
   320: "20"

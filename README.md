@@ -59,12 +59,18 @@ theme: moon
 order:
   by: folder
   dir: asc
+# Load all registered CSS and JS assets
+all_assets: false
 # Include Theme's custom.css
 theme_css: true
-# Enable Plugin's CSS
+# Enable Reveal.js CSS
 builtin_css: true
-# Enable Plugin's JS
+# Enable Reveal.js JS
 builtin_js: true
+# Enable Plugin's CSS
+plugin_css: true
+# Enable Plugin's JS
+plugin_js: true
 # Enable Plugin's dynamic text sizing
 textsizing: true
 # Synchronize Slide-navigation
@@ -99,6 +105,8 @@ content: "Content"
 parser: "Parser"
 # Class to use for Styles, Classes, and Data management
 transport: "Transport"
+# Class to use for Shortcode parsing
+shortcode_parser: RegularParser
 # Breakpoints for responsive textsizing
 breakpoints:
   240: "16"

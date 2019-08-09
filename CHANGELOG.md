@@ -1,3 +1,11 @@
+# v2.1.0
+## 09-08-2019
+
+1. [](#improved)
+   - Defer assets loading (#11)
+   - README
+   - Blueprints
+
 # v2.0.3
 ## 17-07-2019
 

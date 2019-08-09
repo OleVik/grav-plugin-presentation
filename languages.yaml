@@ -56,8 +56,12 @@ en:
             LABEL: Use Theme's CSS
             DESCRIPTION: "Import current theme's /css/custom.css into presentation.html.twig's assets"
           BUILTIN_CSS:
-            LABEL: Use Plugin's CSS
+            LABEL: Use Reveal.js CSS
           BUILTIN_JS:
+            LABEL: Use Reveal.js JS
+          PLUGIN_CSS:
+            LABEL: Use Plugin's CSS
+          PLUGIN_JS:
             LABEL: Use Plugin's JS
         TEXTSIZE:
           TITLE: Font Sizing
