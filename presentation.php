@@ -100,7 +100,7 @@ class PresentationPlugin extends Plugin
             [
                 'onShortcodeHandlers' => ['onShortcodeHandlers', 0],
                 'onPageInitialized' => ['pagePreCache', 0],
-                'onPageContentProcessed' => ['pageIteration', 0],
+                'onPageContentProcessed' => ['pageIteration', -10],
                 'onTwigExtensions' => ['onTwigExtensions', 0],
                 'onTwigTemplatePaths' => ['templates', 0],
                 'onTwigSiteVariables' => ['twigBaseUrl', 0],
