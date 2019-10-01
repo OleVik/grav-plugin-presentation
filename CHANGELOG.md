@@ -1,3 +1,9 @@
+# v3.0.2
+## 01-10-2019
+
+1. [](#bugfix)
+   - Testing-parameter is useless, let me have Semantic Versioning!
+
 # v3.0.1
 ## 01-10-2019
 
