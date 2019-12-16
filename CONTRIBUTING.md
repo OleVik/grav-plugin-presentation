@@ -8,21 +8,21 @@ A bug is a _demonstrable problem_ that is caused by the code in the repository.
 
 Guidelines for bug reports:
 
-1. Check you satisfy the **[Grav requirements](http://learn.getgrav.org/basics/requirements)** and **Plugin requirements](https://github.com/OleVik/grav-plugin-presentation#requirements)**
+1. Check that you satisfy the **[Grav requirements](http://learn.getgrav.org/basics/requirements)**
 
-2. **Check this happens on a clean Grav install** &mdash; check if the issue happens on any Grav site, or just with a specific configuration of plugins / theme
+2. **Check that this happens on a clean Grav installation** &mdash; check if the issue happens on any Grav site, or just with a specific configuration of plugins / themes
 
-3. Use the **[GitHub issue search](https://github.com/OleVik/grav-plugin-presentation/issues)** &mdash; check if the issue has already been reported.
+3. Use the **[GitHub issue search](https://github.com/OleVik/grav-plugin-presentation/issues)** &mdash; check if the issue has already been reported
 
-4. Check if the issue is already being solved in a **[Pull Requests](https://github.com/OleVik/grav-plugin-presentation/pulls)**
+4. Check if the issue is already being solved in a **[Pull Request](https://github.com/OleVik/grav-plugin-presentation/pulls)**
 
 5. Create a [reduced test case](http://css-tricks.com/reduced-test-cases/) and **provide step-by-step instructions on how to recreate the problem**: Include code samples, Page snippets or YAML-configuration like plugin settings or FrontMatter as needed, **as well as the version of Grav, the plugin, and other plugins or themes**
 
-A good bug report shouldn't leave others out information. Please try to be as detailed as possible in your report.
+A good bug report shouldn't leave out information. Please try to be as detailed as possible in your report.
 
-- What is your environment? Is it localhost, OSX, Linux, on a remote server? Same thing happening locally and or the server, just locally, or just on Windows?
+- What is your environment? Is it localhost, OSX, Linux, on a remote server? Is the same thing happening locally or on the remote server, or just on Windows?
 
-- What steps will reproduce the issue? What browser(s) and OS experience the problem?
+- What steps will reproduce the issue? What browser(s) and OS' experience the problem?
 
 - What would you expect to be the outcome?
 
@@ -36,11 +36,11 @@ Important: [include Code Samples in triple backticks](https://help.github.com/ar
 
 ## Feature requests
 
-Feature requests are welcome, and submitted as [issues](https://github.com/OleVik/grav-plugin-presentation/issues). But take a moment to find out whether your idea fits with the scope and aims of the project. It's up to *you* to make a strong case to convince the project's developers of the merits of this feature. Please provide as much detail and context as possible.
+Feature requests are welcome, and submitted to [issues](https://github.com/OleVik/grav-plugin-presentation/issues). But take a moment to find out whether your idea fits with the scope and aims of the project. It's up to *you* to make a strong case to convince the project's developers of the merits of this feature. Please provide as much detail and context as possible.
 
 ## Pull requests
 
-Good pull requests - patches, improvements, new features - are a fantastic help. They should remain focused in scope and avoid containing unrelated commits. They must also adhere to the code standards outlined below. See [Using Pull Request](https://help.github.com/articles/using-pull-requests/) and [Fork a Repo](https://help.github.com/articles/fork-a-repo/) if you are not familiar with Pull Requests.
+Good pull requests - patches, improvements, new features - are a fantastic help. They should remain focused in scope and not contain unrelated commits. They must also adhere to the current code standards. See [Using Pull Request](https://help.github.com/articles/using-pull-requests/) and [Fork a Repo](https://help.github.com/articles/fork-a-repo/) if you are not familiar with Pull Requests.
 
 **IMPORTANT**: By submitting a patch, you agree to allow the project owner to
 license your work under the same license as that used by the project.
