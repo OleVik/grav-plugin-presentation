@@ -50,7 +50,11 @@ class Content implements ContentInterface
         $this->config = $config;
         $this->parser = $parser;
         $this->transport = $transport;
-        $this->parsedown = new \Parsedown();
+        if ($this->grav['config']->get('system.pages.markdown.extra')) {
+            $this->parsedown = new \ParsedownExtra();
+        } else {
+            $this->parsedown = new \Parsedown();
+        }
     }
 
     /**
