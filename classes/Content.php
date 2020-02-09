@@ -228,11 +228,13 @@ class Content implements ContentInterface
                 if (isset($page['header']->textsize['modifier'])) {
                     $modifier = (float) $page['header']->textsize['modifier'];
                 }
-                $this->parser->setModularScale(
-                    $config['id'],
-                    $scale ?? 1.25,
-                    $modifier ?? 1
-                );
+                if (!empty($scale) && !empty($modifier)) {
+                    $this->parser->setModularScale(
+                        $config['id'],
+                        $scale ?? 1.25,
+                        $modifier ?? 1
+                    );
+                }
             }
             if (isset($page['header']->class) && !empty($page['header']->class)) {
                 foreach ($page['header']->class as $item) {

@@ -121,6 +121,9 @@ class Parser implements ParserInterface
             }
             $key = str_replace($mode . '-', '', $key);
             if ($mode == 'style') {
+                if (empty($value)) {
+                    continue;
+                }
                 $this->styleProcessor($id, $key, $value, $paths);
             } elseif ($mode == 'data') {
                 $this->transport->setDataAttribute($id, $key, $value);
