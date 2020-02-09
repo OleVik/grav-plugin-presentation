@@ -211,7 +211,7 @@ en:
         PARSER:
           LABEL: Parser
           DESCRIPTION: Use a custom parser for content.
-        STYLES:
+        TRANSPORT:
           LABEL: Transport
           DESCRIPTION: Use a custom getter/setter for transporting data.
         REVEAL:
