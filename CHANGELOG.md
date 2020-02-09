@@ -1,3 +1,11 @@
+# v3.0.3
+## 09-02-2020
+
+1. [](#new)
+   - Enable ParsedownExtra when set in system.yaml
+1. [](#bugfix)
+   - Variable in blueprints.yaml and languages.yaml
+
 # v3.0.2
 ## 01-10-2019
 
