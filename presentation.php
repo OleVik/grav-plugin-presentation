@@ -186,7 +186,9 @@ class PresentationPlugin extends Plugin
                 $options = Utilities::parseAmbiguousArrayValues($config['options']);
                 $options = json_encode($options, JSON_PRETTY_PRINT);
                 $breakpoints = json_encode($config['breakpoints']);
-                $this->grav['twig']->twig_vars['reveal_init'] = $options;
+                /* Deprecated v3.1.0 */
+                // $this->grav['twig']->twig_vars['reveal_init'] = $options;
+                $grav['assets']->addInlineJs('const reveal_init = ' . $options . ';', null, 'presentation');
                 $this->grav['twig']->twig_vars['presentation_menu'] = $menu;
                 $this->grav['twig']->twig_vars['presentation_breakpoints'] = $breakpoints;
                 $grav['assets']->addInlineCss($this->transport->getStyles(), null, 'presentation');
@@ -485,24 +487,22 @@ class PresentationPlugin extends Plugin
     public function onAdminPagesAssetsInitialized()
     {
         $uri = $this->grav['uri'];
-        $config = $this->config();
-        $page = $this->grav['page'];
         $res = Grav::instance()['locator'];
         $path = $res->findResource('plugin://' . $this->name, false);
-        $adminRoute = $this->config->get('plugins')['admin']['route'];
+        $adminRoute = $this->config->get('plugins.admin.route');
         if (!Utils::contains($uri->path(), $adminRoute . '/pages')) {
             return;
         }
-        if ($config['admin_async_save'] !== true) {
+        if ($this->config->get('plugins.presentation.admin_async_save') !== true) {
             return;
         }
         $adminRoute = $uri->rootUrl(true) . $adminRoute;
         $inlineJsConstants = array(
             'presentationAPIRoute = "' . $adminRoute . '/' . $config['api_route'] . '"',
-            'presentationAPITimeout = ' . ($config['poll_timeout'] ?: 2000) * 2.5,
-            'presentationAPIRetryLimit = ' . ($config['poll_retry_limit'] ?: 10),
-            'presentationAdminAsyncSave = ' . ($config['admin_async_save'] ?: 0),
-            'presentationAdminAsyncSaveTyping = ' . ($config['admin_async_save_typing'] ?: 0)
+            'presentationAPITimeout = ' . ($this->config->get('plugins.presentation.poll_timeout') ?: 2000) * 2.5,
+            'presentationAPIRetryLimit = ' . ($this->config->get('plugins.presentation.poll_retry_limit') ?: 10),
+            'presentationAdminAsyncSave = ' . ($this->config->get('plugins.presentation.admin_async_save') ?: 0),
+            'presentationAdminAsyncSaveTyping = ' . ($this->config->get('plugins.presentation.admin_async_save_typing') ?: 0)
         );
         $inlineJs = '';
         foreach ($inlineJsConstants as $constant) {

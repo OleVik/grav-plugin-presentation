@@ -336,10 +336,10 @@ form:
               data-options@:
                 - "\\Grav\\Plugin\\PresentationPlugin::getClassNamesBlueprintOptions"
                 - Parser
-            styles:
+            transport:
               type: select
-              label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.STYLES.LABEL
-              description: PLUGIN_PRESENTATION.ADMIN.ADVANCED.STYLES.DESCRIPTION
+              label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.TRANSPORT.LABEL
+              description: PLUGIN_PRESENTATION.ADMIN.ADVANCED.TRANSPORT.DESCRIPTION
               data-options@:
                 - "\\Grav\\Plugin\\PresentationPlugin::getClassNamesBlueprintOptions"
                 - Transport
