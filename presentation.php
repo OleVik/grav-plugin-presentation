@@ -207,9 +207,13 @@ class PresentationPlugin extends Plugin
         $page = $this->grav['page'];
         $config = $this->config();
         $plugins = $this->config->get('plugins');
-        if ($uri->path() == '/' . $config['api_route']) {
+        if ($uri->path() == '/' . $this->config->get('plugins.presentation.api_route')) {
             if ($_GET['action'] == 'poll') {
-                $this->handlePollAPI($uri, $page, $config);
+                $this->handlePollAPI(
+                    $uri,
+                    $page,
+                    (array) $this->config->get('plugins.presentation')
+                );
             }
         }
         if (isset($plugins['admin']) && $plugins['admin']['enabled'] == true) {
@@ -272,6 +276,9 @@ class PresentationPlugin extends Plugin
             include_once __DIR__ . '/API/Poll.php';
             $poll = new Poll($target, 'Poll.json');
             gc_enable();
+            if (!isset($config['token']) || empty($config['token'])) {
+                return;
+            }
             if ($_GET['mode'] == 'set' && isset($_GET['data'])) {
                 Utilities::authorize($config['token']);
                 $poll->remove();

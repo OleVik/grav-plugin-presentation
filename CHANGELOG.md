@@ -1,3 +1,9 @@
+# v3.1.2
+## 10-02-2020
+
+1. [](#bugfix)
+   - Reduce reliance on config()
+
 # v3.1.1
 ## 09-02-2020
 
