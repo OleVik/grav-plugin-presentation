@@ -175,17 +175,28 @@ class PresentationPlugin extends Plugin
                     $this->parser,
                     $this->transport
                 );
-                if (isset($config['style']) && !empty($config['style'])) {
-                    $this->parser->processor($config['style'], 'presentation', (array) $grav['page'], 'style');
+                if ($this->config->get('plugins.presentation.style')
+                    && !empty($this->config->get('plugins.presentation.style'))
+                ) {
+                    $this->parser->processor(
+                        $this->config->get('plugins.presentation.style'),
+                        'presentation',
+                        (array) $grav['page'],
+                        'style'
+                    );
                 }
                 $tree = $this->content->buildTree($grav['page']->route());
                 $slides = $this->content->buildContent($tree);
                 $grav['page']->setRawContent($slides);
                 $menu = $this->content->buildMenu($tree);
                 $menu = Utilities::flattenArray($menu, 1);
-                $options = Utilities::parseAmbiguousArrayValues($config['options']);
+                $options = Utilities::parseAmbiguousArrayValues(
+                    $this->config->get('plugins.presentation.options')
+                );
                 $options = json_encode($options, JSON_PRETTY_PRINT);
-                $breakpoints = json_encode($config['breakpoints']);
+                $breakpoints = json_encode(
+                    $this->config->get('plugins.presentation.breakpoints')
+                );
                 /* Deprecated v3.1.0 */
                 // $this->grav['twig']->twig_vars['reveal_init'] = $options;
                 $grav['assets']->addInlineJs('const reveal_init = ' . $options . ';', null, 'presentation');
@@ -205,16 +216,19 @@ class PresentationPlugin extends Plugin
     {
         $uri = $this->grav['uri'];
         $page = $this->grav['page'];
-        $config = $this->config();
         $plugins = $this->config->get('plugins');
-        if ($uri->path() == '/' . $config['api_route']) {
+        if ($uri->path() == '/' . $this->config->get('plugins.presentation.style')) {
             if ($_GET['action'] == 'poll') {
-                $this->handlePollAPI($uri, $page, $config);
+                $this->handlePollAPI(
+                    $uri,
+                    $page,
+                    (array) $this->config->get('plugins.presentation.style')
+                );
             }
         }
         if (isset($plugins['admin']) && $plugins['admin']['enabled'] == true) {
             $adminRoute = $this->config->get('plugins')['admin']['route'];
-            if ($uri->path() == $adminRoute . '/' . $config['api_route']) {
+            if ($uri->path() == $adminRoute . '/' . $this->config->get('plugins.presentation.api_route')) {
                 if ($_GET['action'] == 'save') {
                     $this->handleSaveAPI();
                 }
@@ -258,7 +272,7 @@ class PresentationPlugin extends Plugin
      */
     public function handlePollAPI($config)
     {
-        if ($config['sync'] == 'poll') {
+        if (isset($config['sync']) && $config['sync'] == 'poll') {
             set_time_limit(0);
             header('Cache-Control: no-cache, no-store, max-age=0, must-revalidate');
             header('Pragma: no-cache');
@@ -272,6 +286,10 @@ class PresentationPlugin extends Plugin
             include_once __DIR__ . '/API/Poll.php';
             $poll = new Poll($target, 'Poll.json');
             gc_enable();
+            if (!isset($config['token']) || empty($config['token'])) {
+                return;
+            }
+            )
             if ($_GET['mode'] == 'set' && isset($_GET['data'])) {
                 Utilities::authorize($config['token']);
                 $poll->remove();
@@ -498,7 +516,7 @@ class PresentationPlugin extends Plugin
         }
         $adminRoute = $uri->rootUrl(true) . $adminRoute;
         $inlineJsConstants = array(
-            'presentationAPIRoute = "' . $adminRoute . '/' . $config['api_route'] . '"',
+            'presentationAPIRoute = "' . $adminRoute . '/' . $this->config->get('plugins.presentation.api_route') . '"',
             'presentationAPITimeout = ' . ($this->config->get('plugins.presentation.poll_timeout') ?: 2000) * 2.5,
             'presentationAPIRetryLimit = ' . ($this->config->get('plugins.presentation.poll_retry_limit') ?: 10),
             'presentationAdminAsyncSave = ' . ($this->config->get('plugins.presentation.admin_async_save') ?: 0),
@@ -530,12 +548,18 @@ class PresentationPlugin extends Plugin
      */
     public function onAssetsInitialized()
     {
-        $config = $this->config();
-        if ($config['textsizing'] == 'true' && !empty($config['breakpoints'])) {
+        if ($this->config->get('plugins.presentation.textsizing')
+            && $this->config->get('plugins.presentation.breakpoints')
+            && !empty($this->config->get('plugins.presentation.breakpoints'))
+        ) {
             $css = '';
             $element = '.reveal .slides section section, .reveal.center .slides section section';
-            $breakpoints = array_keys($config['breakpoints']);
-            $sizes = array_values($config['breakpoints']);
+            $breakpoints = array_keys(
+                $this->config->get('plugins.presentation.breakpoints')
+            );
+            $sizes = array_values(
+                $this->config->get('plugins.presentation.breakpoints')
+            );
             for ($i = 0; $i < count($breakpoints); $i++) {
                 $css .= '@media screen and ';
                 if ($i == 0) {
