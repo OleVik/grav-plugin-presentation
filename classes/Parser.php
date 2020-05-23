@@ -78,6 +78,9 @@ class Parser implements ParserInterface
                 } elseif (Utils::startsWith($name, 'style')) {
                     $property = str_replace('style-', '', $name);
                     $this->styleProcessor($id, $property, $value, [$path]);
+                } elseif (Utils::startsWith($name, 'styles')) {
+                    $property = str_replace('styles-', '', $name);
+                    $this->styleProcessor($id, $property, $value, [$path]);
                 } elseif (Utils::startsWith($name, 'data')) {
                     $property = str_replace('data-', '', $name);
                     $this->transport->setDataAttribute($id, $property, $value);

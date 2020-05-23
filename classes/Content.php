@@ -112,18 +112,21 @@ class Content implements ContentInterface
                     ['page' => $page]
                 );
             }
-            if (isset($page->header()->styles)) {
-                $paths[$route]['style'] = $page->header()->styles;
-            } elseif (isset($config['style'])) {
-                $paths[$route]['style'] = $config['style'];
-            }
             $paths[$route]['content'] = $page->content();
-
             if (!empty($paths[$route])) {
                 $children = $this->buildTree($route, $mode, $depth);
                 if (!empty($children)) {
                     $paths[$route]['children'] = $children;
                 }
+            }
+        }
+        
+        if (isset($config['styles'])
+            && is_array($config['styles'])
+            && !empty($config['styles'])
+        ) {
+            foreach ($config['styles'] as $property => $value) {
+                $this->parser->styleProcessor($page->slug(), $property, $value);
             }
         }
         if (!empty($paths)) {
@@ -272,6 +275,14 @@ class Content implements ContentInterface
      */
     public function buildSlide(array $page, array $config, string $break)
     {
+        if (isset($page['header']->styles)
+            && is_array($page['header']->styles)
+            && !empty($page['header']->styles)
+        ) {
+            foreach ($page['header']->styles as $property => $value) {
+                $this->parser->styleProcessor($config['id'], $property, $value, $page);
+            }
+        }
         if ($config['shortcodes']) {
             $break = self::pushNotes($break);
             $shortcodes = $this->parser->processShortcodes($break, $config['id'], $page);

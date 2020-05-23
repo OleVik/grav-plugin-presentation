@@ -1,3 +1,9 @@
+# v3.1.3
+## 23-05-2020
+
+1. [](#bugfix)
+   - Fix transport for styles
+
 # v3.1.2
 ## 10-02-2020
 

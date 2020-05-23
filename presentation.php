@@ -182,7 +182,7 @@ class PresentationPlugin extends Plugin
                         $this->config->get('plugins.presentation.style'),
                         'presentation',
                         (array) $grav['page'],
-                        'style'
+                        'styles'
                     );
                 }
                 $tree = $this->content->buildTree($grav['page']->route());
@@ -202,7 +202,10 @@ class PresentationPlugin extends Plugin
                 $grav['assets']->addInlineJs('const reveal_init = ' . $options . ';', null, 'presentation');
                 $this->grav['twig']->twig_vars['presentation_menu'] = $menu;
                 $this->grav['twig']->twig_vars['presentation_breakpoints'] = $breakpoints;
-                $grav['assets']->addInlineCss($this->transport->getStyles(), null, 'presentation');
+                
+                if ($grav['page']->template() == 'presentation') {
+                    $grav['assets']->addInlineCss($this->transport->getStyles(), null, 'presentation');
+                }
             }
         }
     }
