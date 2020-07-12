@@ -93,6 +93,8 @@ admin_async_save_typing: false
 footer: ""
 # Enable onLoad transition
 transition: true
+# Process HTML or raw Markdown
+process: html
 # Enable Plugin's shortcodes
 shortcodes: true
 # Default class for Presentation-shortcode
@@ -331,6 +333,10 @@ Each slide can have notes associated with it, like a PowerPoint-presentation wou
 ## [Advanced Usage](https://github.com/OleVik/grav-plugin-presentation/blob/master/ADVANCED.md)
 
 ## [Contributing and Development](https://github.com/OleVik/grav-plugin-presentation/blob/master/CONTRIBUTING.md)
+
+## TODO
+
+- [ ] Bump to [new major-version of Reveal.js](https://revealjs.com/upgrading/)
 
 ## Credits
 

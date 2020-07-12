@@ -1,5 +1,5 @@
 name: Presentation
-version: 3.1.4-beta.1
+version: 4.0.0-beta.1
 testing: true
 description: Responsive navigational slideshows with Reveal.js
 icon: arrows-alt
@@ -313,6 +313,14 @@ form:
                 0: PLUGIN_ADMIN.DISABLED
               validate:
                 type: bool
+            process:
+              type: select
+              label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.PROCESS.LABEL
+              description: PLUGIN_PRESENTATION.ADMIN.ADVANCED.PROCESS.DESCRIPTION
+              default: html
+              options:
+                html: HTML
+                markdown: Markdown
             unwrap_images:
               type: toggle
               label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.UNWRAP_IMAGES.LABEL

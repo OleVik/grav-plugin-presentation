@@ -1,3 +1,11 @@
+# v4.0.0-beta.1
+## 12-07-2020
+
+1. [](#bugfix)
+   - Re-processing content with Parsedown broke slides
+2. [](#new)
+   - `process`-option
+
 # v3.1.4-beta.1
 ## 12-07-2020
 

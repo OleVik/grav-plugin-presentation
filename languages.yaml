@@ -202,6 +202,9 @@ en:
         TRANSITION:
           LABEL: OnLoad Transition
           DESCRIPTION: Fade in from white when page (DOM-structure) is ready.
+        PROCESS:
+          LABEL: Process
+          DESCRIPTION: Use HTML or raw Markdown when building slides.
         UNWRAP_IMAGES:
           LABEL: Unwrap Images
           DESCRIPTION: Unwrap images from paragraphs.

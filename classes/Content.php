@@ -112,7 +112,11 @@ class Content implements ContentInterface
                     ['page' => $page]
                 );
             }
-            $paths[$route]['content'] = $page->content();
+            if (isset($this->config['process']) && $this->config['process'] == "markdown") {
+                $paths[$route]['content'] = $page->rawMarkdown();
+            } else {
+                $paths[$route]['content'] = $page->content();
+            }
             if (!empty($paths[$route])) {
                 $children = $this->buildTree($route, $mode, $depth);
                 if (!empty($children)) {
@@ -157,7 +161,9 @@ class Content implements ContentInterface
             if (preg_match(self::REGEX_FRAGMENT_SHORTCODE, $content)) {
                 $content = $this->processFragments($content);
             }
-            $content = $this->parsedown->text($content);
+            if (isset($this->config['process']) && $this->config['process'] == "markdown") {
+                $content = $this->parsedown->text($content);
+            }
             $breaks = explode('<hr />', $content);
             if (count($breaks) > 0) {
                 $this->breakContent($page, $config, $breaks);

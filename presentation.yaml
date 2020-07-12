@@ -20,6 +20,7 @@ admin_async_save: false
 admin_async_save_typing: false
 footer: ""
 transition: true
+process: html
 shortcodes: true
 shortcode_classes: "presentation-iframe"
 unwrap_images: true
