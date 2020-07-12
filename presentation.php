@@ -175,14 +175,14 @@ class PresentationPlugin extends Plugin
                     $this->parser,
                     $this->transport
                 );
-                if ($this->config->get('plugins.presentation.style')
-                    && !empty($this->config->get('plugins.presentation.style'))
-                ) {
+                $styles = $this->config->get('plugins.presentation.style') ??
+                    $this->config->get('plugins.presentation.styles') ??
+                    [];
+                if (!empty($styles) && is_array($styles) && Utils::arrayIsAssociative($styles)) {
                     $this->parser->processor(
-                        $this->config->get('plugins.presentation.style'),
+                        $styles,
                         'presentation',
-                        (array) $grav['page'],
-                        'styles'
+                        (array) $grav['page']
                     );
                 }
                 $tree = $this->content->buildTree($grav['page']->route());
@@ -197,12 +197,10 @@ class PresentationPlugin extends Plugin
                 $breakpoints = json_encode(
                     $this->config->get('plugins.presentation.breakpoints')
                 );
-                /* Deprecated v3.1.0 */
-                // $this->grav['twig']->twig_vars['reveal_init'] = $options;
+                $this->grav['twig']->twig_vars['reveal_init'] = $options;
                 $grav['assets']->addInlineJs('const reveal_init = ' . $options . ';', null, 'presentation');
                 $this->grav['twig']->twig_vars['presentation_menu'] = $menu;
                 $this->grav['twig']->twig_vars['presentation_breakpoints'] = $breakpoints;
-                
                 if ($grav['page']->template() == 'presentation') {
                     $grav['assets']->addInlineCss($this->transport->getStyles(), null, 'presentation');
                 }

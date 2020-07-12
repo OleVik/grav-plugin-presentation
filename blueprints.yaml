@@ -1,5 +1,6 @@
 name: Presentation
-version: 3.1.3
+version: 3.1.4-beta.1
+testing: true
 description: Responsive navigational slideshows with Reveal.js
 icon: arrows-alt
 author:
@@ -168,7 +169,7 @@ form:
                   label: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-COLOR.LABEL
                 style.background-image:
                   type: filepicker
-                  folder: 'user/pages/images'
+                  folder: "user/pages/images"
                   preview_images: true
                   label: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-IMAGE.LABEL
                   description: PLUGIN_PRESENTATION.ADMIN.STYLE.BACKGROUND-IMAGE.DESCRIPTION
@@ -235,8 +236,8 @@ form:
                     self-end: PLUGIN_PRESENTATION.ADMIN.STYLE.ALIGN-ITEMS.OPTIONS.SELF-END
                     normal: PLUGIN_PRESENTATION.ADMIN.STYLE.ALIGN-ITEMS.OPTIONS.NORMAL
                     baseline: PLUGIN_PRESENTATION.ADMIN.STYLE.ALIGN-ITEMS.OPTIONS.BASELINE
-                    'first baseline': PLUGIN_PRESENTATION.ADMIN.STYLE.ALIGN-ITEMS.OPTIONS.FIRST-BASELINE
-                    'last baseline': PLUGIN_PRESENTATION.ADMIN.STYLE.ALIGN-ITEMS.OPTIONS.LAST-BASELINE
+                    "first baseline": PLUGIN_PRESENTATION.ADMIN.STYLE.ALIGN-ITEMS.OPTIONS.FIRST-BASELINE
+                    "last baseline": PLUGIN_PRESENTATION.ADMIN.STYLE.ALIGN-ITEMS.OPTIONS.LAST-BASELINE
                     initial: PLUGIN_PRESENTATION.ADMIN.COMMON.INITIAL
                     inherit: PLUGIN_PRESENTATION.ADMIN.COMMON.INHERIT
                 horizontal:
@@ -299,9 +300,9 @@ form:
               label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.SHORTCODE_PARSER.LABEL
               description: PLUGIN_PRESENTATION.ADMIN.ADVANCED.SHORTCODE_PARSER.LABEL
               options:
-                  RegularParser: PLUGIN_PRESENTATION.ADMIN.ADVANCED.SHORTCODE_PARSER.OPTIONS.REGULAR
-                  RegexParser: PLUGIN_PRESENTATION.ADMIN.ADVANCED.SHORTCODE_PARSER.OPTIONS.REGEX
-                  WordpressParser: PLUGIN_PRESENTATION.ADMIN.ADVANCED.SHORTCODE_PARSER.OPTIONS.WORDPRESS
+                RegularParser: PLUGIN_PRESENTATION.ADMIN.ADVANCED.SHORTCODE_PARSER.OPTIONS.REGULAR
+                RegexParser: PLUGIN_PRESENTATION.ADMIN.ADVANCED.SHORTCODE_PARSER.OPTIONS.REGEX
+                WordpressParser: PLUGIN_PRESENTATION.ADMIN.ADVANCED.SHORTCODE_PARSER.OPTIONS.WORDPRESS
             transition:
               type: toggle
               label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.TRANSITION.LABEL

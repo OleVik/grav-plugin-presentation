@@ -1,3 +1,12 @@
+# v3.1.4-beta.1
+## 12-07-2020
+
+1. [](#bugfix)
+   - Flexibility in declaring styles from config and FrontMatter
+   - Reinstate `reveal_init` initialization
+2. [](#improved)
+   - Stricter type-checking on styles
+
 # v3.1.3
 ## 23-05-2020
 

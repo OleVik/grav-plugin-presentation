@@ -117,6 +117,8 @@ class Parser implements ParserInterface
         foreach ($data as $key => $value) {
             if (Utils::startsWith('style-', $key)) {
                 $mode = 'style';
+            } elseif (Utils::startsWith('styles-', $key)) {
+                $mode = 'style';
             } elseif (Utils::startsWith('data-', $key)) {
                 $mode = 'data';
             } elseif (Utils::startsWith('aria-', $key)) {

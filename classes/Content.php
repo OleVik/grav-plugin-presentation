@@ -275,11 +275,13 @@ class Content implements ContentInterface
      */
     public function buildSlide(array $page, array $config, string $break)
     {
-        if (isset($page['header']->styles)
-            && is_array($page['header']->styles)
-            && !empty($page['header']->styles)
-        ) {
-            foreach ($page['header']->styles as $property => $value) {
+        $styles = $page['header']->style ??
+            $page['header']->styles ??
+            $page['header']->presentation['style'] ??
+            $page['header']->presentation['styles'] ??
+            [];
+        if (!empty($styles) && is_array($styles) && Utils::arrayIsAssociative($styles)) {
+            foreach ($styles as $property => $value) {
                 $this->parser->styleProcessor($config['id'], $property, $value, $page);
             }
         }
