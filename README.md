@@ -297,6 +297,23 @@ When using `data-background-interactive`, the iFrame can be interacted with. The
 
 A `link-overlay`-shortcode is available for creating a link that overlays the slide, apt for use with backgrounds. For example: `[link-overlay="https://google.com/"]`.
 
+#### Variable-naming
+
+Since version 3.1.4 the plugin is more flexible in how it looks for custom styles. You can name these `style` or `styles`, or nest them within `presentation` in a Page's FrontMatter. The plugin-configuration looks for `style` then `styles`, and when processing slides it continues looking within `presentation`. Here's an example from FrontMatter, where `style` is found first and therefore applied.
+
+```yaml
+style:
+  justify-content: center
+styles:
+  justify-content: space-around
+presentation:
+  style:
+    justify-content: space-between
+presentation:
+  styles:
+    justify-content: space-evenly
+```
+
 ### Notes
 
 Each slide can have notes associated with it, like a PowerPoint-presentation would. These can be set on any slide using `[notes] ... [/notes]`, where the shortcodes should envelop the Markdown-content that makes up your notes. Eg:
