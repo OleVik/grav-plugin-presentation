@@ -1,5 +1,5 @@
 <?php
-namespace Grav\Plugin;
+namespace Grav\Plugin\PresentationPlugin;
 
 /**
  * Search for a file in multiple locations

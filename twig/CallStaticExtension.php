@@ -1,5 +1,5 @@
 <?php
-namespace Grav\Plugin;
+namespace Grav\Plugin\PresentationPlugin;
 
 class CallStaticTwigExtension extends \Twig_Extension
 {

@@ -1,3 +1,9 @@
+# v4.0.0-beta.2
+## 15-07-2020
+
+1. [](#improved)
+   - Twig-extensions namespacing
+
 # v4.0.0-beta.1
 ## 12-07-2020
 

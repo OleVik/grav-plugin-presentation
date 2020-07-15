@@ -354,9 +354,9 @@ class PresentationPlugin extends Plugin
     public function onTwigExtensions()
     {
         include_once __DIR__ . '/twig/CallStaticExtension.php';
-        $this->grav['twig']->twig->addExtension(new CallStaticTwigExtension());
+        $this->grav['twig']->twig->addExtension(new PresentationPlugin\CallStaticTwigExtension());
         include_once __DIR__ . '/twig/FileFinderExtension.php';
-        $this->grav['twig']->twig->addExtension(new FileFinderTwigExtension());
+        $this->grav['twig']->twig->addExtension(new PresentationPlugin\FileFinderTwigExtension());
     }
 
     /**
