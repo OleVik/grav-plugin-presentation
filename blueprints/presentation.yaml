@@ -168,8 +168,8 @@ form:
                     self-end: PLUGIN_PRESENTATION.ADMIN.STYLE.ALIGN-ITEMS.OPTIONS.SELF-END
                     normal: PLUGIN_PRESENTATION.ADMIN.STYLE.ALIGN-ITEMS.OPTIONS.NORMAL
                     baseline: PLUGIN_PRESENTATION.ADMIN.STYLE.ALIGN-ITEMS.OPTIONS.BASELINE
-                    'first baseline': PLUGIN_PRESENTATION.ADMIN.STYLE.ALIGN-ITEMS.OPTIONS.FIRST-BASELINE
-                    'last baseline': PLUGIN_PRESENTATION.ADMIN.STYLE.ALIGN-ITEMS.OPTIONS.LAST-BASELINE
+                    "first baseline": PLUGIN_PRESENTATION.ADMIN.STYLE.ALIGN-ITEMS.OPTIONS.FIRST-BASELINE
+                    "last baseline": PLUGIN_PRESENTATION.ADMIN.STYLE.ALIGN-ITEMS.OPTIONS.LAST-BASELINE
                     initial: PLUGIN_PRESENTATION.ADMIN.COMMON.INITIAL
                     inherit: PLUGIN_PRESENTATION.ADMIN.COMMON.INHERIT
                 header.horizontal:
@@ -239,8 +239,8 @@ form:
                     ]
                 header.presentation.styles:
                   type: select
-                  label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.STYLES.LABEL
-                  description: PLUGIN_PRESENTATION.ADMIN.ADVANCED.STYLES.DESCRIPTION
+                  label: PLUGIN_PRESENTATION.ADMIN.ADVANCED.TRANSPORT.LABEL
+                  description: PLUGIN_PRESENTATION.ADMIN.ADVANCED.TRANSPORT.DESCRIPTION
                   data-options@:
                     [
                       '\Grav\Plugin\PresentationPlugin::getClassNamesBlueprintOptions',

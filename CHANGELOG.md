@@ -1,3 +1,9 @@
+# v4.0.1
+## 19-07-2020
+
+1. [](#bugfix)
+   - Language-string for advanced options
+
 # v4.0.0
 ## 15-07-2020
 
