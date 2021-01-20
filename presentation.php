@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Presentation Plugin
  *
@@ -11,6 +12,7 @@
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  * @link       https://github.com/OleVik/grav-plugin-presentation
  */
+
 namespace Grav\Plugin;
 
 use Grav\Common\Grav;
@@ -476,15 +478,21 @@ class PresentationPlugin extends Plugin
     {
         include __DIR__ . '/vendor/autoload.php';
         $inflector = new Inflector();
-        $themes = array('none' => 'None');
+        $options = array('none' => 'None');
         $path = 'user://plugins/presentation/node_modules/reveal.js/css/theme';
         $location = Grav::instance()['locator']->findResource($path, true);
+        if (!$location) {
+            return $options;
+        }
         $files = Utilities::filesFinder($location, ['css']);
+        if (empty($files)) {
+            return $options;
+        }
         foreach ($files as $file) {
             $key = $file->getBasename('.' . $file->getExtension());
-            $themes[$key] = $inflector->titleize($key);
+            $options[$key] = $inflector->titleize($key);
         }
-        return $themes;
+        return $options;
     }
 
     /**
@@ -564,7 +572,7 @@ class PresentationPlugin extends Plugin
                 $css .= '@media screen and ';
                 if ($i == 0) {
                     $css .= '(min-width: 0px) and ';
-                    $css .= '(max-width:' . (intval($breakpoints[$i+1])-1) . 'px) ';
+                    $css .= '(max-width:' . (intval($breakpoints[$i + 1]) - 1) . 'px) ';
                 } else {
                     $css .= '(min-width:' . $breakpoints[$i] . 'px) ';
                 }

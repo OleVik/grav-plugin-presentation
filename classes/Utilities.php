@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Presentation Plugin, Utilities
  *
@@ -56,7 +57,7 @@ class Utilities
      * @param string $directory Folder-name.
      * @param string $types     File extensions.
      *
-     * @return string
+     * @return array
      */
     public static function filesFinder(string $directory, array $types)
     {
@@ -71,11 +72,7 @@ class Utilities
                 $files[] = $file;
             }
         }
-        if (count($files) > 0) {
-            return $files;
-        } else {
-            return false;
-        }
+        return $files;
     }
 
     /**
@@ -112,7 +109,7 @@ class Utilities
      */
     public function getContrast50($hexcolor)
     {
-        return (hexdec($hexcolor) > 0xffffff/2) ? 'black':'white';
+        return (hexdec($hexcolor) > 0xffffff / 2) ? 'black' : 'white';
     }
 
     /**
@@ -129,7 +126,7 @@ class Utilities
         $r = hexdec(substr($hexcolor, 0, 2));
         $g = hexdec(substr($hexcolor, 2, 4));
         $b = hexdec(substr($hexcolor, 4, 6));
-        $yiq = (($r*299)+($g*587)+($b*114))/1000;
+        $yiq = (($r * 299) + ($g * 587) + ($b * 114)) / 1000;
         return ($yiq >= 128) ? 'black' : 'white';
     }
 
