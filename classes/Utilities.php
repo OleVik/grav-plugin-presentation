@@ -61,6 +61,9 @@ class Utilities
      */
     public static function filesFinder(string $directory, array $types)
     {
+        if (empty($directory) || !is_dir($directory)) {
+            return [];
+        }
         $iterator = new \RecursiveDirectoryIterator(
             $directory,
             \RecursiveDirectoryIterator::SKIP_DOTS

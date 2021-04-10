@@ -1,5 +1,5 @@
 name: Presentation
-version: 4.0.2
+version: 4.0.3
 description: Responsive navigational slideshows with Reveal.js
 icon: arrows-alt
 author:
@@ -12,7 +12,7 @@ bugs: https://github.com/OleVik/grav-plugin-presentation/issues
 docs: https://github.com/OleVik/grav-plugin-presentation/blob/master/README.md
 license: MIT
 dependencies:
-  - { name: grav, version: ">=1.6" }
+  - { name: grav, version: ">=1.7" }
 
 form:
   validation: strict
