@@ -13,7 +13,7 @@
     "codemirror": "^5.58.2",
     "js-base64": "^2.5.1",
     "localforage": "^1.7.3",
-    "reveal.js": "^3.9.2"
+    "reveal.js": "^4.3.0"
   },
   "devDependencies": {
     "include-media": "^1.4.9",
