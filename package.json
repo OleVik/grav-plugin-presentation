@@ -9,7 +9,7 @@
   "author": "OleVik",
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.21.3",
+    "axios": "^1.6.4",
     "codemirror": "^5.58.2",
     "js-base64": "^2.5.1",
     "localforage": "^1.7.3",
