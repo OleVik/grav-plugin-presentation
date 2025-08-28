@@ -10,7 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.21.3",
-    "codemirror": "^5.58.2",
+    "codemirror": "^6.0.0",
     "js-base64": "^2.5.1",
     "localforage": "^1.7.3",
     "reveal.js": "^3.9.2"
